@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>คลังข้อสอบและแบบฝึกหัดออนไลน์</title>
+  <title>คลังข้อสอบและแบบฝึกหัด Interactive</title>
   <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
-      background-color: #F4F7FC;
+      background-color: #F8F9FE;
       color: #2D3748;
       padding: 30px 16px;
       line-height: 1.6;
@@ -54,16 +54,16 @@
     .quiz-grid {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
     }
     .quiz-link {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 18px;
+      padding: 15px 18px;
       border-radius: 14px;
       text-decoration: none;
-      font-size: 15px;
+      font-size: 15.5px;
       font-weight: 500;
       color: #FFFFFF;
       box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
@@ -75,62 +75,10 @@
     }
     .arrow {
       font-size: 18px;
-      opacity: 0.85;
+      opacity: 0.9;
     }
     
     /* สีประจำวิชา */
-    .btn-sci    { background: linear-gradient(135deg, #319795, #2C7A7B); }
-    .btn-eng    { background: linear-gradient(135deg, #DD6B20, #C05621); }
-    .btn-math   { background: linear-gradient(135deg, #3182CE, #2B6CB0); }
-    .btn-social { background: linear-gradient(135deg, #E53E3E, #C53030); }
-  </style>
-</head>
-<body>
-
-  <div class="container">
-    <header>
-      <h1>📚 คลังข้อสอบและแบบฝึกหัด Interactive</h1>
-      <p>เลือกระดับชั้นและรายวิชาที่ต้องการฝึกฝนได้เลยครับ</p>
-    </header>
-
-    <!-- ระดับชั้น ป.4 -->
-    <div class="section-card">
-      <div class="section-title title-p4">
-        <span>🎒</span> ระดับชั้นประถมศึกษาปีที่ 4 (ป.4)
-      </div>
-      <div class="quiz-grid">
-        <a href="p4/Sciencep4.html" class="quiz-link btn-sci">
-          <span>🔬 วิชาวิทยาศาสตร์ (มวลและน้ำหนัก & ตัวกลางแสง)</span>
-          <span class="arrow">➜</span>
-        </a>
-        <a href="p4/In_The_Kitchen_Grade4_Quiz.html" class="quiz-link btn-eng">
-          <span>🍳 วิชาภาษาอังกฤษ (In the Kitchen)</span>
-          <span class="arrow">➜</span>
-        </a>
-        <a href="p4/Math_Grade4_Semester1_Quiz.html" class="quiz-link btn-math">
-          <span>📐 วิชาคณิตศาสตร์ (ปลายภาคเรียนที่ 1)</span>
-          <span class="arrow">➜</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- ระดับชั้น ป.6 -->
-    <div class="section-card">
-      <div class="section-title title-p6">
-        <span>🎓</span> ระดับชั้นประถมศึกษาปีที่ 6 (ป.6)
-      </div>
-      <div class="quiz-grid">
-        <a href="p6/mahp6.html" class="quiz-link btn-math">
-          <span>📐 วิชาคณิตศาสตร์ (ทศนิยม & อัตราแลกเปลี่ยน)</span>
-          <span class="arrow">➜</span>
-        </a>
-        <a href="p6/socialp6.html" class="quiz-link btn-social">
-          <span>🌸 วิชาสังคมศึกษาฯ (ศาสนา หน้าที่พลเมือง วัฒนธรรม)</span>
-          <span class="arrow">➜</span>
-        </a>
-      </div>
-    </div>
-  </div>
-
-</body>
-</html>
+    .btn-sci-p4    { background: linear-gradient(135deg, #2E7D73, #235F57); }
+    .btn-math-p6   { background: linear-gradient(135deg, #2563EB, #1D4ED8); }
+    .btn-social-p6 { background: linear-gradient
