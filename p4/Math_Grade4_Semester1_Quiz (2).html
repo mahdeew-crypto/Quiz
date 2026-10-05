@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบฝึกหัดคณิตศาสตร์ ป.4 ปลายภาคเรียนที่ 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #FF5E57;
+    --primary-hover: #FF3F34;
+    --secondary: #0BE881;
+    --purple: #575FCF;
+    --bg: #F4F7FC;
+    --card-bg: #FFFFFF;
+    --text: #1E272E;
+    --text-muted: #808E9B;
+    --border: #E4E8F0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    padding: 16px;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(87, 95, 207, 0.12);
+    overflow: hidden;
+    border: 3px solid #E8E4F8;
+  }
+  header {
+    background: linear-gradient(135deg, #FF5E57, #575FCF);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+  }
+  header h1 {
+    font-size: 25px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.15);
+  }
+  header p {
+    font-size: 14.5px;
+    opacity: 0.95;
+  }
+  .badge-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: rgba(255,255,255,0.22);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+  }
+  .score-sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    padding: 12px 20px;
+    border-bottom: 2px solid #E8E4F8;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+  }
+  .progress-wrap {
+    flex-grow: 1;
+    margin: 0 16px;
+    background: #EEF2F7;
+    border-radius: 12px;
+    height: 14px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #FF5E57, #0BE881);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  .section-title {
+    background: #FFF1F0;
+    border-left: 6px solid var(--primary);
+    padding: 14px 20px;
+    margin: 24px 20px 14px;
+    border-radius: 0 12px 12px 0;
+  }
+  .section-title.sec-2 {
+    background: #F1F0FF;
+    border-left-color: var(--purple);
+  }
+  .section-title h2 {
+    font-size: 19px;
+    color: #D63031;
+    font-weight: 700;
+  }
+  .section-title.sec-2 h2 {
+    color: #3C40C6;
+  }
+  .section-title p {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .topic-tag {
+    display: inline-block;
+    background: #EEF2FF;
+    color: #3C40C6;
+    padding: 3px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .question-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin: 14px 20px;
+    transition: all 0.2s ease;
+  }
+  .question-card:hover {
+    box-shadow: 0 4px 14px rgba(87, 95, 207, 0.08);
+    border-color: #D2D7F6;
+  }
+  .q-num {
+    font-weight: 700;
+    color: var(--primary);
+    margin-right: 6px;
+  }
+  .q-text {
+    font-size: 15.5px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: #1E272E;
+    line-height: 1.6;
+  }
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 650px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+  .opt-btn {
+    background: #F8F9FC;
+    border: 1.5px solid #E2E8F0;
+    padding: 12px 14px;
+    border-radius: 12px;
+    text-align: left;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    color: #2D3748;
+  }
+  .opt-btn:hover:not(:disabled) {
+    background: #FFF3F2;
+    border-color: var(--primary);
+    color: #D63031;
+  }
+  .opt-btn.correct {
+    background: #EAFBF5 !important;
+    border-color: #0BE881 !important;
+    color: #058249 !important;
+    font-weight: 600;
+  }
+  .opt-btn.wrong {
+    background: #FFEEEE !important;
+    border-color: #FF5E57 !important;
+    color: #D63031 !important;
+  }
+  .opt-prefix {
+    font-weight: 700;
+    margin-right: 8px;
+    min-width: 22px;
+  }
+  .feedback {
+    margin-top: 10px;
+    padding: 11px 15px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    display: none;
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.success {
+    background: #EAFBF5;
+    color: #058249;
+    border: 1px solid #A6EED7;
+  }
+  .feedback.error {
+    background: #FFEEEE;
+    color: #D63031;
+    border: 1px solid #FFC5C5;
+  }
+  .subjective-card {
+    background: #FAF9FE;
+    border: 1.5px solid #DDD6FE;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 16px 20px;
+  }
+  .subjective-card textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1.5px solid #CBD5E1;
+    font-family: inherit;
+    font-size: 14.5px;
+    margin-top: 10px;
+    resize: vertical;
+  }
+  .subjective-card textarea:focus {
+    outline: none;
+    border-color: var(--purple);
+  }
+  .toggle-key-btn {
+    background: var(--purple);
+    color: white;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: inherit;
+  }
+  .key-ans {
+    display: none;
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: #F0FDF4;
+    border-left: 4px solid #0BE881;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #166534;
+    line-height: 1.7;
+  }
+  .actions-container {
+    padding: 30px 20px;
+    text-align: center;
+    background: #FAFBFD;
+    border-top: 1px solid var(--border);
+  }
+  .btn-reset {
+    background: linear-gradient(135deg, #FF5E57, #575FCF);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    padding: 14px 34px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 94, 87, 0.35);
+    transition: transform 0.2s ease;
+  }
+  .btn-reset:hover {
+    transform: scale(1.03);
+  }
+  .score-dialog {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  .score-dialog-content {
+    background: white;
+    padding: 32px 24px;
+    border-radius: 24px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  }
+  .score-dialog h2 {
+    font-size: 24px;
+    color: #FF5E57;
+    margin-bottom: 10px;
+  }
+  .score-dialog .score-number {
+    font-size: 46px;
+    font-weight: 700;
+    color: #0BE881;
+    margin: 12px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>📐 แบบฝึกหัดคณิตศาสตร์ ป.4 ปลายภาค 1/2569 📐</h1>
+    <p>ฉบับฝึกฝน Interactive เพิ่มจำนวนข้อ 2 เท่า (ปรนัย 50 ข้อ + อัตนัย 4 ข้อ รวม 54 ข้อ)</p>
+    <div class="badge-container">
+      <span class="badge">📝 ปรนัย 50 ข้อ (คลิกเลือก สุ่มช้อยส์ ทันที)</span>
+      <span class="badge">✏️ แสดงวิธีทำ 4 ข้อ (ตรวจแนวคิดละเอียด)</span>
+      <span class="badge">🔁 ฝึกซ้ำได้ไม่จำกัดรอบ</span>
+    </div>
+  </header>
+
+  <div class="score-sticky-bar">
+    <span style="font-weight: 600; font-size: 14px;">คะแนนปรนัย: <span id="current-score" style="color: #FF5E57; font-size: 20px;">0</span> / <span id="total-q">50</span></span>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <span id="answered-count" style="font-size: 13px; color: #808E9B;">ทำไปแล้ว 0/50</span>
+  </div>
+
+  <!-- Part 1: Multiple Choice -->
+  <div class="section-title">
+    <h2>ตอนที่ 1: ข้อสอบปรนัย (50 ข้อ)</h2>
+    <p>บทที่ 1: จำนวนนับที่มากกว่า 100,000 (20 ข้อ) | บทที่ 2: การบวกและลบ (14 ข้อ) | บทที่ 3: การคูณและการหาร (10 ข้อ) | บทที่ 5: เวลา (6 ข้อ)</p>
+  </div>
+  <div id="part1-questions">
+    <!-- Rendered dynamically by JavaScript -->
+  </div>
+
+  <!-- Part 2: Subjective -->
+  <div class="section-title sec-2">
+    <h2>ตอนที่ 2: ข้อสอบอัตนัย แสดงวิธีทำ (4 ข้อ)</h2>
+    <p>บทที่ 4: การบวก ลบ คูณ หารระคน แสดงวิธีคิดอย่างเป็นขั้นตอน แล้วกดตรวจคำตอบ</p>
+  </div>
+  <div id="part2-questions">
+    <!-- Sub 1 -->
+    <div class="subjective-card">
+      <div class="topic-tag">บทที่ 4: การบวก ลบ คูณ หารระคน</div>
+      <div class="q-text"><strong>อัตนัยข้อที่ 1:</strong> จงหาผลลัพธ์ของประโยคสัญลักษณ์ต่อไปนี้ พร้อมแสดงวิธีทำอย่างละเอียด<br>
+      <strong>(125,600 + 24,350) ÷ 5 - 4,250 = █</strong></div>
+      <textarea id="sub-1" placeholder="พิมพ์การแสดงวิธีทำเป็นขั้นตอนทีละลำดับ..."></textarea>
+      <button class="toggle-key-btn" onclick="toggleKey(1)">ตรวจแนวทางการแสดงวิธีทำและคำตอบ</button>
+      <div class="key-ans" id="key-1">
+        <strong>ลำดับขั้นการคำนวณและเฉลย:</strong><br>
+        <strong>ขั้นที่ 1:</strong> คำนวณในวงเล็บ (125,600 + 24,350) = 149,950<br>
+        <strong>ขั้นที่ 2:</strong> นำผลบวกมาหารด้วย 5 ได้ 149,950 ÷ 5 = 29,990<br>
+        <strong>ขั้นที่ 3:</strong> นำผลหารมาลบด้วย 4,250 ได้ 29,990 - 4,250 = 25,740<br>
+        <strong>ตอบ:</strong> <strong>๒๕,๗๔๐ (หรือ 25,740)</strong>
+      </div>
+    </div>
+
+    <!-- Sub 2 -->
+    <div class="subjective-card">
+      <div class="topic-tag">บทที่ 4: การบวก ลบ คูณ หารระคน</div>
+      <div class="q-text"><strong>อัตนัยข้อที่ 2:</strong> จงหาผลลัพธ์ของประโยคสัญลักษณ์ต่อไปนี้ พร้อมแสดงวิธีทำอย่างละเอียด<br>
+      <strong>385,400 - (12,450 × 16) + 48,600 = █</strong></div>
+      <textarea id="sub-2" placeholder="พิมพ์การแสดงวิธีทำเป็นขั้นตอนทีละลำดับ..."></textarea>
+      <button class="toggle-key-btn" onclick="toggleKey(2)">ตรวจแนวทางการแสดงวิธีทำและคำตอบ</button>
+      <div class="key-ans" id="key-2">
+        <strong>ลำดับขั้นการคำนวณและเฉลย:</strong><br>
+        <strong>ขั้นที่ 1:</strong> คำนวณในวงเล็บ (12,450 × 16) = 199,200<br>
+        <strong>ขั้นที่ 2:</strong> นำ 385,400 มาลบด้วยผลคูณ ได้ 385,400 - 199,200 = 186,200<br>
+        <strong>ขั้นที่ 3:</strong> นำมาบวกด้วย 48,600 ได้ 186,200 + 48,600 = 234,800<br>
+        <strong>ตอบ:</strong> <strong>๒๓๔,๘๐๐ (หรือ 234,800)</strong>
+      </div>
+    </div>
+
+    <!-- Sub 3 -->
+    <div class="subjective-card">
+      <div class="topic-tag">บทที่ 4: การบวก ลบ คูณ หารระคน (โจทย์ปัญหา)</div>
+      <div class="q-text"><strong>อัตนัยข้อที่ 3:</strong> สหกรณ์โรงเรียนซื้อสมุดมา 150 แพ็ก แต่ละแพ็กมีสมุด 24 เล่ม นำมาแจกให้นักเรียน 8 ห้อง ห้องละเท่า ๆ กัน นักเรียนแต่ละห้องจะได้รับสมุดกี่เล่ม? (จงเขียนประโยคสัญลักษณ์และแสดงวิธีทำ)</div>
+      <textarea id="sub-3" placeholder="เขียนประโยคสัญลักษณ์และแสดงวิธีทำเป็นขั้นตอน..."></textarea>
+      <button class="toggle-key-btn" onclick="toggleKey(3)">ตรวจแนวทางการแสดงวิธีทำและคำตอบ</button>
+      <div class="key-ans" id="key-3">
+        <strong>ประโยคสัญลักษณ์:</strong> (150 × 24) ÷ 8 = █<br>
+        <strong>วิธีทำ:</strong><br>
+        - สหกรณ์ซื้อสมุดมา 150 แพ็ก แต่ละแพ็กมี 24 เล่ม<br>
+        - รวมมีสมุดทั้งหมด 150 × 24 = 3,600 เล่ม<br>
+        - นำมาแจกให้นักเรียน 8 ห้อง ห้องละเท่า ๆ กัน<br>
+        - แต่ละห้องจะได้รับสมุด 3,600 ÷ 8 = 450 เล่ม<br>
+        <strong>ตอบ:</strong> <strong>นักเรียนแต่ละห้องจะได้รับสมุด ๔๕๐ เล่ม</strong>
+      </div>
+    </div>
+
+    <!-- Sub 4 -->
+    <div class="subjective-card">
+      <div class="topic-tag">บทที่ 4: การบวก ลบ คูณ หารระคน (โจทย์ปัญหา)</div>
+      <div class="q-text"><strong>อัตนัยข้อที่ 4:</strong> ชาวสวนเก็บมังคุดได้ 850 กิโลกรัม ขายไปราคากิโลกรัมละ 45 บาท นำเงินที่ได้ไปซื้อปุ๋ยบำรุงดิน 12 กระสอบ ราคากระสอบละ 650 บาท ชาวสวนจะเหลือเงินกี่บาท? (จงเขียนประโยคสัญลักษณ์และแสดงวิธีทำ)</div>
+      <textarea id="sub-4" placeholder="เขียนประโยคสัญลักษณ์และแสดงวิธีทำเป็นขั้นตอน..."></textarea>
+      <button class="toggle-key-btn" onclick="toggleKey(4)">ตรวจแนวทางการแสดงวิธีทำและคำตอบ</button>
+      <div class="key-ans" id="key-4">
+        <strong>ประโยคสัญลักษณ์:</strong> (850 × 45) - (12 × 650) = █<br>
+        <strong>วิธีทำ:</strong><br>
+        - ขายมังคุด 850 กิโลกรัม ราคากิโลกรัมละ 45 บาท ได้เงิน 850 × 45 = 38,250 บาท<br>
+        - ซื้อปุ๋ยบำรุงดิน 12 กระสอบ ราคากระสอบละ 650 บาท จ่ายเงิน 12 × 650 = 7,800 บาท<br>
+        - ชาวสวนจะเหลือเงิน 38,250 - 7,800 = 30,450 บาท<br>
+        <strong>ตอบ:</strong> <strong>ชาวสวนจะเหลือเงิน ๓๐,๔๕๐ บาท</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions-container">
+    <button class="btn-reset" onclick="resetQuiz()">🔄 รีเซ็ตทำแบบฝึกหัดใหม่ (สุ่มลำดับตัวเลือกใหม่)</button>
+  </div>
+</div>
+
+<div class="score-dialog" id="score-dialog">
+  <div class="score-dialog-content">
+    <h2>🎉 ยอดเยี่ยมมากครับ! 🎉</h2>
+    <p>น้อง ๆ ทำแบบทดสอบปรนัยครบทั้ง 50 ข้อแล้ว</p>
+    <div class="score-number" id="final-score-val">0 / 50</div>
+    <p id="score-feedback-text" style="color: #576574; margin-bottom: 20px; font-size: 15px;"></p>
+    <button class="btn-reset" onclick="closeDialogAndReset()">ฝึกทำซ้ำอีกรอบเพื่อความแม่นยำ</button>
+  </div>
+</div>
+
+<script>
+const rawData = [{"id": 1, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ตัวเลข 5 ในจำนวน 4,582,300 อยู่ในหลักใดและมีค่าเท่าใด?", "options": ["อยู่ในหลักแสน และมีค่าเท่ากับ 500,000", "อยู่ในหลักหมื่น และมีค่าเท่ากับ 50,000", "อยู่ในหลักล้าน และมีค่าเท่ากับ 5,000,000", "อยู่ในหลักพัน และมีค่าเท่ากับ 5,000"], "answer": 0, "exp": "ในจำนวน 4,582,300 เลข 5 อยู่ในหลักแสน จึงมีค่าประจำหลักเป็น 500,000"}, {"id": 2, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ข้อใดเขียน 'เจ็ดล้านแปดแสนห้าหมื่นสองพันหนึ่งร้อยสี่' เป็นตัวเลขฮินดูอารบิกได้ถูกต้อง?", "options": ["7,852,104", "7,852,140", "7,850,214", "7,825,104"], "answer": 0, "exp": "7 ในหลักล้าน, 8 ในหลักแสน, 5 ในหลักหมื่น, 2 ในหลักพัน, 1 ในหลักร้อย, 0 ในหลักสิบ, 4 ในหลักหน่วย คือ 7,852,104"}, {"id": 3, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "จำนวน 8,000,000 + 400,000 + 6,000 + 300 + 9 เขียนในรูปจำนวนตรงกับข้อใด?", "options": ["8,406,309", "8,460,309", "8,046,390", "8,406,390"], "answer": 0, "exp": "หลักหมื่นและหลักสิบไม่มีค่า (เป็น 0) รวมกันได้ 8,406,309"}, {"id": 4, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ข้อใดเขียนจำนวน ๙,๐๖๕,๒๓๐ เป็นตัวหนังสือภาษาไทยได้ถูกต้อง?", "options": ["เก้าล้านหกหมื่นห้าพันสองร้อยสามสิบ", "เก้าล้านหกแสนห้าพันสองร้อยสามสิบ", "เก้าแสนหกหมื่นห้าพันสองร้อยสามสิบ", "เก้าล้านหกหมื่นห้าพันสองร้อยสาม"], "answer": 0, "exp": "หลักแสนเป็น 0 จึงอ่านข้ามหลักแสนเป็น เก้าล้านหกหมื่นห้าพันสองร้อยสามสิบ"}, {"id": 5, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ค่าประมาณเป็นจำนวนเต็มพันของ 458,720 คือจำนวนใด?", "options": ["459,000", "458,000", "460,000", "458,700"], "answer": 0, "exp": "พิจารณาหลักร้อยคือเลข 7 (ตั้งแต่ 5 ขึ้นไป) ให้ปัดหลักพันขึ้นจาก 8 เป็น 9 ได้ 459,000"}, {"id": 6, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ค่าประมาณเป็นจำนวนเต็มหมื่นของ 2,364,890 คือจำนวนใด?", "options": ["2,360,000", "2,370,000", "2,400,000", "2,365,000"], "answer": 0, "exp": "พิจารณาหลักพันคือเลข 4 (น้อยกว่า 5) ให้ปัดลง คงหลักหมื่นไว้ที่ 6 ได้ 2,360,000"}, {"id": 7, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ค่าประมาณเป็นจำนวนเต็มแสนของ 5,749,200 คือจำนวนใด?", "options": ["5,700,000", "5,800,000", "6,000,000", "5,750,000"], "answer": 0, "exp": "พิจารณาหลักหมื่นคือเลข 4 (น้อยกว่า 5) ให้ปัดลง คงหลักแสนไว้ที่ 7 ได้ 5,700,000"}, {"id": 8, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ค่าประมาณเป็นจำนวนเต็มล้านของ 14,685,000 คือจำนวนใด?", "options": ["15,000,000", "14,000,000", "14,700,000", "10,000,000"], "answer": 0, "exp": "พิจารณาหลักแสนคือเลข 6 (ตั้งแต่ 5 ขึ้นไป) ให้ปัดหลักล้านขึ้นจาก 14 เป็น 15 ได้ 15,000,000"}, {"id": 9, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ข้อใดเรียงลำดับจำนวนจาก 'น้อยไปหามาก' ได้ถูกต้อง?", "options": ["415,200 < 451,020 < 451,200 < 514,000", "451,200 < 415,200 < 451,020 < 514,000", "514,000 < 451,200 < 451,020 < 415,200", "415,200 < 451,200 < 451,020 < 514,000"], "answer": 0, "exp": "เรียงตามค่าจริง: 415,200 < 451,020 < 451,200 < 514,000"}, {"id": 10, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ข้อใดเรียงลำดับจำนวนจาก 'มากไปหาน้อย' ได้ถูกต้อง?", "options": ["3,205,000 > 3,025,000 > 2,980,000 > 2,890,000", "3,025,000 > 3,205,000 > 2,980,000 > 2,890,000", "2,890,000 > 2,980,000 > 3,025,000 > 3,205,000", "3,205,000 > 2,980,000 > 3,025,000 > 2,890,000"], "answer": 0, "exp": "3.20 ล้าน > 3.02 ล้าน > 2.98 ล้าน > 2.89 ล้าน เป็นการเรียงจากมากไปน้อยถูกต้อง"}, {"id": 11, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "จำนวนใดต่อไปนี้มีค่าประมาณเป็นจำนวนเต็มหมื่นเท่ากับ 800,000?", "options": ["798,450", "808,200", "794,890", "812,000"], "answer": 0, "exp": "798,450 หลักพันคือ 8 ปัดขึ้นทำให้หลักหมื่นและหลักแสนปัดขึ้นเป็น 800,000"}, {"id": 12, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ในจำนวน 62,835,140 เลขโดด 2 กับ 3 มีค่าต่างกันเท่าใด?", "options": ["1,970,000", "2,030,000", "1,900,000", "2,300,000"], "answer": 0, "exp": "เลข 2 มีค่า 2,000,000 และเลข 3 มีค่า 30,000 ผลต่างคือ 2,000,000 - 30,000 = 1,970,000"}, {"id": 13, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ข้อใดใช้เครื่องหมายแสดงการเปรียบเทียบจำนวนได้ถูกต้อง?", "options": ["1,245,600 > 1,244,990", "5,432,100 < 5,423,900", "8,901,400 = 8,910,400", "3,750,000 < 3,705,000"], "answer": 0, "exp": "หลักหมื่นเท่ากันคือ 4 แต่หลักพัน 5 มากกว่า 4 ดังนั้น 1,245,600 มากกว่า 1,244,990"}, {"id": 14, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "จำนวนนับที่น้อยที่สุดและมากที่สุดที่มีค่าประมาณเต็มพันเป็น 50,000 คือข้อใด?", "options": ["49,500 และ 50,499", "49,000 และ 50,999", "49,499 และ 50,500", "49,501 และ 50,490"], "answer": 0, "exp": "จำนวนตั้งแต่ 49,500 ถึง 50,499 เมื่อประมาณเต็มพันจะมีค่าเท่ากับ 50,000"}, {"id": 15, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ตัวเลข 0 ในจำนวน 12,045,678 มีค่าประจำหลักเท่าใด?", "options": ["100,000", "0", "1,000,000", "10,000"], "answer": 0, "exp": "เลข 0 อยู่ในหลักแสน ค่าประจำหลักแสนคือ 100,000 (แม้ค่าของเลขโดดคือ 0 แต่ค่าประจำหลักคือ 100,000)"}, {"id": 16, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ข้อใดคือรูปกระจายของจำนวน 3,050,402 ที่ถูกต้อง?", "options": ["3,000,000 + 50,000 + 400 + 2", "3,000,000 + 500,000 + 40 + 2", "3,000,000 + 5,000 + 400 + 2", "3,000,000 + 50,000 + 40 + 20"], "answer": 0, "exp": "หลักล้านคือ 3,000,000 หลักหมื่นคือ 50,000 หลักร้อยคือ 400 และหลักหน่วยคือ 2"}, {"id": 17, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ถ้า ก = 584,200 และ ข = 584,090 ผลต่างของจำนวนทั้งสองมีค่าเท่าใด?", "options": ["110", "190", "210", "290"], "answer": 0, "exp": "584,200 - 584,090 = 110"}, {"id": 18, "chapter: ": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "จำนวนในข้อใดมีค่ามากกว่า 6,548,200 แต่น้อยกว่า 6,550,000?", "options": ["6,549,300", "6,548,150", "6,550,200", "6,547,990"], "answer": 0, "exp": "6,549,300 มีค่าอยู่ระหว่าง 6,548,200 และ 6,550,000"}, {"id": 19, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ข้อใดเขียนตัวเลขไทย '๗,๕๒๐,๑๖๔' เป็นตัวหนังสือได้ถูกต้อง?", "options": ["เจ็ดล้านห้าแสนสองหมื่นหนึ่งร้อยหกสิบสี่", "เจ็ดล้านห้าหมื่นสองพันหนึ่งร้อยหกสิบสี่", "เจ็ดล้านห้าแสนสองพันหนึ่งร้อยหกสิบสี่", "เจ็ดล้านห้าแสนสองหมื่นหกร้อยสิบสี่"], "answer": 0, "exp": "๗,๕๒๐,๑๖๔ อ่านว่า เจ็ดล้านห้าแสนสองหมื่นหนึ่งร้อยหกสิบสี่"}, {"id": 20, "chapter": "บทที่ 1: จำนวนนับที่มากกว่า 100,000", "q": "ค่าประมาณเป็นจำนวนเต็มสิบและเต็มร้อยของ 128,456 ตรงกับข้อใดตามลำดับ?", "options": ["128,460 และ 128,500", "128,450 และ 128,400", "128,460 และ 128,400", "128,450 และ 128,500"], "answer": 0, "exp": "เต็มสิบดูหลักหน่วย (6) ปัดขึ้นเป็น 128,460 | เต็มร้อยดูหลักสิบ (5) ปัดขึ้นเป็น 128,500"}, {"id": 21, "chapter": "บทที่ 2: การบวกและการลบ", "q": "ผลบวกของ 458,920 + 364,180 มีค่าเท่ากับข้อใด?", "options": ["823,100", "822,100", "813,100", "823,000"], "answer": 0, "exp": "458,920 + 364,180 = 823,100"}, {"id": 22, "chapter": "บทที่ 2: การบวกและการลบ", "q": "ผลลบของ 1,524,000 - 685,400 มีค่าเท่ากับข้อใด?", "options": ["838,600", "839,600", "848,600", "938,600"], "answer": 0, "exp": "1,524,000 - 685,400 = 838,600"}, {"id": 23, "chapter": "บทที่ 2: การบวกและการลบ", "q": "จากสมการ 245,600 + █ = 600,000 ตัวไม่ทราบค่าคือจำนวนใด?", "options": ["354,400", "355,400", "454,400", "344,400"], "answer": 0, "exp": "หาตัวไม่ทราบค่าได้จาก 600,000 - 245,600 = 354,400"}, {"id": 24, "chapter": "บทที่ 2: การบวกและการลบ", "q": "จากสมการ █ - 184,500 = 325,800 ตัวไม่ทราบค่าคือจำนวนใด?", "options": ["510,300", "509,300", "511,300", "141,300"], "answer": 0, "exp": "หาตัวไม่ทราบค่าได้จาก 325,800 + 184,500 = 510,300"}, {"id": 25, "chapter": "บทที่ 2: การบวกและการลบ", "q": "จากสมการ 850,000 - █ = 432,600 ตัวไม่ทราบค่าคือจำนวนใด?", "options": ["417,400", "418,400", "427,400", "1,282,600"], "answer": 0, "exp": "หาตัวไม่ทราบค่าได้จาก 850,000 - 432,600 = 417,400"}, {"id": 26, "chapter": "บทที่ 2: การบวกและการลบ", "q": "พ่อมีเงินฝากธนาคาร 1,450,000 บาท ถอนเงินไปซื้อรถยนต์ 680,000 บาท พ่อเหลือเงินฝากเท่าใด?", "options": ["770,000 บาท", "760,000 บาท", "870,000 บาท", "830,000 บาท"], "answer": 0, "exp": "1,450,000 - 680,000 = 770,000 บาท"}, {"id": 27, "chapter": "บทที่ 2: การบวกและการลบ", "q": "โรงงานผลิตนมกล่องรสจืดได้ 385,000 กล่อง ผลิตรสหวานได้มากกว่ารสจืด 64,500 กล่อง โรงงานผลิตรสหวานได้กี่กล่อง?", "options": ["449,500 กล่อง", "448,500 กล่อง", "320,500 กล่อง", "450,500 กล่อง"], "answer": 0, "exp": "385,000 + 64,500 = 449,500 กล่อง"}, {"id": 28, "chapter": "บทที่ 2: การบวกและการลบ", "q": "บริษัทมียอดขายปีแรก 2,890,000 บาท ยอดขายปีที่สอง 3,450,000 บาท ยอดขายปีที่สองมากกว่าปีแรกเท่าใด?", "options": ["560,000 บาท", "550,000 บาท", "660,000 บาท", "640,000 บาท"], "answer": 0, "exp": "3,450,000 - 2,890,000 = 560,000 บาท"}, {"id": 29, "chapter": "บทที่ 2: การบวกและการลบ", "q": "การประมาณผลลัพธ์ของ 518,400 + 289,600 โดยใช้ค่าประมาณเต็มหมื่นตรงกับข้อใด?", "options": ["520,000 + 290,000 = 810,000", "510,000 + 280,000 = 790,000", "520,000 + 280,000 = 800,000", "500,000 + 300,000 = 800,000"], "answer": 0, "exp": "518,400 ประมาณเต็มหมื่นคือ 520,000 และ 289,600 ประมาณเต็มหมื่นคือ 290,000 รวมเป็น 810,000"}, {"id": 30, "chapter": "บทที่ 2: การบวกและการลบ", "q": "ผลลัพธ์ของ 3,456,800 + 1,234,500 - 980,000 มีค่าเท่ากับข้อใด?", "options": ["3,711,300", "3,710,300", "3,611,300", "4,711,300"], "answer": 0, "exp": "3,456,800 + 1,234,500 = 4,691,300 จากนั้นลบด้วย 980,000 = 3,711,300"}, {"id": 31, "chapter": "บทที่ 2: การบวกและการลบ", "q": "จังหวัดหนึ่งมีประชากรชาย 482,600 คน มีประชากรหญิง 517,400 คน จังหวัดนี้มีประชากรทั้งหมดกี่คน?", "options": ["1,000,000 คน", "990,000 คน", "1,010,000 คน", "980,000 คน"], "answer": 0, "exp": "482,600 + 517,400 = 1,000,000 คน"}, {"id": 32, "chapter": "บทที่ 2: การบวกและการลบ", "q": "ชาวสวนขายทุเรียนได้เงิน 840,000 บาท ขายมังคุดได้เงินน้อยกว่าทุเรียน 355,000 บาท ชาวสวนขายมังคุดได้เงินกี่บาท?", "options": ["485,000 บาท", "495,000 บาท", "585,000 บาท", "1,195,000 บาท"], "answer": 0, "exp": "840,000 - 355,000 = 485,000 บาท"}, {"id": 33, "chapter": "บทที่ 2: การบวกและการลบ", "q": "จากสมการ 75,000 + A = 210,000 และ B - 50,000 = A ค่าของ B มีค่าเท่าใด?", "options": ["185,000", "135,000", "175,000", "195,000"], "answer": 0, "exp": "A = 210,000 - 75,000 = 135,000 ดังนั้น B = 135,000 + 50,000 = 185,000"}, {"id": 34, "chapter": "บทที่ 2: การบวกและการลบ", "q": "การหาค่าประมาณผลลบของ 789,200 - 312,400 โดยใช้ค่าประมาณเต็มแสนได้ผลลัพธ์เท่าใด?", "options": ["500,000", "400,000", "600,000", "480,000"], "answer": 0, "exp": "789,200 ปัดเป็น 800,000 และ 312,400 ปัดเป็น 300,000 ผลลบคือ 800,000 - 300,000 = 500,000"}, {"id": 35, "chapter": "บทที่ 3: การคูณและการหาร", "q": "ผลคูณของ 4,520 × 36 มีค่าเท่ากับข้อใด?", "options": ["162,720", "162,620", "152,720", "163,720"], "answer": 0, "exp": "4,520 × 36 = 162,720"}, {"id": 36, "chapter": "บทที่ 3: การคูณและการหาร", "q": "ผลคูณของ 625 × 400 มีค่าเท่ากับข้อใด?", "options": ["250,000", "240,000", "25,000", "260,000"], "answer": 0, "exp": "625 × 4 = 2,500 เติมศูนย์สองตัว ได้ 250,000"}, {"id": 37, "chapter": "บทที่ 3: การคูณและการหาร", "q": "ผลหารและเศษของ 85,410 ÷ 7 ตรงกับข้อใด?", "options": ["12,201 เศษ 3", "12,201 เศษ 5", "12,210 เศษ 3", "12,200 เศษ 3"], "answer": 0, "exp": "85,410 ÷ 7 = 12,201 เศษ 3 (ตรวจสอบ: 12,201 × 7 = 85,407 + 3 = 85,410)"}, {"id": 38, "chapter": "บทที่ 3: การคูณและการหาร", "q": "ผลหารของ 148,800 ÷ 24 มีค่าเท่ากับข้อใด?", "options": ["6,200", "6,100", "6,400", "6,020"], "answer": 0, "exp": "148,800 ÷ 24 = 6,200"}, {"id": 39, "chapter": "บทที่ 3: การคูณและการหาร", "q": "โรงงานผลิตเสื้อได้วันละ 1,250 ตัว ในเวลา 45 วัน โรงงานจะผลิตเสื้อได้ทั้งหมดกี่ตัว?", "options": ["56,250 ตัว", "56,150 ตัว", "55,250 ตัว", "57,250 ตัว"], "answer": 0, "exp": "1,250 × 45 = 56,250 ตัว"}, {"id": 40, "chapter": "บทที่ 3: การคูณและการหาร", "q": "แม่ค้ามีไข่ไก่ 7,200 ฟอง จัดใส่แผง แผงละ 30 ฟอง จะได้ไข่ไก่ทั้งหมดกี่แผง?", "options": ["240 แผง", "230 แผง", "250 แผง", "2,400 แผง"], "answer": 0, "exp": "7,200 ÷ 30 = 240 แผง"}, {"id": 41, "chapter": "บทที่ 3: การคูณและการหาร", "q": "ผลคูณของ 348 × 215 มีค่าเท่ากับข้อใด?", "options": ["74,820", "74,720", "73,820", "75,820"], "answer": 0, "exp": "348 × 215 = 74,820"}, {"id": 42, "chapter": "บทที่ 3: การคูณและการหาร", "q": "ครูมีเงิน 54,000 บาท ต้องการซื้อพัดลมราคาเครื่องละ 1,200 บาท จะซื้อพัดลมได้กี่เครื่อง?", "options": ["45 เครื่อง", "40 เครื่อง", "50 เครื่อง", "42 เครื่อง"], "answer": 0, "exp": "54,000 ÷ 1,200 = 45 เครื่อง"}, {"id": 43, "chapter": "บทที่ 3: การคูณและการหาร", "q": "จากประโยคสัญลักษณ์ █ × 45 = 11,250 จำนวนในช่องว่างคือข้อใด?", "options": ["250", "240", "260", "225"], "answer": 0, "exp": "11,250 ÷ 45 = 250"}, {"id": 44, "chapter": "บทที่ 3: การคูณและการหาร", "q": "ข้อใดมีผลลัพธ์ของการคำนวณมากที่สุด?", "options": ["400 × 500", "2,500 × 70", "1,800,000 ÷ 10", "90,000 × 2"], "answer": 0, "exp": "400 × 500 = 200,000 | 2,500 × 70 = 175,000 | 1,800,000 ÷ 10 = 180,000 | 90,000 × 2 = 180,000 ดังนั้น 200,000 มากที่สุด"}, {"id": 45, "chapter": "บทที่ 5: เรื่องเวลา", "q": "ระยะเวลา 3 ชั่วโมง 45 นาที คิดเป็นกี่นาที?", "options": ["225 นาที", "215 นาที", "235 นาที", "195 นาที"], "answer": 0, "exp": "(3 × 60) + 45 = 180 + 45 = 225 นาที"}, {"id": 46, "chapter": "บทที่ 5: เรื่องเวลา", "q": "เวลา 180 วัน คิดเป็นเวลากี่เดือน (กำหนดให้ 1 เดือนมี 30 วัน)?", "options": ["6 เดือน", "5 เดือน", "7 เดือน", "8 เดือน"], "answer": 0, "exp": "180 ÷ 30 = 6 เดือน"}, {"id": 47, "chapter": "บทที่ 5: เรื่องเวลา", "q": "ข้อใดเปรียบเทียบระยะเวลาได้ถูกต้อง?", "options": ["4 สัปดาห์ 3 วัน นานกว่า 30 วัน", "2 ชั่วโมง 15 นาที นานกว่า 140 นาที", "18 เดือน สั้นกว่า 1 ปี 4 เดือน", "250 วินาที นานกว่า 5 นาที"], "answer": 0, "exp": "4 สัปดาห์ 3 วัน = (4 × 7) + 3 = 31 วัน ซึ่งนานกว่า 30 วัน"}, {"id": 48, "chapter": "บทที่ 5: เรื่องเวลา", "q": "แก้วเริ่มอ่านหนังสือเวลา 08.45 น. และอ่านเสร็จเวลา 11.20 น. แก้วใช้เวลาอ่านหนังสือนานเท่าใด?", "options": ["2 ชั่วโมง 35 นาที", "2 ชั่วโมง 45 นาที", "3 ชั่วโมง 25 นาที", "1 ชั่วโมง 35 นาที"], "answer": 0, "exp": "จาก 08.45 น. ถึง 10.45 น. คือ 2 ชั่วโมง และจาก 10.45 น. ถึง 11.20 น. อีก 35 นาที รวมเป็น 2 ชั่วโมง 35 นาที"}, {"id": 49, "chapter": "บทที่ 5: เรื่องเวลา", "q": "การแข่งขันฟุตบอลเริ่มเวลา 15.30 น. ใช้เวลาแข่งขัน 1 ชั่วโมง 45 นาที การแข่งขันจะสิ้นสุดเวลาใด?", "options": ["17.15 น.", "17.05 น.", "16.75 น.", "17.30 น."], "answer": 0, "exp": "15.30 น. + 1 ชั่วโมง = 16.30 น. บวกอีก 45 นาที (30 นาทีถึง 17.00 น. + 15 นาที) เป็น 17.15 น."}, {"id": 50, "chapter": "บทที่ 5: เรื่องเวลา", "q": "รถไฟขบวนหนึ่งออกเดินทางเวลา 22.40 น. ถึงปลายทางเวลา 06.10 น. ของวันรุ่งขึ้น รถไฟใช้เวลาเดินทางเท่าใด?", "options": ["7 ชั่วโมง 30 นาที", "7 ชั่วโมง 20 นาที", "8 ชั่วโมง 30 นาที", "6 ชั่วโมง 40 นาที"], "answer": 0, "exp": "จาก 22.40 น. ถึง 24.00 น. = 1 ชั่วโมง 20 นาที รวมกับช่วงเช้า 06.10 น. ได้ 1 ชม. 20 นาที + 6 ชม. 10 นาที = 7 ชั่วโมง 30 นาที"}];
+
+let userAnswers = {};
+let score = 0;
+let randomizedQuestions = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function initQuiz() {
+  userAnswers = {};
+  score = 0;
+  
+  // Shuffle options for each question
+  randomizedQuestions = rawData.map(item => {
+    const correctText = item.options[item.answer];
+    const shuffledOptions = shuffle(item.options);
+    const newCorrectIndex = shuffledOptions.indexOf(correctText);
+    return {
+      ...item,
+      options: shuffledOptions,
+      correctIndex: newCorrectIndex,
+      correctText: correctText
+    };
+  });
+
+  renderQuizUI();
+  updateStatusBar();
+}
+
+function renderQuizUI() {
+  const container = document.getElementById("part1-questions");
+  if (!container) return;
+  container.innerHTML = "";
+
+  randomizedQuestions.forEach((item, qIdx) => {
+    const card = document.createElement("div");
+    card.className = "question-card";
+    card.id = `card-${item.id}`;
+
+    const optsHtml = item.options.map((optText, optIdx) => {
+      const letter = String.fromCharCode(65 + optIdx);
+      return `<button type="button" class="opt-btn" id="btn-${item.id}-${optIdx}" onclick="handleAnswer(${item.id}, ${optIdx})">
+        <span class="opt-prefix">${letter}.</span>
+        <span class="opt-text">${optText}</span>
+      </button>`;
+    }).join("");
+
+    card.innerHTML = `
+      <div class="topic-tag">${item.chapter}</div>
+      <div class="q-text"><span class="q-num">ข้อที่ ${item.id}.</span> ${item.q}</div>
+      <div class="options-grid" id="grid-${item.id}">${optsHtml}</div>
+      <div class="feedback" id="feedback-${item.id}"></div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function handleAnswer(qId, selectedIdx) {
+  if (userAnswers[qId] !== undefined) return; // already answered
+  userAnswers[qId] = selectedIdx;
+
+  const item = randomizedQuestions.find(q => q.id === qId);
+  if (!item) return;
+
+  const isCorrect = (selectedIdx === item.correctIndex);
+  if (isCorrect) score++;
+
+  // Disable all buttons in this question
+  for (let i = 0; i < item.options.length; i++) {
+    const btn = document.getElementById(`btn-${qId}-${i}`);
+    if (!btn) continue;
+    btn.disabled = true;
+    if (i === item.correctIndex) {
+      btn.classList.add("correct");
+    } else if (i === selectedIdx && !isCorrect) {
+      btn.classList.add("wrong");
+    }
+  }
+
+  // Feedback display
+  const fb = document.getElementById(`feedback-${qId}`);
+  if (fb) {
+    fb.classList.add("show");
+    if (isCorrect) {
+      fb.className = "feedback show success";
+      fb.innerHTML = `✅ <strong>ถูกต้องยอดเยี่ยม!</strong> ${item.exp}`;
+    } else {
+      fb.className = "feedback show error";
+      fb.innerHTML = `❌ <strong>ยังไม่ถูกต้อง</strong> คำตอบที่ถูกคือ: <strong>${item.correctText}</strong><br><span style="color:#555;">💡 วิธีคิด: ${item.exp}</span>`;
+    }
+  }
+
+  updateStatusBar();
+
+  // If completed all 50
+  if (Object.keys(userAnswers).length === randomizedQuestions.length) {
+    setTimeout(showFinalResult, 600);
+  }
+}
+
+function updateStatusBar() {
+  const total = randomizedQuestions.length || 50;
+  const answeredCount = Object.keys(userAnswers).length;
+  const scoreElem = document.getElementById("current-score");
+  const countElem = document.getElementById("answered-count");
+  const barElem = document.getElementById("progress-bar");
+
+  if (scoreElem) scoreElem.innerText = score;
+  if (countElem) countElem.innerText = `ทำไปแล้ว ${answeredCount}/${total}`;
+  if (barElem) {
+    const pct = total > 0 ? (answeredCount / total) * 100 : 0;
+    barElem.style.width = `${pct}%`;
+  }
+}
+
+function showFinalResult() {
+  const dialog = document.getElementById("score-dialog");
+  const finalVal = document.getElementById("final-score-val");
+  const fbTextElem = document.getElementById("score-feedback-text");
+  
+  if (finalVal) finalVal.innerText = `${score} / ${randomizedQuestions.length}`;
+
+  let fbText = "";
+  if (score >= 45) {
+    fbText = "🌟 ยอดเยี่ยมมากครับ! น้องมีความเข้าใจหลักการคำนวณและโจทย์ปัญหาเป็นอย่างดี พร้อมสอบปลายภาคได้คะแนนเต็มแน่นอน!";
+  } else if (score >= 35) {
+    fbText = "👍 เก่งมากครับ! ทำคะแนนได้ในเกณฑ์ดีมาก ลองทบทวนข้อที่คำนวณผิดพลาดเพื่อความรอบคอบยิ่งขึ้นนะครับ";
+  } else if (score >= 25) {
+    fbText = "😊 ผ่านเกณฑ์ระดับน่าพอใจครับ ลองฝึกสังเกตการคำนวณระคนและการประมาณค่าอีกสักรอบนะครับ";
+  } else {
+    fbText = "💪 สู้ ๆ นะครับ! ฝึกทำซ้ำใหม่อีกครั้ง ค่อย ๆ คำนวณตามขั้นตอน น้องจะเก่งขึ้นแน่นอนครับ!";
+  }
+  if (fbTextElem) fbTextElem.innerText = fbText;
+  if (dialog) dialog.style.display = "flex";
+}
+
+function closeDialogAndReset() {
+  const dialog = document.getElementById("score-dialog");
+  if (dialog) dialog.style.display = "none";
+  resetQuiz();
+}
+
+function resetQuiz() {
+  initQuiz();
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById(`sub-${i}`);
+    if (el) el.value = "";
+    const keyEl = document.getElementById(`key-${i}`);
+    if (keyEl) keyEl.style.display = "none";
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleKey(id) {
+  const keyEl = document.getElementById(`key-${id}`);
+  if (!keyEl) return;
+  keyEl.style.display = (keyEl.style.display === "block") ? "none" : "block";
+}
+
+// Run immediately upon load
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initQuiz);
+} else {
+  initQuiz();
+}
+</script>
+</body>
+</html>
