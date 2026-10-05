@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>แบบฝึกหัดคณิตศาสตร์ ป.6 ปลายภาคเรียน</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #4A69BD;
+    --primary-light: #6A89CC;
+    --secondary: #079992;
+    --accent: #F8C291;
+    --warning: #E58E26;
+    --danger: #EB2F06;
+    --success: #38ADA9;
+    --bg: #F4F6FB;
+    --card-bg: #FFFFFF;
+    --text: #1E272E;
+    --text-muted: #6A89CC;
+    --border: #DCDDE1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    padding: 16px;
+    line-height: 1.6;
+  }
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    border-radius: 24px;
+    box-shadow: 0 12px 35px rgba(74, 105, 189, 0.15);
+    overflow: hidden;
+    border: 3px solid #D6E4FF;
+  }
+  header {
+    background: linear-gradient(135deg, #1E3799, #4A69BD);
+    color: white;
+    padding: 32px 24px;
+    text-align: center;
+    position: relative;
+  }
+  header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+  header p {
+    font-size: 15px;
+    opacity: 0.95;
+  }
+  .badge-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    background: rgba(255,255,255,0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .score-sticky-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: white;
+    padding: 12px 24px;
+    border-bottom: 2px solid #D6E4FF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+  }
+  .progress-wrap {
+    flex-grow: 1;
+    margin: 0 20px;
+    background: #E8EEF8;
+    border-radius: 12px;
+    height: 14px;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #4A69BD, #38ADA9);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+  .section-title {
+    background: #EEF3FF;
+    border-left: 6px solid #1E3799;
+    padding: 15px 22px;
+    margin: 25px 20px 15px;
+    border-radius: 0 12px 12px 0;
+  }
+  .section-title.sec-2 {
+    background: #EAF8F7;
+    border-left-color: #079992;
+  }
+  .section-title h2 {
+    font-size: 19px;
+    color: #0C2461;
+    font-weight: 700;
+  }
+  .section-title.sec-2 h2 {
+    color: #079992;
+  }
+  .section-title p {
+    font-size: 13.5px;
+    color: #4A69BD;
+  }
+  .topic-tag {
+    display: inline-block;
+    background: #EEF3FF;
+    color: #1E3799;
+    padding: 3px 12px;
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    border: 1px solid #D6E4FF;
+  }
+  .question-card {
+    background: #FFFFFF;
+    border: 1.5px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin: 15px 20px;
+    transition: all 0.2s ease;
+  }
+  .question-card:hover {
+    box-shadow: 0 4px 14px rgba(74, 105, 189, 0.1);
+    border-color: #A4B0BE;
+  }
+  .q-num {
+    font-weight: 700;
+    color: #1E3799;
+    margin-right: 6px;
+  }
+  .q-text {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    color: #2C3A47;
+    line-height: 1.6;
+  }
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 650px) {
+    .options-grid { grid-template-columns: 1fr; }
+  }
+  .opt-btn {
+    background: #F8FAFD;
+    border: 1.5px solid #DCDDE1;
+    padding: 12px 15px;
+    border-radius: 12px;
+    text-align: left;
+    font-size: 14.5px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    color: #2F3542;
+  }
+  .opt-btn:hover:not(:disabled) {
+    background: #EEF3FF;
+    border-color: #4A69BD;
+    color: #1E3799;
+  }
+  .opt-btn.correct {
+    background: #E8F8F5 !important;
+    border-color: #38ADA9 !important;
+    color: #079992 !important;
+    font-weight: 600;
+  }
+  .opt-btn.wrong {
+    background: #FDEDEC !important;
+    border-color: #EB2F06 !important;
+    color: #B71540 !important;
+  }
+  .opt-prefix {
+    font-weight: 700;
+    margin-right: 8px;
+    min-width: 22px;
+  }
+  .feedback {
+    margin-top: 10px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    display: none;
+    line-height: 1.6;
+  }
+  .feedback.show { display: block; }
+  .feedback.success {
+    background: #E8F8F5;
+    color: #079992;
+    border: 1px solid #78E08F;
+  }
+  .feedback.error {
+    background: #FDEDEC;
+    color: #B71540;
+    border: 1px solid #F8A5C2;
+  }
+  /* Subjective styling */
+  .subjective-card {
+    background: #FAFCFE;
+    border: 1.5px solid #CAD3C8;
+    border-radius: 16px;
+    padding: 22px 20px;
+    margin: 18px 20px;
+  }
+  .subjective-card textarea {
+    width: 100%;
+    min-height: 110px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1.5px solid #CED6E0;
+    font-family: inherit;
+    font-size: 14.5px;
+    margin-top: 10px;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .subjective-card textarea:focus {
+    outline: none;
+    border-color: #1E3799;
+    box-shadow: 0 0 0 3px rgba(30, 55, 153, 0.1);
+  }
+  .toggle-key-btn {
+    background: #1E3799;
+    color: white;
+    border: none;
+    padding: 9px 20px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: inherit;
+    transition: background 0.2s ease;
+  }
+  .toggle-key-btn:hover {
+    background: #0C2461;
+  }
+  .key-ans {
+    display: none;
+    margin-top: 12px;
+    padding: 16px;
+    background: #F0FDF4;
+    border-left: 4px solid #38ADA9;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #1E272E;
+    line-height: 1.7;
+  }
+  .actions-container {
+    padding: 32px 20px;
+    text-align: center;
+    background: #FAFBFD;
+    border-top: 1px solid var(--border);
+  }
+  .btn-reset {
+    background: linear-gradient(135deg, #1E3799, #38ADA9);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    padding: 14px 36px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(30, 55, 153, 0.3);
+    transition: transform 0.2s ease;
+  }
+  .btn-reset:hover {
+    transform: scale(1.03);
+  }
+  .score-dialog {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+  }
+  .score-dialog-content {
+    background: white;
+    padding: 34px 26px;
+    border-radius: 24px;
+    max-width: 480px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  }
+  .score-dialog h2 {
+    font-size: 24px;
+    color: #1E3799;
+    margin-bottom: 10px;
+  }
+  .score-dialog .score-number {
+    font-size: 46px;
+    font-weight: 700;
+    color: #079992;
+    margin: 12px 0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>📘 ข้อสอบปลายภาค วิชาคณิตศาสตร์พื้นฐาน ป.6 📘</h1>
+    <p>ระบบฝึกฝนข้อสอบ Interactive (แบบปรนัย 40 ข้อ + อัตนัยแสดงวิธีทำ 8 ข้อ รวม 48 ข้อ)</p>
+    <div class="badge-container">
+      <span class="badge">📝 ปรนัย 40 ข้อ (สุ่มช้อยส์ ทันที มีเฉลยวิธีคิด)</span>
+      <span class="badge">✏️ อัตนัยแสดงวิธีทำ 8 ข้อ (เพิ่มเป็น 2 เท่าจาก 4 ข้อเดิม)</span>
+      <span class="badge">🔁 ฝึกซ้ำได้ไม่จำกัดรอบ</span>
+    </div>
+  </header>
+
+  <div class="score-sticky-bar">
+    <span style="font-weight: 600; font-size: 14px;">คะแนนปรนัย: <span id="current-score" style="color: #1E3799; font-size: 20px;">0</span> / <span id="total-q">40</span></span>
+    <div class="progress-wrap">
+      <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    <span id="answered-count" style="font-size: 13px; color: #6A89CC;">ทำไปแล้ว 0/40</span>
+  </div>
+
+  <!-- Part 1: Multiple Choice -->
+  <div class="section-title">
+    <h2>ตอนที่ 1: แบบทดสอบปรนัยเพื่อการฝึกฝนทักษะ (40 ข้อ)</h2>
+    <p>ครอบคลุม 4 เรื่องหลัก: เขียนเศษส่วนเป็นทศนิยม (10 ข้อ) | การหารทศนิยม (10 ข้อ) | โจทย์ปัญหาทศนิยม (10 ข้อ) | อัตราแลกเปลี่ยนเงินตรา (10 ข้อ)</p>
+  </div>
+  <div id="part1-questions">
+    <!-- Populated dynamically via JavaScript -->
+  </div>
+
+  <!-- Part 2: Subjective (8 items - doubled from 4 in the exam blueprint) -->
+  <div class="section-title sec-2">
+    <h2>ตอนที่ 2: ข้อสอบอัตนัย แสดงวิธีทำ (8 ข้อ - เพิ่มจำนวนข้อเป็น 2 เท่าจากเดิม 4 ข้อ)</h2>
+    <p>ให้นักเรียนฝึกเขียนขั้นตอนการแสดงวิธีทำอย่างละเอียดในแต่ละข้อ แล้วกดตรวจคำตอบและเกณฑ์การให้คะแนน</p>
+  </div>
+  <div id="part2-questions">
+    <!-- Populated dynamically via JavaScript -->
+  </div>
+
+  <div class="actions-container">
+    <button class="btn-reset" onclick="resetQuiz()">🔄 รีเซ็ตทำแบบฝึกหัดใหม่ (สุ่มลำดับตัวเลือกใหม่)</button>
+  </div>
+</div>
+
+<div class="score-dialog" id="score-dialog">
+  <div class="score-dialog-content">
+    <h2>🎉 ยอดเยี่ยมมากครับ! 🎉</h2>
+    <p>น้อง ๆ ทำแบบทดสอบปรนัยครบทั้ง 40 ข้อเรียบร้อยแล้ว</p>
+    <div class="score-number" id="final-score-val">0 / 40</div>
+    <p id="score-feedback-text" style="color: #4A69BD; margin-bottom: 20px; font-size: 15px;"></p>
+    <button class="btn-reset" onclick="closeDialogAndReset()">ฝึกซ้ำอีกรอบเพื่อพัฒนาความแม่นยำ</button>
+  </div>
+</div>
+
+<script>
+const mcData = [{"id": 1, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "เศษส่วน 3/4 สามารถเขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["0.75", "0.34", "0.43", "0.65"], "answer": 0, "exp": "วิธีคิด: ทำตัวส่วนให้เป็น 100 โดยนำ 25 มาคูณทั้งเศษและส่วน จะได้ (3 × 25)/(4 × 25) = 75/100 = 0.75"}, {"id": 2, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "เศษส่วน 7/8 สามารถเขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["0.875", "0.785", "0.825", "0.750"], "answer": 0, "exp": "วิธีคิด: นำ 125 มาคูณทั้งเศษและส่วน จะได้ (7 × 125)/(8 × 125) = 875/1,000 = 0.875"}, {"id": 3, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "จำนวนคละ 3 2/5 สามารถเขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["3.40", "3.25", "3.20", "3.45"], "answer": 0, "exp": "วิธีคิด: 2/5 = (2 × 2)/(5 × 2) = 4/10 = 0.4 ดังนั้น 3 2/5 = 3 + 0.4 = 3.4 (หรือ 3.40)"}, {"id": 4, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "เศษส่วน 19/20 สามารถเขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["0.95", "0.90", "0.85", "0.80"], "answer": 0, "exp": "วิธีคิด: นำ 5 มาคูณทั้งเศษและส่วน จะได้ (19 × 5)/(20 × 5) = 95/100 = 0.95"}, {"id": 5, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "เศษส่วน 13/25 สามารถเขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["0.52", "0.48", "0.56", "0.62"], "answer": 0, "exp": "วิธีคิด: นำ 4 มาคูณทั้งเศษและส่วน จะได้ (13 × 4)/(25 × 4) = 52/100 = 0.52"}, {"id": 6, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "เศษส่วน 9/40 สามารถเขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["0.225", "0.245", "0.215", "0.235"], "answer": 0, "exp": "วิธีคิด: นำ 25 มาคูณทั้งเศษและส่วน จะได้ (9 × 25)/(40 × 25) = 225/1,000 = 0.225"}, {"id": 7, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "จำนวนคละ 5 7/50 สามารถเขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["5.14", "5.28", "5.35", "5.07"], "answer": 0, "exp": "วิธีคิด: 7/50 = (7 × 2)/(50 × 2) = 14/100 = 0.14 ดังนั้น 5 7/50 = 5.14"}, {"id": 8, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "เศษเกิน 37/8 เขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["4.625", "4.375", "4.875", "4.525"], "answer": 0, "exp": "วิธีคิด: 37 ÷ 8 = 4 เศษ 5 ซึ่ง 5/8 = 0.625 รวมกับ 4 ได้เท่ากับ 4.625"}, {"id": 9, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "เศษส่วน 11/125 สามารถเขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["0.088", "0.880", "0.044", "0.110"], "answer": 0, "exp": "วิธีคิด: นำ 8 มาคูณทั้งเศษและส่วน จะได้ (11 × 8)/(125 × 8) = 88/1,000 = 0.088"}, {"id": 10, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "q": "เศษส่วน 21/500 สามารถเขียนให้อยู่ในรูปทศนิยมได้ตรงกับข้อใด?", "options": ["0.042", "0.420", "0.084", "0.210"], "answer": 0, "exp": "วิธีคิด: นำ 2 มาคูณทั้งเศษและส่วน จะได้ (21 × 2)/(500 × 2) = 42/1,000 = 0.042"}, {"id": 11, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 12.6 ÷ 0.3 มีค่าเท่ากับข้อใด?", "options": ["42.0", "4.20", "0.42", "420."], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 1 ตำแหน่งทั้งตัวตั้งและตัวหาร จะได้ 126 ÷ 3 = 42"}, {"id": 12, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 4.8 ÷ 0.12 มีค่าเท่ากับข้อใด?", "options": ["40.0", "4.00", "0.40", "400."], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 2 ตำแหน่ง จะได้ 480 ÷ 12 = 40"}, {"id": 13, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 0.72 ÷ 0.8 มีค่าเท่ากับข้อใด?", "options": ["0.90", "9.00", "0.09", "0.80"], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 1 ตำแหน่ง จะได้ 7.2 ÷ 8 = 0.9"}, {"id": 14, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 15.75 ÷ 2.5 มีค่าเท่ากับข้อใด?", "options": ["6.30", "6.50", "5.80", "7.10"], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 1 ตำแหน่ง จะได้ 157.5 ÷ 25 = 6.3"}, {"id": 15, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 0.108 ÷ 0.09 มีค่าเท่ากับข้อใด?", "options": ["1.20", "12.0", "0.12", "0.80"], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 2 ตำแหน่ง จะได้ 10.8 ÷ 9 = 1.2"}, {"id": 16, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 8.4 ÷ 0.007 มีค่าเท่ากับข้อใด?", "options": ["1,200", "120.0", "12.00", "12,000"], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 3 ตำแหน่ง จะได้ 8,400 ÷ 7 = 1,200"}, {"id": 17, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 3.24 ÷ 1.8 มีค่าเท่ากับข้อใด?", "options": ["1.80", "1.60", "2.10", "1.40"], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 1 ตำแหน่ง จะได้ 32.4 ÷ 18 = 1.8"}, {"id": 18, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 0.625 ÷ 0.25 มีค่าเท่ากับข้อใด?", "options": ["2.50", "0.25", "25.0", "1.25"], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 2 ตำแหน่ง จะได้ 62.5 ÷ 25 = 2.5"}, {"id": 19, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 7 ÷ 0.14 มีค่าเท่ากับข้อใด?", "options": ["50.0", "5.00", "500.", "0.50"], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 2 ตำแหน่ง จะได้ 700 ÷ 14 = 50"}, {"id": 20, "topic": "2. การหารทศนิยม", "q": "ผลลัพธ์ของ 1.96 ÷ 1.4 มีค่าเท่ากับข้อใด?", "options": ["1.40", "1.20", "1.60", "0.14"], "answer": 0, "exp": "วิธีคิด: เลื่อนจุดทศนิยมไปทางขวา 1 ตำแหน่ง จะได้ 19.6 ÷ 14 = 1.4"}, {"id": 21, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "ริบบิ้นเส้นหนึ่งยาว 14.4 เมตร ตัดออกเป็นเส้นสั้น ๆ ยาวเส้นละ 0.8 เมตร จะได้ทั้งหมดกี่เส้น?", "options": ["18 เส้น", "16 เส้น", "15 เส้น", "12 เส้น"], "answer": 0, "exp": "วิธีคิด: นำความยาวทั้งหมดหารด้วยความยาวแต่ละเส้น 14.4 ÷ 0.8 = 144 ÷ 8 = 18 เส้น"}, {"id": 22, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "น้ำมันพืช 18.75 ลิตร บรรจุใส่ขวดขนาดเท่ากันขวดละ 1.25 ลิตร จะบรรจุได้ทั้งหมดกี่ขวด?", "options": ["15 ขวด", "12 ขวด", "16 ขวด", "14 ขวด"], "answer": 0, "exp": "วิธีคิด: 18.75 ÷ 1.25 = 1,875 ÷ 125 = 15 ขวด"}, {"id": 23, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "แม่ค้าซื้อเนื้อหมูมา 8.5 กิโลกรัม จ่ายเงินไป 1,275 บาท เนื้อหมูกิโลกรัมละกี่บาท?", "options": ["150 บาท", "140 บาท", "160 บาท", "145 บาท"], "answer": 0, "exp": "วิธีคิด: ราคากิโลกรัมละ = 1,275 ÷ 8.5 = 12,750 ÷ 85 = 150 บาท"}, {"id": 24, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "รถยนต์คันหนึ่งวิ่งระยะทาง 345.6 กิโลเมตร ใช้น้ำมัน 28.8 ลิตร รถยนต์คันนี้วิ่งได้กี่กิโลเมตรต่อน้ำมัน 1 ลิตร?", "options": ["12 กิโลเมตร", "14 กิโลเมตร", "15 กิโลเมตร", "10 กิโลเมตร"], "answer": 0, "exp": "วิธีคิด: 345.6 ÷ 28.8 = 3,456 ÷ 288 = 12 กิโลเมตรต่อลิตร"}, {"id": 25, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "เชือกยาว 21.6 เมตร ต้องการตัดแบ่งให้เพื่อน 12 คน คนละเท่า ๆ กัน เพื่อนแต่ละคนจะได้เชือกยาวกี่เมตร?", "options": ["1.8 เมตร", "1.6 เมตร", "1.5 เมตร", "1.9 เมตร"], "answer": 0, "exp": "วิธีคิด: 21.6 ÷ 12 = 1.8 เมตร"}, {"id": 26, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "น้ำตาลทรายกระสอบหนึ่งหนัก 45 กิโลกรัม นำมาแบ่งใส่ถุง ถุงละ 1.5 กิโลกรัม จะได้น้ำตาลทรายกี่ถุง?", "options": ["30 ถุง", "25 ถุง", "35 ถุง", "28 ถุง"], "answer": 0, "exp": "วิธีคิด: 45 ÷ 1.5 = 450 ÷ 15 = 30 ถุง"}, {"id": 27, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "ที่ดินรูปสี่เหลี่ยมผืนผ้ามีพื้นที่ 187.5 ตารางวา ถ้าด้านกว้างยาว 12.5 วา ด้านยาวจะยาวกี่วา?", "options": ["15.0 วา", "14.5 วา", "16.0 วา", "13.5 วา"], "answer": 0, "exp": "วิธีคิด: ด้านยาว = พื้นที่ ÷ ด้านกว้าง = 187.5 ÷ 12.5 = 1,875 ÷ 125 = 15 วา"}, {"id": 28, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "พ่อมีลวดหนามยาว 126.8 เมตร ต้องการตัดเป็น 4 เส้น ยาวเท่า ๆ กัน ลวดหนามแต่ละเส้นจะยาวกี่เมตร?", "options": ["31.7 เมตร", "32.4 เมตร", "30.8 เมตร", "31.2 เมตร"], "answer": 0, "exp": "วิธีคิด: 126.8 ÷ 4 = 31.7 เมตร"}, {"id": 29, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "ขนมเค้กถาดหนึ่งหนัก 3.75 กิโลกรัม ตัดแบ่งออกเป็นชิ้นหนักชิ้นละ 0.25 กิโลกรัม จะได้เค้กทั้งหมดกี่ชิ้น?", "options": ["15 ชิ้น", "14 ชิ้น", "12 ชิ้น", "16 ชิ้น"], "answer": 0, "exp": "วิธีคิด: 3.75 ÷ 0.25 = 375 ÷ 25 = 15 ชิ้น"}, {"id": 30, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "q": "ชาวสวนเก็บส้มได้ 86.4 กิโลกรัม บรรจุใส่กล่อง กล่องละ 7.2 กิโลกรัม จะต้องใช้กล่องทั้งหมดกี่ใบ?", "options": ["12 ใบ", "10 ใบ", "14 ใบ", "11 ใบ"], "answer": 0, "exp": "วิธีคิด: 86.4 ÷ 7.2 = 864 ÷ 72 = 12 ใบ"}, {"id": 31, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "อัตราแลกเปลี่ยน 1 ดอลลาร์สหรัฐ (USD) เท่ากับ 36.50 บาท ถ้าต้องการแลกเงิน 200 ดอลลาร์ ต้องใช้เงินไทยกี่บาท?", "options": ["7,300 บาท", "7,200 บาท", "7,400 บาท", "7,100 บาท"], "answer": 0, "exp": "วิธีคิด: 200 × 36.50 = 7,300 บาท"}, {"id": 32, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "อัตราแลกเปลี่ยน 1 ดอลลาร์สหรัฐ (USD) เท่ากับ 35.00 บาท ถ้ามีเงินไทย 14,000 บาท จะแลกได้กี่ดอลลาร์สหรัฐ?", "options": ["400 USD", "350 USD", "450 USD", "380 USD"], "answer": 0, "exp": "วิธีคิด: 14,000 ÷ 35.00 = 400 ดอลลาร์สหรัฐ"}, {"id": 33, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "อัตราแลกเปลี่ยน 100 เยนญี่ปุ่น (JPY) เท่ากับ 24.50 บาท ถ้าต้องการแลกเงิน 50,000 เยน จะต้องใช้เงินไทยกี่บาท?", "options": ["12,250 บาท", "12,500 บาท", "11,850 บาท", "13,200 บาท"], "answer": 0, "exp": "วิธีคิด: 50,000 เยน คิดเป็น 500 หน่วยของ 100 เยน ดังนั้น 500 × 24.50 = 12,250 บาท"}, {"id": 34, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "อัตราแลกเปลี่ยน 1 ยูโร (EUR) เท่ากับ 39.20 บาท มาริโอ้นำเงิน 250 ยูโรมาแลกเป็นเงินไทย จะได้รับเงินกี่บาท?", "options": ["9,800 บาท", "9,750 บาท", "9,900 บาท", "9,650 บาท"], "answer": 0, "exp": "วิธีคิด: 250 × 39.20 = 9,800 บาท"}, {"id": 35, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "อัตราแลกเปลี่ยน 1 ดอลลาร์สิงคโปร์ (SGD) เท่ากับ 27.50 บาท ลินดามีเงินไทย 11,000 บาท จะแลกเงินสิงคโปร์ได้กี่ดอลลาร์?", "options": ["400 SGD", "380 SGD", "420 SGD", "350 SGD"], "answer": 0, "exp": "วิธีคิด: 11,000 ÷ 27.50 = 110,000 ÷ 275 = 400 ดอลลาร์สิงคโปร์"}, {"id": 36, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "อัตราแลกเปลี่ยน 1 ปอนด์สเตอร์ลิง (GBP) เท่ากับ 46.50 บาท ทอมซื้อกระเป๋าราคา 80 ปอนด์ คิดเป็นเงินไทยกี่บาท?", "options": ["3,720 บาท", "3,680 บาท", "3,750 บาท", "3,820 บาท"], "answer": 0, "exp": "วิธีคิด: 80 × 46.50 = 3,720 บาท"}, {"id": 37, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "อัตราแลกเปลี่ยน 1 หยวนจีน (CNY) เท่ากับ 5.10 บาท ถ้านักท่องเที่ยวมีเงินไทย 20,400 บาท จะแลกได้กี่หยวนจีน?", "options": ["4,000 CNY", "3,800 CNY", "4,200 CNY", "3,900 CNY"], "answer": 0, "exp": "วิธีคิด: 20,400 ÷ 5.10 = 204,000 ÷ 51 = 4,000 หยวนจีน"}, {"id": 38, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "อัตราแลกเปลี่ยน 100 วอนเกาหลี (KRW) เท่ากับ 2.60 บาท มินอาแลกเงิน 250,000 วอน ต้องจ่ายเงินไทยกี่บาท?", "options": ["6,500 บาท", "6,200 บาท", "6,800 บาท", "5,900 บาท"], "answer": 0, "exp": "วิธีคิด: 250,000 วอน = 2,500 หน่วยของ 100 วอน ดังนั้น 2,500 × 2.60 = 6,500 บาท"}, {"id": 39, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "คุณพ่อไปทำงานต่างประเทศ แลกเงิน 1,500 ดอลลาร์สหรัฐ (อัตรา 1 USD = 36.20 บาท) คิดเป็นเงินไทยกี่บาท?", "options": ["54,300 บาท", "54,000 บาท", "53,800 บาท", "55,200 บาท"], "answer": 0, "exp": "วิธีคิด: 1,500 × 36.20 = 54,300 บาท"}, {"id": 40, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "q": "อัตราแลกเปลี่ยน 1 ริงกิตมาเลเซีย (MYR) เท่ากับ 8.25 บาท ถ้ามีเงินไทย 16,500 บาท จะแลกได้กี่ริงกิต?", "options": ["2,000 MYR", "1,800 MYR", "2,200 MYR", "1,950 MYR"], "answer": 0, "exp": "วิธีคิด: 16,500 ÷ 8.25 = 1,650,000 ÷ 825 = 2,000 ริงกิตมาเลเซีย"}];
+const subData = [{"id": 1, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "title": "อัตนัยข้อที่ 1 (เรื่อง: การเขียนเศษส่วนให้อยู่ในรูปทศนิยม)", "q": "จงแสดงวิธีทำในการเขียนเศษส่วนต่อไปนี้ให้อยู่ในรูปทศนิยมให้ถูกต้องและละเอียด:\n(1) 7/8\n(2) 3 9/40", "key": "<strong>วิธีทำข้อที่ 1:</strong><br>\n<strong>(1) การเขียน 7/8 ในรูปทศนิยม</strong><br>\n- ทำให้ตัวส่วนเป็น 1,000 โดยนำ 125 มาคูณทั้งเศษและส่วน<br>\n  7/8 = (7 × 125) / (8 × 125)<br>\n      = 875 / 1,000<br>\n      = <strong>0.875</strong><br><br>\n<strong>(2) การเขียน 3 9/40 ในรูปทศนิยม</strong><br>\n- พิจารณาส่วนเศษส่วน 9/40 ทำให้ตัวส่วนเป็น 1,000 โดยนำ 25 มาคูณทั้งเศษและส่วน<br>\n  9/40 = (9 × 25) / (40 × 25)<br>\n       = 225 / 1,000<br>\n       = 0.225<br>\n- นำมารวมกับจำนวนนับ 3: 3 + 0.225 = <strong>3.225</strong><br>\n<strong>ตอบ: (1) 0.875  และ (2) 3.225</strong>"}, {"id": 2, "topic": "1. การเขียนเศษส่วนให้อยู่ในรูปทศนิยม", "title": "อัตนัยข้อที่ 2 (เรื่อง: การเขียนเศษส่วนให้อยู่ในรูปทศนิยม)", "q": "จงแสดงวิธีทำในการเขียนเศษส่วนต่อไปนี้ให้อยู่ในรูปทศนิยมให้ละเอียด:\n(1) 19/250\n(2) 6 13/20", "key": "<strong>วิธีทำข้อที่ 2:</strong><br>\n<strong>(1) การเขียน 19/250 ในรูปทศนิยม</strong><br>\n- นำ 4 มาคูณทั้งเศษและส่วนเพื่อให้ตัวส่วนเป็น 1,000<br>\n  19/250 = (19 × 4) / (250 × 4)<br>\n         = 76 / 1,000<br>\n         = <strong>0.076</strong><br><br>\n<strong>(2) การเขียน 6 13/20 ในรูปทศนิยม</strong><br>\n- พิจารณา 13/20 นำ 5 มาคูณทั้งเศษและส่วนเพื่อให้ตัวส่วนเป็น 100<br>\n  13/20 = (13 × 5) / (20 × 5)<br>\n        = 65 / 100<br>\n        = 0.65<br>\n- รวมกับจำนวนนับ 6: 6 + 0.65 = <strong>6.65</strong><br>\n<strong>ตอบ: (1) 0.076  และ (2) 6.65</strong>"}, {"id": 3, "topic": "2. การหารทศนิยม", "title": "อัตนัยข้อที่ 3 (เรื่อง: การหารทศนิยม)", "q": "จงแสดงวิธีทำเพื่อหาผลลัพธ์ของ 43.75 ÷ 1.25 อย่างเป็นขั้นตอน", "key": "<strong>วิธีทำข้อที่ 3:</strong><br>\nโจทย์: 43.75 ÷ 1.25<br>\n- <strong>ขั้นที่ 1:</strong> ทำตัวหาร (1.25) ให้เป็นจำนวนนับ โดยการเลื่อนจุดทศนิยมไปทางขวา 2 ตำแหน่ง (หรือคูณด้วย 100 ทั้งตัวตั้งและตัวหาร)<br>\n  จะได้: 43.75 × 100 = 4,375<br>\n         1.25 × 100 = 125<br>\n- <strong>ขั้นที่ 2:</strong> ตั้งหารยาว 4,375 ÷ 125<br>\n  - 125 × 3 = 375<br>\n  - 437 - 375 = 62 ดึง 5 ลงมาเป็น 625<br>\n  - 125 × 5 = 625<br>\n  - 625 - 625 = 0 (หารลงตัว)<br>\n- <strong>ดังนั้น</strong> 43.75 ÷ 1.25 = <strong>35</strong><br>\n<strong>ตอบ: ๓๕ (หรือ 35)</strong>"}, {"id": 4, "topic": "2. การหารทศนิยม", "title": "อัตนัยข้อที่ 4 (เรื่อง: การหารทศนิยม)", "q": "จงแสดงวิธีทำเพื่อหาผลลัพธ์ของ 2.508 ÷ 0.38 อย่างเป็นขั้นตอน", "key": "<strong>วิธีทำข้อที่ 4:</strong><br>\nโจทย์: 2.508 ÷ 0.38<br>\n- <strong>ขั้นที่ 1:</strong> เลื่อนจุดทศนิยมไปทางขวา 2 ตำแหน่งทั้งตัวตั้งและตัวหาร เพื่อให้ตัวหารเป็นจำนวนนับ<br>\n  จะได้: 250.8 ÷ 38<br>\n- <strong>ขั้นที่ 2:</strong> ตั้งหารยาว 250.8 ด้วย 38<br>\n  - 38 × 6 = 228<br>\n  - 250 - 228 = 22<br>\n  - ใส่จุดทศนิยมที่ผลลัพธ์ แล้วดึง 8 ลงมาเป็น 228<br>\n  - 38 × 6 = 228<br>\n  - 228 - 228 = 0<br>\n- <strong>ดังนั้น</strong> 2.508 ÷ 0.38 = <strong>6.6</strong><br>\n<strong>ตอบ: ๖.๖ (หรือ 6.6)</strong>"}, {"id": 5, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "title": "อัตนัยข้อที่ 5 (เรื่อง: โจทย์ปัญหาการหารทศนิยม)", "q": "ถังน้ำใบหนึ่งมีน้ำอยู่ 62.5 ลิตร ตวงใส่ขวดที่มีความจุเท่ากันขวดละ 1.25 ลิตร จะได้น้ำทั้งหมดกี่ขวด? (จงเขียนประโยคสัญลักษณ์และแสดงวิธีทำ)", "key": "<strong>วิธีทำข้อที่ 5:</strong><br>\n<strong>ประโยคสัญลักษณ์:</strong> 62.5 ÷ 1.25 = █<br>\n<strong>วิธีทำ:</strong><br>\n- ถังน้ำมีน้ำอยู่ 62.5 ลิตร<br>\n- ตวงใส่ขวดที่มีความจุขวดละ 1.25 ลิตร<br>\n- จะได้น้ำทั้งหมด 62.5 ÷ 1.25 ขวด<br>\n  (คำนวณโดยเลื่อนจุดทศนิยม 2 ตำแหน่ง: 6,250 ÷ 125 = 50)<br>\n- ดังนั้น จะได้น้ำทั้งหมด 50 ขวด<br>\n<strong>ตอบ: จะได้น้ำทั้งหมด ๕๐ ขวด</strong>"}, {"id": 6, "topic": "3. โจทย์ปัญหาการหารทศนิยม", "title": "อัตนัยข้อที่ 6 (เรื่อง: โจทย์ปัญหาการหารทศนิยม)", "q": "ชาวสวนเก็บสตรอว์เบอร์รีได้ 54.6 กิโลกรัม นำมาบรรจุใส่กล่อง กล่องละ 0.65 กิโลกรัม แล้วนำไปขายกล่องละ 120 บาท ชาวสวนจะขายสตรอว์เบอร์รีได้เงินทั้งหมดกี่บาท?", "key": "<strong>วิธีทำข้อที่ 6:</strong><br>\n<strong>ประโยคสัญลักษณ์:</strong> (54.6 ÷ 0.65) × 120 = █<br>\n<strong>วิธีทำ:</strong><br>\n- ชาวสวนเก็บสตรอว์เบอร์รีได้ 54.6 กิโลกรัม<br>\n- บรรจุใส่กล่อง กล่องละ 0.65 กิโลกรัม<br>\n- ได้สตรอว์เบอร์รีทั้งหมด 54.6 ÷ 0.65 = 5,460 ÷ 65 = 84 กล่อง<br>\n- นำไปขายกล่องละ 120 บาท<br>\n- จะได้เงินทั้งหมด 84 × 120 = 10,080 บาท<br>\n<strong>ตอบ: ชาวสวนจะขายสตรอว์เบอร์รีได้เงินทั้งหมด ๑๐,๐๘๐ บาท</strong>"}, {"id": 7, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "title": "อัตนัยข้อที่ 7 (เรื่อง: คำนวณอัตราการแลกเปลี่ยนเงินตรา)", "q": "อัตราแลกเปลี่ยนเงินตรากำหนดให้ 1 ดอลลาร์สหรัฐ (USD) เท่ากับ 36.40 บาท\n(1) นารีมีเงิน 450 ดอลลาร์สหรัฐ แลกเป็นเงินไทยได้กี่บาท?\n(2) ถ้าปรีชามีเงินไทย 18,200 บาท จะแลกเป็นเงินดอลลาร์สหรัฐได้กี่ดอลลาร์?", "key": "<strong>วิธีทำข้อที่ 7:</strong><br>\n<strong>(1) การคำนวณเงินไทยที่นารีจะได้รับ:</strong><br>\n- อัตราแลกเปลี่ยน 1 USD = 36.40 บาท<br>\n- นารีมีเงิน 450 USD<br>\n- แลกเป็นเงินไทยได้: 450 × 36.40 = <strong>16,380 บาท</strong><br><br>\n<strong>(2) การคำนวณเงินดอลลาร์สหรัฐที่ปรีชาจะได้รับ:</strong><br>\n- ปรีชามีเงินไทย 18,200 บาท<br>\n- นำเงินไทยหารด้วยอัตราแลกเปลี่ยนต่อ 1 USD: 18,200 ÷ 36.40<br>\n  (คำนวณ: 182,000 ÷ 364 = 500)<br>\n- ปรีชาจะได้รับ: <strong>500 ดอลลาร์สหรัฐ</strong><br>\n<strong>ตอบ: (1) นารีแลกได้ ๑๖,๓๘๐ บาท และ (2) ปรีชาแลกได้ ๕๐๐ ดอลลาร์สหรัฐ</strong>"}, {"id": 8, "topic": "4. คำนวณอัตราการแลกเปลี่ยนเงินตรา", "title": "อัตนัยข้อที่ 8 (เรื่อง: คำนวณอัตราการแลกเปลี่ยนเงินตรา)", "q": "ธนาคารประกาศอัตราแลกเปลี่ยนเงินตราระหว่างประเทศ ดังนี้:\n• 100 เยนญี่ปุ่น (JPY) เท่ากับ 24.20 บาท\n• 1 ดอลลาร์สิงคโปร์ (SGD) เท่ากับ 27.50 บาท\nกานต์ต้องการแลกเงิน 80,000 เยน และ 400 ดอลลาร์สิงคโปร์ กานต์จะต้องเตรียมเงินไทยไปแลกทั้งหมดกี่บาท?", "key": "<strong>วิธีทำข้อที่ 8:</strong><br>\n<strong>ขั้นที่ 1: คำนวณเงินไทยสำหรับแลกเงินเยนญี่ปุ่น</strong><br>\n- อัตราแลกเปลี่ยน 100 เยน = 24.20 บาท<br>\n- เงิน 80,000 เยน คิดเป็น 80,000 ÷ 100 = 800 หน่วย<br>\n- ต้องใช้เงินไทย: 800 × 24.20 = 19,360 บาท<br><br>\n<strong>ขั้นที่ 2: คำนวณเงินไทยสำหรับแลกเงินดอลลาร์สิงคโปร์</strong><br>\n- อัตราแลกเปลี่ยน 1 SGD = 27.50 บาท<br>\n- เงิน 400 SGD ต้องใช้เงินไทย: 400 × 27.50 = 11,000 บาท<br><br>\n<strong>ขั้นที่ 3: รวมเงินไทยทั้งหมดที่ต้องเตรียมไป</strong><br>\n- รวมเงินไทย: 19,360 + 11,000 = 30,360 บาท<br>\n<strong>ตอบ: กานต์จะต้องเตรียมเงินไทยไปแลกทั้งหมด ๓๐,๓๖๐ บาท</strong>"}];
+
+let userAnswers = {};
+let score = 0;
+let randomizedQuestions = [];
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function initQuiz() {
+  userAnswers = {};
+  score = 0;
+
+  // Shuffle multiple choice options
+  randomizedQuestions = mcData.map(item => {
+    const correctText = item.options[item.answer];
+    const shuffledOptions = shuffle(item.options);
+    const newCorrectIndex = shuffledOptions.indexOf(correctText);
+    return {
+      ...item,
+      options: shuffledOptions,
+      correctIndex: newCorrectIndex,
+      correctText: correctText
+    };
+  });
+
+  renderMC();
+  renderSubjective();
+  updateStatusBar();
+}
+
+function renderMC() {
+  const container = document.getElementById("part1-questions");
+  if (!container) return;
+  container.innerHTML = "";
+
+  randomizedQuestions.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "question-card";
+    card.id = `card-${item.id}`;
+
+    const optsHtml = item.options.map((optText, optIdx) => {
+      const letter = String.fromCharCode(65 + optIdx);
+      return `<button type="button" class="opt-btn" id="btn-${item.id}-${optIdx}" onclick="handleAnswer(${item.id}, ${optIdx})">
+        <span class="opt-prefix">${letter}.</span>
+        <span>${optText}</span>
+      </button>`;
+    }).join("");
+
+    card.innerHTML = `
+      <div class="topic-tag">${item.topic}</div>
+      <div class="q-text"><span class="q-num">ข้อที่ ${item.id}.</span> ${item.q}</div>
+      <div class="options-grid" id="grid-${item.id}">${optsHtml}</div>
+      <div class="feedback" id="feedback-${item.id}"></div>
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function renderSubjective() {
+  const container = document.getElementById("part2-questions");
+  if (!container) return;
+  container.innerHTML = "";
+
+  subData.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "subjective-card";
+    card.innerHTML = `
+      <div class="topic-tag" style="background:#EAF8F7; color:#079992; border-color:#B8E994;">${item.title}</div>
+      <div class="q-text" style="white-space: pre-line; font-weight: 600; margin-top: 6px;">${item.q}</div>
+      <textarea id="sub-${item.id}" placeholder="พิมพ์แสดงวิธีทำเป็นขั้นตอนอย่างละเอียดที่นี่..."></textarea>
+      <button class="toggle-key-btn" onclick="toggleSubKey(${item.id})">ตรวจเฉลยวิธีทำละเอียดและแนวคิด</button>
+      <div class="key-ans" id="sub-key-${item.id}">${item.key}</div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function handleAnswer(qId, selectedIdx) {
+  if (userAnswers[qId] !== undefined) return;
+  userAnswers[qId] = selectedIdx;
+
+  const item = randomizedQuestions.find(q => q.id === qId);
+  if (!item) return;
+
+  const isCorrect = (selectedIdx === item.correctIndex);
+  if (isCorrect) score++;
+
+  for (let i = 0; i < item.options.length; i++) {
+    const btn = document.getElementById(`btn-${qId}-${i}`);
+    if (!btn) continue;
+    btn.disabled = true;
+    if (i === item.correctIndex) {
+      btn.classList.add("correct");
+    } else if (i === selectedIdx && !isCorrect) {
+      btn.classList.add("wrong");
+    }
+  }
+
+  const fb = document.getElementById(`feedback-${qId}`);
+  if (fb) {
+    fb.classList.add("show");
+    if (isCorrect) {
+      fb.className = "feedback show success";
+      fb.innerHTML = `✅ <strong>ถูกต้องแม่นยำ!</strong> ${item.exp}`;
+    } else {
+      fb.className = "feedback show error";
+      fb.innerHTML = `❌ <strong>ยังไม่ถูกต้อง</strong> คำตอบที่ถูกคือ: <strong>${item.correctText}</strong><br><span style="color:#555;">💡 ${item.exp}</span>`;
+    }
+  }
+
+  updateStatusBar();
+
+  if (Object.keys(userAnswers).length === randomizedQuestions.length) {
+    setTimeout(showFinalResult, 600);
+  }
+}
+
+function updateStatusBar() {
+  const total = randomizedQuestions.length || 40;
+  const answeredCount = Object.keys(userAnswers).length;
+  const scoreElem = document.getElementById("current-score");
+  const countElem = document.getElementById("answered-count");
+  const barElem = document.getElementById("progress-bar");
+
+  if (scoreElem) scoreElem.innerText = score;
+  if (countElem) countElem.innerText = `ทำไปแล้ว ${answeredCount}/${total}`;
+  if (barElem) {
+    const pct = total > 0 ? (answeredCount / total) * 100 : 0;
+    barElem.style.width = `${pct}%`;
+  }
+}
+
+function showFinalResult() {
+  const dialog = document.getElementById("score-dialog");
+  const finalVal = document.getElementById("final-score-val");
+  const fbTextElem = document.getElementById("score-feedback-text");
+
+  if (finalVal) finalVal.innerText = `${score} / ${randomizedQuestions.length}`;
+
+  let fbText = "";
+  if (score >= 36) {
+    fbText = "🌟 ยอดเยี่ยมไร้ที่ติ! น้องมีความเข้าใจเรื่องทศนิยมและอัตราแลกเปลี่ยนเงินตราระดับยอดเยี่ยม พร้อมสอบปลายภาคได้คะแนนเต็มแน่นอน!";
+  } else if (score >= 28) {
+    fbText = "👍 เก่งมากครับ! มีทักษะการคำนวณและแก้โจทย์ปัญหาในเกณฑ์ดีมาก ลองทบทวนข้อที่พลาดเพื่อความแม่นยำยิ่งขึ้นนะครับ";
+  } else if (score >= 20) {
+    fbText = "😊 ทำได้ดีพอใช้ครับ ลองทบทวนการเลื่อนจุดทศนิยมและการเทียบบัญญัติไตรยางค์อัตราแลกเปลี่ยนอีกสักนิดนะครับ";
+  } else {
+    fbText = "💪 สู้ ๆ นะครับ! ฝึกทำซ้ำใหม่อีกครั้ง ค่อย ๆ คำนวณทีละขั้นตอน น้องจะทำได้คะแนนสูงขึ้นแน่นอนครับ!";
+  }
+  if (fbTextElem) fbTextElem.innerText = fbText;
+  if (dialog) dialog.style.display = "flex";
+}
+
+function closeDialogAndReset() {
+  const dialog = document.getElementById("score-dialog");
+  if (dialog) dialog.style.display = "none";
+  resetQuiz();
+}
+
+function resetQuiz() {
+  initQuiz();
+  for (let i = 1; i <= subData.length; i++) {
+    const el = document.getElementById(`sub-${i}`);
+    if (el) el.value = "";
+    const keyEl = document.getElementById(`sub-key-${i}`);
+    if (keyEl) keyEl.style.display = "none";
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleSubKey(id) {
+  const keyEl = document.getElementById(`sub-key-${id}`);
+  if (!keyEl) return;
+  keyEl.style.display = (keyEl.style.display === "block") ? "none" : "block";
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initQuiz);
+} else {
+  initQuiz();
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คลังแบบทดสอบ</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; padding: 20px; text-align: center; }
+        .box { background: white; padding: 30px; max-width: 400px; margin: 50px auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn { display: block; background: #007bff; color: white; padding: 12px; margin: 10px 0; border-radius: 5px; text-decoration: none; font-weight: bold; }
+        .btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <h2>📚 เลือกวิชาที่ต้องการทำ</h2>
+        <!-- สังเกตตรง href="..." ต้องพิมพ์ชื่อไฟล์ให้ตรงกับไฟล์จริงๆ ของคุณ -->
+        <a href="social.html" class="btn">🌍 ทำแบบทดสอบ สังคมศึกษา</a>
+        <a href="math.html" class="btn">➕ ทำแบบทดสอบ คณิตศาสตร์</a>
+        <a href="science.html" class="btn">🧪 ทำแบบทดสอบ วิทยาศาสตร์</a>
+    </div>
+
+</body>
+</html>
