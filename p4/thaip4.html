@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แบบทดสอบภาษาไทย ป.4 ปลายภาคเรียนที่ 1 - ภาษาพาที บทที่ 5-8</title>
+  <!-- Google Fonts: Sarabun & Kanit for clear Thai reading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            kanit: ['Kanit', 'sans-serif'],
+            sarabun: ['Sarabun', 'sans-serif'],
+          },
+          colors: {
+            kidprimary: '#3B82F6',
+            kidsecondary: '#F59E0B',
+            kidgreen: '#10B981',
+            kidpurple: '#8B5CF6',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background: linear-gradient(135deg, #EFF6FF 0%, #F0FDF4 50%, #FEF3C7 100%);
+      min-height: 100vh;
+    }
+    h1, h2, h3, .heading-font {
+      font-family: 'Kanit', sans-serif;
+    }
+    .option-btn {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+    }
+    /* Hide scrollbar for tabs navigation */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="text-slate-800 antialiased flex flex-col min-h-screen">
+
+  <!-- Top Navigation Header -->
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-40 border-b border-blue-100 shadow-sm">
+    <div class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="bg-blue-600 text-white p-2 rounded-2xl shadow-sm">
+          <i data-lucide="book-open-check" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold text-slate-800 leading-tight">เตรียมสอบภาษาไทย ป.4</h1>
+          <p class="text-xs text-slate-500 font-medium">ปลายภาค 1/2569 (ภาษาพาที บทที่ 5–8)</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-2">
+        <button id="soundToggleBtn" onclick="toggleSound()" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 transition" title="เปิด/ปิดเสียงเอฟเฟกต์">
+          <i id="soundIcon" data-lucide="volume-2" class="w-5 h-5"></i>
+        </button>
+        <button onclick="resetAllQuiz()" class="px-3 py-1.5 text-xs font-semibold rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 transition flex items-center gap-1">
+          <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+          <span>เริ่มใหม่</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 flex flex-col justify-start">
+    
+    <!-- Mode Switcher Tabs -->
+    <div class="bg-white/80 p-1.5 rounded-2xl shadow-sm border border-slate-200 mb-6 flex gap-1">
+      <button id="tabPart1Btn" onclick="switchSection('part1')" class="flex-1 py-2.5 px-3 rounded-xl font-kanit font-semibold text-sm transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-sm">
+        <i data-lucide="list-checks" class="w-4 h-4"></i>
+        <span>ตอนที่ 1: ปรนัย (28 ข้อฝึกฝน)</span>
+      </button>
+      <button id="tabPart2Btn" onclick="switchSection('part2')" class="flex-1 py-2.5 px-3 rounded-xl font-kanit font-semibold text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:bg-slate-100">
+        <i data-lucide="file-edit" class="w-4 h-4"></i>
+        <span>ตอนที่ 2: อัตนัย (2 ข้อ)</span>
+      </button>
+    </div>
+
+    <!-- SECTION 1: MULTIPLE CHOICE (ปรนัย 28 ข้อ) -->
+    <section id="part1Container" class="flex flex-col space-y-4">
+      
+      <!-- Category Filter & Shuffle Bar -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+        <div class="w-full sm:w-auto">
+          <label class="text-xs font-semibold text-slate-500 block mb-1">เลือกหมวดเพื่อเจาะจงฝึกฝน:</label>
+          <div class="flex gap-1.5 overflow-x-auto no-scrollbar pb-1 sm:pb-0">
+            <button onclick="filterCategory('all')" class="cat-pill active-pill px-3 py-1 text-xs rounded-lg font-medium border transition bg-blue-600 text-white border-blue-600" data-cat="all">ทั้งหมด (28)</button>
+            <button onclick="filterCategory('สำนวน')" class="cat-pill px-3 py-1 text-xs rounded-lg font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition" data-cat="สำนวน">สำนวน (7)</button>
+            <button onclick="filterCategory('การอ่านจับใจความ')" class="cat-pill px-3 py-1 text-xs rounded-lg font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition" data-cat="การอ่านจับใจความ">การอ่าน (7)</button>
+            <button onclick="filterCategory('การฟังและการดู')" class="cat-pill px-3 py-1 text-xs rounded-lg font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition" data-cat="การฟังและการดู">การฟัง/ดู (7)</button>
+            <button onclick="filterCategory('การพูด')" class="cat-pill px-3 py-1 text-xs rounded-lg font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition" data-cat="การพูด">การพูด (7)</button>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 w-full sm:w-auto justify-between sm:justify-end">
+          <div class="text-right">
+            <span class="text-xs text-slate-500">คะแนนปรนัย:</span>
+            <span id="currentScoreDisplay" class="font-kanit font-bold text-lg text-blue-600 ml-1">0 / 0</span>
+          </div>
+          <button onclick="shuffleAndRestart()" class="px-3 py-1.5 text-xs bg-slate-100 hover:bg-slate-200 font-semibold rounded-xl text-slate-700 flex items-center gap-1 transition">
+            <i data-lucide="shuffle" class="w-3.5 h-3.5"></i>
+            <span>สลับข้อ/ตัวเลือก</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz Card Area -->
+      <div id="quizPlayArea" class="bg-white rounded-3xl p-5 md:p-7 shadow-sm border border-slate-100 flex flex-col relative overflow-hidden">
+        
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-100 h-2.5 rounded-full overflow-hidden mb-5">
+          <div id="quizProgressBar" class="bg-blue-600 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+
+        <!-- Question Info Header -->
+        <div class="flex items-center justify-between text-xs text-slate-500 mb-3">
+          <span id="questionCategoryTag" class="px-2.5 py-1 rounded-md bg-blue-50 text-blue-700 font-semibold uppercase tracking-wider">หมวด: สำนวน</span>
+          <span id="questionCounterTag" class="font-kanit font-medium text-slate-400">ข้อที่ 1 จาก 28</span>
+        </div>
+
+        <!-- Question Text & Context Box -->
+        <div class="mb-6">
+          <h2 id="questionText" class="text-base md:text-lg font-bold text-slate-800 leading-relaxed font-kanit">
+            <!-- Question content inserted by JS -->
+          </h2>
+        </div>
+
+        <!-- Options Container -->
+        <div id="optionsContainer" class="grid grid-cols-1 gap-3 mb-6">
+          <!-- Option buttons injected here -->
+        </div>
+
+        <!-- Explanation Drawer (Hidden until answered) -->
+        <div id="explanationBox" class="hidden rounded-2xl p-4 border transition-all mb-4">
+          <div class="flex items-start gap-2.5">
+            <div id="explainIconWrap" class="p-1.5 rounded-xl shrink-0 mt-0.5"></div>
+            <div>
+              <p id="explainTitle" class="font-kanit font-bold text-sm mb-1"></p>
+              <p id="explainDetail" class="text-sm text-slate-700 leading-relaxed"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Next / Prev Controls -->
+        <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+          <button id="prevBtn" onclick="prevQuestion()" class="px-4 py-2 rounded-xl text-slate-500 hover:text-slate-800 font-semibold text-sm flex items-center gap-1.5 transition disabled:opacity-30 disabled:pointer-events-none">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            <span>ข้อก่อนหน้า</span>
+          </button>
+          
+          <button id="nextBtn" onclick="nextQuestion()" class="px-6 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm flex items-center gap-1.5 shadow-md shadow-blue-500/20 transition">
+            <span id="nextBtnText">ข้อถัดไป</span>
+            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Quick Summary Scorecard (shows when completed all questions) -->
+      <div id="quizSummaryModal" class="hidden bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-slate-100 text-center">
+        <div class="w-20 h-20 mx-auto rounded-3xl bg-amber-50 text-amber-500 flex items-center justify-center mb-4">
+          <i data-lucide="award" class="w-10 h-10"></i>
+        </div>
+        <h3 class="text-2xl font-bold font-kanit text-slate-800 mb-1">ทำแบบทดสอบปรนัยครบแล้ว!</h3>
+        <p class="text-sm text-slate-500 mb-4">เก่งมากครับ มาดูผลการทดสอบรอบนี้กัน</p>
+        
+        <div class="bg-blue-50/70 border border-blue-100 rounded-2xl p-4 max-w-sm mx-auto mb-6">
+          <div class="text-xs text-blue-700 font-medium">คะแนนที่ได้</div>
+          <div id="finalScoreDisplay" class="text-4xl font-extrabold text-blue-700 font-kanit my-1">25 / 28</div>
+          <div id="finalScorePercent" class="text-xs font-semibold text-blue-600">89% - ยอดเยี่ยมมาก!</div>
+        </div>
+
+        <!-- Breakdown by category -->
+        <div id="categoryBreakdown" class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6 text-left">
+          <!-- category stats injected here -->
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-3">
+          <button onclick="shuffleAndRestart()" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm shadow transition flex items-center justify-center gap-2">
+            <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+            <span>สลับข้อสอบแล้วฝึกใหม่</span>
+          </button>
+          <button onclick="switchSection('part2')" class="px-6 py-3 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm shadow transition flex items-center justify-center gap-2">
+            <i data-lucide="edit-3" class="w-4 h-4"></i>
+            <span>ไปทำตอนที่ 2 (อัตนัย)</span>
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SECTION 2: SUBJECTIVE QUESTIONS (อัตนัย 2 ข้อ) -->
+    <section id="part2Container" class="hidden flex flex-col space-y-6">
+      
+      <!-- Top banner for Part 2 -->
+      <div class="bg-gradient-to-r from-amber-500 to-amber-600 rounded-3xl p-5 md:p-6 text-white shadow-sm flex items-start gap-4">
+        <div class="p-3 bg-white/20 rounded-2xl shrink-0">
+          <i data-lucide="feather" class="w-7 h-7"></i>
+        </div>
+        <div>
+          <h2 class="text-lg md:text-xl font-bold font-kanit">ตอนที่ 2: ข้อสอบอัตนัยวิเคราะห์สำนวน (จำนวน 2 ข้อ)</h2>
+          <p class="text-xs md:text-sm text-amber-100 leading-relaxed mt-1">
+            ให้นักเรียนอ่านสถานการณ์ที่กำหนด แล้วพิมพ์ตอบคำถามด้วยภาษาที่สุภาพ ชัดเจน และตรงประเด็น จากนั้นคลิกปุ่ม <b>"ประเมินคำตอบและดูเฉลย (Rubric)"</b> เพื่อเปรียบเทียบกับเกณฑ์คะแนนจริง
+          </p>
+        </div>
+      </div>
+
+      <!-- Essay Question 1 -->
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-100 text-amber-800">อัตนัยข้อที่ 1 (3 คะแนน)</span>
+          <span class="text-xs text-slate-400">เนื้อหา: ออมไว้กำไรชีวิต & สำนวนไทย</span>
+        </div>
+        
+        <div class="bg-slate-50 border-l-4 border-blue-500 p-4 rounded-r-2xl mb-4">
+          <div class="text-xs font-bold text-blue-700 mb-1">สถานการณ์จำลอง:</div>
+          <p class="text-sm md:text-base text-slate-700 leading-relaxed">
+            "เด็กชายวินัยอยากได้อุปกรณ์วาดภาพชุดใหม่ที่มีราคาค่อนข้างแพง แต่คุณแม่บอกว่าไม่อยากให้สิ้นเปลืองเงิน วินัยจึงตัดสินใจแบ่งเงินค่าขนมที่เหลือวันละ 5 บาท 10 บาท หยอดใส่กระปุกออมสินทุกวันเป็นเวลาสี่เดือน จนในที่สุดวินัยก็มีเงินมากพอที่จะไปซื้อชุดอุปกรณ์วาดภาพได้ด้วยเงินของตนเองอย่างภาคภูมิใจ"
+          </p>
+        </div>
+
+        <div class="space-y-4 mb-4">
+          <div>
+            <label class="block text-sm font-bold text-slate-800 mb-1">
+              คำถามข้อ 1.1: การกระทำของเด็กชายวินัยตรงกับสำนวน สุภาษิต หรือคำพังเพยใด? (1 คะแนน)
+            </label>
+            <input type="text" id="essay1_idiom" placeholder="พิมพ์ชื่อสำนวนที่สอดคล้องที่นี่..." class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-slate-800 mb-1">
+              คำถามข้อ 1.2: อธิบายความหมายของสำนวนดังกล่าว และบอกว่านักเรียนสามารถนำข้อคิดนี้ไปปรับใช้ในชีวิตจริงอย่างไร? (2 คะแนน)
+            </label>
+            <textarea id="essay1_explain" rows="3" placeholder="อธิบายความหมายและยกตัวอย่างการนำไปปรับใช้ในชีวิตประจำวันของตนเอง..." class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+          </div>
+        </div>
+
+        <button onclick="checkEssayAnswer(1)" class="w-fit self-end px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm transition flex items-center gap-2 shadow-sm">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <span>ประเมินคำตอบข้อที่ 1</span>
+        </button>
+
+        <!-- Rubric & Model Answer Drawer 1 -->
+        <div id="essay1_rubric" class="hidden mt-5 p-4 rounded-2xl bg-amber-50/70 border border-amber-200">
+          <h4 class="font-kanit font-bold text-amber-900 text-sm flex items-center gap-1.5 mb-2">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-600"></i>
+            <span>แนวทางการให้คะแนน (Scoring Rubric) ข้อที่ 1</span>
+          </h4>
+          <div class="text-xs text-slate-700 space-y-2">
+            <div>
+              <span class="font-bold text-slate-900">สำนวนที่ถูกต้อง (1 คะแนน):</span> 
+              <span class="bg-white px-2 py-0.5 rounded border border-amber-300 font-semibold text-amber-800">เก็บเบี้ยใต้ถุนร้าน</span> หรือ <span class="bg-white px-2 py-0.5 rounded border border-amber-300 font-semibold text-amber-800">มีสลึงพึงบรรจบให้ครบบาท</span>
+            </div>
+            <div>
+              <span class="font-bold text-slate-900">เกณฑ์การตอบคำถาม 1.2 (2 คะแนน):</span>
+              <ul class="list-disc pl-5 mt-1 space-y-1">
+                <li><b>ส่วนความหมาย (1 คะแนน):</b> อธิบายตรงจุดว่าเป็นการเก็บรวบรวมทีละเล็กละน้อย รู้จักประหยัด ไม่ดูถูกเงินน้อย</li>
+                <li><b>ส่วนการนำไปใช้ (1 คะแนน):</b> ยกตัวอย่างการกระทำจริงในชีวิตประจำวัน เช่น การหยอดกระปุกออมสินจากเงินทอนค่าขนม, การประหยัดไม่ซื้อขนมที่ไม่มีประโยชน์</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Essay Question 2 -->
+      <div class="bg-white rounded-3xl p-6 shadow-sm border border-slate-100 flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-amber-100 text-amber-800">อัตนัยข้อที่ 2 (3 คะแนน - ฝึกฝนเพิ่มเติม)</span>
+          <span class="text-xs text-slate-400">เนื้อหา: อย่างนี้ดีควรทำ, คนดีศรีโรงเรียน & การพูด</span>
+        </div>
+        
+        <div class="bg-slate-50 border-l-4 border-amber-500 p-4 rounded-r-2xl mb-4">
+          <div class="text-xs font-bold text-amber-800 mb-1">สถานการณ์จำลอง:</div>
+          <p class="text-sm md:text-base text-slate-700 leading-relaxed">
+            "ในการทำความสะอาดห้องเรียนประจำเวรวันศุกร์ พลอยแอบไปยืนคุยกับเพื่อนห้องอื่น ไม่ยอมช่วยเพื่อนคนอื่นยกเก้าอี้และกวาดห้อง แต่พอเมื่อคุณครูเวรเดินเข้ามาตรวจ พลอยรีบวิ่งเข้ามาคว้าไม้กวาดทำท่าตั้งใจกวาดพื้นอย่างกระตือรือร้นเพื่อให้คุณครูเห็นและกล่าวชม"
+          </p>
+        </div>
+
+        <div class="space-y-4 mb-4">
+          <div>
+            <label class="block text-sm font-bold text-slate-800 mb-1">
+              คำถามข้อ 2.1: พฤติกรรมของพลอยตรงกับสำนวน สุภาษิต หรือคำพังเพยใด? (1 คะแนน)
+            </label>
+            <input type="text" id="essay2_idiom" placeholder="พิมพ์ชื่อสำนวนที่สอดคล้องที่นี่..." class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-slate-800 mb-1">
+              คำถามข้อ 2.2: หากนักเรียนเป็นหัวหน้าเวร นักเรียนจะใช้ 'การพูดโน้มน้าวใจ' เพื่อตักเตือนให้พลอยปรับปรุงตนเองอย่างไร โดยสุภาพและไม่เกิดการทะเลาะ? (2 คะแนน)
+            </label>
+            <textarea id="essay2_explain" rows="3" placeholder="เขียนคำพูดโน้มน้าวใจที่สุภาพและให้เหตุผล..." class="w-full p-3 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+          </div>
+        </div>
+
+        <button onclick="checkEssayAnswer(2)" class="w-fit self-end px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm transition flex items-center gap-2 shadow-sm">
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+          <span>ประเมินคำตอบข้อที่ 2</span>
+        </button>
+
+        <!-- Rubric & Model Answer Drawer 2 -->
+        <div id="essay2_rubric" class="hidden mt-5 p-4 rounded-2xl bg-amber-50/70 border border-amber-200">
+          <h4 class="font-kanit font-bold text-amber-900 text-sm flex items-center gap-1.5 mb-2">
+            <i data-lucide="sparkles" class="w-4 h-4 text-amber-600"></i>
+            <span>แนวทางการให้คะแนน (Scoring Rubric) ข้อที่ 2</span>
+          </h4>
+          <div class="text-xs text-slate-700 space-y-2">
+            <div>
+              <span class="font-bold text-slate-900">สำนวนที่ถูกต้อง (1 คะแนน):</span> 
+              <span class="bg-white px-2 py-0.5 rounded border border-amber-300 font-semibold text-amber-800">ผักชีโรยหน้า</span> หรือ <span class="bg-white px-2 py-0.5 rounded border border-amber-300 font-semibold text-amber-800">ต่อหน้ามะพลับ ลับหลังตะโก</span>
+            </div>
+            <div>
+              <span class="font-bold text-slate-900">เกณฑ์การตอบคำถาม 2.2 (2 คะแนน):</span>
+              <ul class="list-disc pl-5 mt-1 space-y-1">
+                <li><b>มารยาทและน้ำเสียง (1 คะแนน):</b> ใช้ถ้อยคำสุภาพ ไม่ต่อว่าด้วยอารมณ์ฉุนเฉียว ไม่ใช้คำหยาบคาย</li>
+                <li><b>หลักการพูดโน้มน้าวใจ (1 คะแนน):</b> ชี้ให้เห็นประโยชน์ของการร่วมมือ เช่น <i>"พลอยจ๊ะ มาช่วยกันทำเวรตั้งแต่แรกดีกว่านะ ห้องจะได้สะอาดเร็วขึ้น และพวกเราจะได้ภูมิใจในความสะอาดด้วยกันนะ"</i></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="mt-auto py-4 text-center text-xs text-slate-400 border-t border-slate-200 bg-white/60">
+    <p>สื่อการเรียนรู้เตรียมสอบปลายภาคเรียนที่ 1 ชั้น ป.4 • กลุ่มสาระการเรียนรู้ภาษาไทย (ภาษาพาที บทที่ 5–8)</p>
+  </footer>
+
+  <script>
+    // 28 Multiple Choice Questions (Balanced distractors, matching length, no obvious giveaways)
+    const masterQuestions = [
+      // 1-7: สำนวน สุภาษิต คำพังเพย (บทที่ 5-8)
+      {
+        id: 1,
+        category: "สำนวน",
+        question: "เด็กหญิงแก้วแบ่งเงินค่าขนมส่วนหนึ่งหยอดกระปุกออมสินทุกวัน จนมีเงินเก็บไว้ซื้ออุปกรณ์การเรียนเอง การกระทำนี้ตรงกับสำนวนใด",
+        options: [
+          { text: "เก็บเบี้ยใต้ถุนร้าน", isCorrect: true, reason: "'เก็บเบี้ยใต้ถุนร้าน' หมายถึง เก็บเล็กผสมน้อย ทำงานเล็กๆ น้อยๆ สะสมไปเรื่อยๆ จนกลายเป็นเงินก้อน" },
+          { text: "ชี้โพรงให้กระรอก", isCorrect: false, reason: "'ชี้โพรงให้กระรอก' หมายถึง ชี้แนะช่องทางให้ผู้อื่นทำสิ่งที่ไม่ดีหรือทำตามสัญชาตญาณ" },
+          { text: "ขี่ช้างจับตั๊กแตน", isCorrect: false, reason: "'ขี่ช้างจับตั๊กแตน' หมายถึง ลงทุนลงแรงมากเพื่อให้ได้ผลตอบแทนเพียงเล็กน้อย" },
+          { text: "น้ำซึมบ่อทราย", isCorrect: false, reason: "'น้ำซึมบ่อทราย' หมายถึง สิ่งที่ได้มาเรื่อยๆ ค่อยเป็นค่อยไป แต่มักใช้กับรายได้ที่เข้ามาสม่ำเสมอ" }
+        ]
+      },
+      {
+        id: 2,
+        category: "สำนวน",
+        question: "ข้อใดใช้สำนวนเปรียบเทียบเกี่ยวกับ 'การใช้จ่ายเงินอย่างรอบคอบ' ได้อย่างถูกต้องและเหมาะสมที่สุด",
+        options: [
+          { text: "มีสลึงพึงบรรจบให้ครบบาท อย่าให้ขาดสิ่งของต้องประสงค์", isCorrect: true, reason: "เป็นสุภาษิตสอนให้รู้จักอดออมเงินและใช้จ่ายในสิ่งที่มีประโยชน์จำเป็น" },
+          { text: "เข้าเมืองตาหลิ่วต้องหลิ่วตาตาม เพื่อความปลอดภัยของชีวิต", isCorrect: false, reason: "หมายถึง การประพฤติตนให้กลมกลืนตามขนบธรรมเนียมของสถานที่นั้นๆ" },
+          { text: "เอาหูไปนาเอาตาไปไร่ อย่าได้สนใจเรื่องรอบตัวมากเกินไป", isCorrect: false, reason: "หมายถึง แกล้งทำเป็นไม่รู้ไม่เห็น ไม่ใส่ใจเรื่องที่เกิดขึ้น" },
+          { text: "น้ำขึ้นให้รีบตัก จะได้มีน้ำไว้ใช้ในยามหน้าแล้งที่จะมาถึง", isCorrect: false, reason: "หมายถึง เมื่อมีโอกาสดีผ่านเข้ามา ควรรีบคว้าโอกาสนั้นไว้ทำประโยชน์" }
+        ]
+      },
+      {
+        id: 3,
+        category: "สำนวน",
+        question: "สถานการณ์ในข้อใดตรงกับความหมายของสำนวน 'กินน้ำเห็นปลิง' มากที่สุด",
+        options: [
+          { text: "ตะวันรู้สึกกระดากใจและไม่อยากรับประทานอาหารเมื่อเห็นว่าร้านนั้นไม่สะอาด", isCorrect: true, reason: "'กินน้ำเห็นปลิง' หมายถึง รู้สึกตะขิดตะขวงใจหรือรังเกียจที่จะทำสิ่งใดสิ่งหนึ่งเพราะรู้สิ่งไม่ดีเบื้องหลัง" },
+          { text: "กานต์พยายามทำงานอย่างหนักเพื่อหวังจะได้เลื่อนขั้นเป็นหัวหน้าฝ่ายเร็วๆ", isCorrect: false, reason: "ตรงกับความมุ่งมั่นพยายาม ไม่เกี่ยวข้องกับความตะขิดตะขวงใจ" },
+          { text: "มานะยอมทนทำงานร่วมกับเพื่อนที่ตนเองไม่ชอบหน้าเพราะเห็นแก่ส่วนรวม", isCorrect: false, reason: "ใกล้เคียงกับ 'กลืนไม่เข้าคายไม่ออก' หรือความอดทน" },
+          { text: "สมบัติใช้จ่ายเงินอย่างสุรุ่ยสุร่ายจนหมดตัวในเวลาเพียงไม่กี่สัปดาห์", isCorrect: false, reason: "ตรงกับ 'ตำน้ำพริกละลายแม่น้ำ' หรือการใช้จ่ายฟุ่มเฟือย" }
+        ]
+      },
+      {
+        id: 4,
+        category: "สำนวน",
+        question: "ข้อใดอธิบายความหมายของสำนวน 'หวานอมขมกลืน' ได้ถูกต้องและสอดคล้องกับหลักภาษาไทย",
+        options: [
+          { text: "การจำใจต้องยอมรับผลที่เกิดขึ้นทั้งที่ตนเองรู้สึกทุกข์ระทมใจ", isCorrect: true, reason: "'หวานอมขมกลืน' หมายถึง ต้องยอมรับเรื่องราวทั้งดีและร้าย หรือกล้ำกลืนความทุกข์ไว้ไม่อาจหลีกเลี่ยง" },
+          { text: "การเลือกรับประทานเฉพาะอาหารรสหวานและปฏิเสธของที่มีรสขม", isCorrect: false, reason: "เป็นการแปลตามตัวอักษรของคำ มิใช่ความหมายเชิงสำนวนเปรียบเทียบ" },
+          { text: "การพูดจาไพเราะต่อหน้าผู้อื่นแต่นำความลับของเขาไปนินทาภายหลัง", isCorrect: false, reason: "ตรงกับสำนวน 'ปากหวานก้นเปรี้ยว' หรือ 'หน้าไหว้หลังหลอก'" },
+          { text: "การลงทุนทำสิ่งใดสิ่งหนึ่งแล้วได้รับผลตอบแทนกลับคืนมาคุ้มค่า", isCorrect: false, reason: "ตรงกับสำนวนที่เกี่ยวกับการประสบผลสำเร็จ" }
+        ]
+      },
+      {
+        id: 5,
+        category: "สำนวน",
+        question: "บุคคลที่มีลักษณะ 'มือสะอาด' ตามบริบทของคุณธรรมจริยธรรม ควรแสดงพฤติกรรมในข้อใด",
+        options: [
+          { text: "ปฏิบัติหน้าที่ด้วยความซื่อสัตย์สุจริต ไม่ยอมรับเงินสินบนจากใคร", isCorrect: true, reason: "'มือสะอาด' เป็นสำนวนหมายถึง มีความซื่อสัตย์ ไม่คดโกง ไม่รับสินบน" },
+          { text: "ล้างมือด้วยสบู่ทุกครั้งก่อนและหลังรับประทานอาหารเพื่อสุขอนามัย", isCorrect: false, reason: "เป็นความหมายตรงตัวของสุขอนามัย ไม่ใช่ความหมายเชิงสำนวนคุณธรรม" },
+          { text: "ช่วยเหลือผู้อื่นทำงานทุกอย่างโดยไม่หวังสิ่งตอบแทนแม้แต่คำขอบคุณ", isCorrect: false, reason: "ตรงกับลักษณะของคนมีน้ำใจ หรือ 'ปิดทองหลังพระ'" },
+          { text: "ทำงานประณีตเรียบร้อยไม่มีรอยเปื้อนบนชิ้นงานศิลปะแม้แต่น้อย", isCorrect: false, reason: "หมายถึง ความประณีตและสะอาดเรียบร้อยในผลงาน" }
+        ]
+      },
+      {
+        id: 6,
+        category: "สำนวน",
+        question: "ข้อความว่า 'ทำดีได้ดี ทำชั่วได้ชั่ว' จัดเป็นถ้อยคำประเภทใดในภาษาไทย",
+        options: [
+          { text: "สุภาษิตสอนใจ", isCorrect: true, reason: "'ทำดีได้ดี ทำชั่วได้ชั่ว' มุ่งสอนเตือนใจให้ประพฤติดี ละเว้นชั่ว จึงจัดเป็นสุภาษิต" },
+          { text: "คำพังเพยประชดประชัน", isCorrect: false, reason: "คำพังเพยมักเป็นการเปรียบเทียบหรือให้แง่คิดทั่วไป แต่มิได้เป็นสัจธรรมเตือนใจโดยตรง" },
+          { text: "สำนวนเปรียบเทียบทั่วไป", isCorrect: false, reason: "สำนวนมักเป็นถ้อยคำสั้นๆ ที่มีความหมายแฝง เช่น แกะดำ, ไข่ในหิน" },
+          { text: "ปริศนาคำทาย", isCorrect: false, reason: "ปริศนาคำทายเป็นการตั้งคำถามเพื่อให้ผู้เล่นทายหาคำตอบ" }
+        ]
+      },
+      {
+        id: 7,
+        category: "สำนวน",
+        question: "สำนวนในข้อใดมีความหมายสอดคล้องกับพฤติกรรมของ 'คนดีศรีโรงเรียน' ที่ทำความดีโดยไม่ต้องการโอ้อวด",
+        options: [
+          { text: "ปิดทองหลังพระ", isCorrect: true, reason: "'ปิดทองหลังพระ' หมายถึง การทำความดีโดยไม่หวังให้ใครมาชื่นชมหรือป่าวประกาศ" },
+          { text: "ผักชีโรยหน้า", isCorrect: false, reason: "'ผักชีโรยหน้า' หมายถึง ทำดีเพียงผิวเผินเพื่อให้ดูดีเฉพาะหน้างาน" },
+          { text: "เอาหน้าเอาตา", isCorrect: false, reason: "หมายถึง ทำสิ่งต่างๆ เพียงเพื่อให้ตนเองได้รับคำชมเชยและชื่อเสียง" },
+          { text: "ขวานผ่าซาก", isCorrect: false, reason: "หมายถึง การพูดจาตรงเกินไปจนไม่คำนึงถึงความรู้สึกของผู้ฟัง" }
+        ]
+      },
+
+      // 8-14: การอ่านจับใจความสำคัญ (บทที่ 5-8)
+      {
+        id: 8,
+        category: "การอ่านจับใจความ",
+        question: "อ่านข้อความต่อไปนี้:\n'การทำขนมไทยต้องอาศัยความประณีต ใจเย็น และพิถีพิถันทุกขั้นตอน ตั้งแต่นวดแป้ง กวนไส้ จนถึงอบควันเทียน หากรีบร้อนขนมจะไม่อร่อย'\nใจความสำคัญของข้อความนี้ตรงกับข้อใด",
+        options: [
+          { text: "การทำขนมไทยต้องอาศัยความประณีตและใจเย็น", isCorrect: true, reason: "ใจความสำคัญคือแกนหลักของเรื่องที่ระบุว่าขนมไทยต้องใช้ความประณีตและใจเย็นจึงจะออกมาดี" },
+          { text: "ขนมไทยทุกชนิดต้องนำไปอบควันเทียนให้หอม", isCorrect: false, reason: "เป็นเพียงรายละเอียดปลีกย่อยในขั้นตอนการทำขนมบางชนิดเท่านั้น" },
+          { text: "แป้งและไส้ขนมไทยหาซื้อได้ยากในปัจจุบัน", isCorrect: false, reason: "ข้อความไม่ได้กล่าวถึงการหาซื้อวัตถุดิบเลยแม้แต่น้อย" },
+          { text: "ขนมไทยมีรสชาติหวานอร่อยกว่าขนมของชาติอื่น", isCorrect: false, reason: "เป็นการแสดงความคิดเห็นส่วนตัว ไม่ได้อยู่ในข้อความที่อ่าน" }
+        ]
+      },
+      {
+        id: 9,
+        category: "การอ่านจับใจความ",
+        question: "อ่านข้อความต่อไปนี้:\n'เงินที่ได้มาโดยสุจริตแม้มีน้อยแต่ทำให้ใจสงบ ส่วนเงินที่ได้มาโดยมิชอบแม้มีมากก็มักนำความเดือดร้อนมาสู่ตนเอง'\nข้อคิดสำคัญของข้อความนี้คืออะไร",
+        options: [
+          { text: "ความซื่อสัตย์สุจริตในการหาเงินสำคัญกว่าปริมาณเงิน", isCorrect: true, reason: "ข้อความชี้ให้เห็นว่าเงินน้อยแต่สุจริตสร้างความสงบสุขได้มากกว่าเงินมากที่ได้มาโดยมิชอบ" },
+          { text: "คนที่มีเงินมากมักจะมีความสุขมากกว่าคนที่มีเงินน้อย", isCorrect: false, reason: "ขัดแย้งกับใจความที่บอกว่าเงินมากที่ได้โดยมิชอบจะนำความเดือดร้อนมาให้" },
+          { text: "การเก็บออมเงินควรเริ่มตั้งแต่ตอนที่ยังมีอายุน้อย", isCorrect: false, reason: "แม้จะเป็นข้อคิดที่ดี แต่ข้อความไม่ได้กล่าวถึงเรื่องอายุของการเริ่มออมเงิน" },
+          { text: "ความเดือดร้อนทางการเงินสามารถแก้ไขได้ด้วยการยืม", isCorrect: false, reason: "ไม่มีเนื้อหาเรื่องการยืมเงินปรากฏอยู่ในข้อความ" }
+        ]
+      },
+      {
+        id: 10,
+        category: "การอ่านจับใจความ",
+        question: "อ่านข้อความต่อไปนี้:\n'ต้นเห็นกระเป๋าสตางค์หล่นอยู่บนทางเดิน จึงนำไปส่งให้อาจารย์ประจำชั้นเพื่อประกาศหาเจ้าของ'\nข้อความนี้แสดงว่าต้นเป็นผู้มีคุณลักษณะตามข้อใด",
+        options: [
+          { text: "มีความซื่อสัตย์สุจริต", isCorrect: true, reason: "การไม่นำทรัพย์สินของผู้อื่นมาเป็นของตน แสดงถึงความซื่อสัตย์สุจริตอย่างแท้จริง" },
+          { text: "มีความกระตือรือร้นในการเรียน", isCorrect: false, reason: "เนื้อเรื่องไม่เกี่ยวกับผลการเรียนหรือการตั้งใจศึกษาในห้องเรียน" },
+          { text: "มีความประหยัดอดออม", isCorrect: false, reason: "เนื้อเรื่องไม่ได้กล่าวถึงการบริหารเงินส่วนตัวของต้น" },
+          { text: "มีความกล้าแสดงออกต่อหน้าสาธารณะ", isCorrect: false, reason: "การนำของไปส่งให้อาจารย์เป็นหน้าที่ของพลเมืองดี ไม่ใช่เรื่องการแสดงความสามารถ" }
+        ]
+      },
+      {
+        id: 11,
+        category: "การอ่านจับใจความ",
+        question: "ข้อใดเป็นขั้นตอนแรกที่ถูกต้องในการอ่านจับใจความสำคัญของเรื่องร้อยแก้ว",
+        options: [
+          { text: "อ่านเรื่องทั้งหมดตั้งแต่ต้นจนจบอย่างคร่าวๆ หนึ่งรอบ", isCorrect: true, reason: "ขั้นตอนแรกคืออ่านกวาดสายตาจบเรื่อง เพื่อให้รู้ว่าใคร ทำอะไร ที่ไหน เมื่อไร อย่างไร ก่อนเจาะลึก" },
+          { text: "จดบันทึกคำศัพท์ยากลงในสมุดและค้นหาความหมายทันที", isCorrect: false, reason: "การหยุดค้นคำศัพท์ทันทีจะทำให้การอ่านจับประเด็นสะดุดและขาดความต่อเนื่อง" },
+          { text: "สรุปย่อความทันทีหลังจากอ่านข้อความบรรทัดแรกจบ", isCorrect: false, reason: "ยังไม่ทราบเนื้อหาทั้งหมด ย่อมไม่สามารถสรุปใจความสำคัญที่ถูกต้องได้" },
+          { text: "เขียนตั้งคำถามเพื่อทดสอบผู้อื่นเกี่ยวกับเรื่องนั้น", isCorrect: false, reason: "เป็นขั้นตอนหลังจากที่ผู้อ่านเข้าใจเนื้อเรื่องอย่างถ่องแท้แล้ว" }
+        ]
+      },
+      {
+        id: 12,
+        category: "การอ่านจับใจความ",
+        question: "อ่านประโยคต่อไปนี้:\n'การเก็บเงินวันละนิดเปรียบเหมือนการสร้างบ้าน ต้องอาศัยความพยายามและอดทน'\nคำสำคัญ (Keywords) ของประโยคนี้คือข้อใด",
+        options: [
+          { text: "เก็บเงิน, ความพยายาม, ความอดทน", isCorrect: true, reason: "เป็นคำแกนที่สื่อสารสาระสำคัญของการออมเงินที่ต้องใช้ความเพียรพยายาม" },
+          { text: "วันละนิด, เหมือนการ, สร้างบ้าน", isCorrect: false, reason: "เป็นเพียงคำขยายและคำเปรียบเทียบประกอบรูปประโยค" },
+          { text: "เปรียบเหมือน, ต้องอาศัย, การสร้าง", isCorrect: false, reason: "เป็นคำกริยาเชื่อมโยงประโยค ไม่ใช่ใจความหลัก" },
+          { text: "การเก็บ, อาศัย, บ้าน", isCorrect: false, reason: "ตัดทอนคำจนเสียความหมายของสาระสำคัญเรื่องความอดทน" }
+        ]
+      },
+      {
+        id: 13,
+        category: "การอ่านจับใจความ",
+        question: "อ่านข้อความต่อไปนี้:\n'ในงานสัปดาห์วิทยาศาสตร์ มีการจัดแสดงผลงานสิ่งประดิษฐ์ของนักเรียนมากมาย ผู้คนต่างเดินทางมาชื่นชมผลงานด้วยความสนใจ'\nข้อใดเป็น 'ข้อเท็จจริง' จากข้อความนี้",
+        options: [
+          { text: "มีการจัดแสดงผลงานสิ่งประดิษฐ์ของนักเรียนในงาน", isCorrect: true, reason: "การจัดแสดงผลงานเป็นเหตุการณ์จริงที่พิสูจน์ได้ จึงเป็นข้อเท็จจริง" },
+          { text: "ผลงานของนักเรียนทุกคนมีความสวยงามยอดเยี่ยมที่สุด", isCorrect: false, reason: "คำว่า 'ยอดเยี่ยมที่สุด' เป็นการแสดงความคิดเห็นและความรู้สึก" },
+          { text: "ผู้เข้าชมทุกคนจะได้รับความรู้กลับไปอย่างคุ้มค่าแน่นอน", isCorrect: false, reason: "เป็นการคาดคะเนผลล่วงหน้า มิใช่ข้อเท็จจริงที่เกิดขึ้น" },
+          { text: "งานนี้เป็นงานวิทยาศาสตร์ที่ดีที่สุดในรอบสิบปี", isCorrect: false, reason: "เป็นข้อคิดเห็นที่ใช้การตัดสินส่วนบุคคล" }
+        ]
+      },
+      {
+        id: 14,
+        category: "การอ่านจับใจความ",
+        question: "อ่านข้อความต่อไปนี้:\n'ขนมทองหยิบ ทองหยอด และฝอยทอง นิยมใช้ในงานมงคลเพราะมีสีเหลืองทอง เชื่อว่าจะนำพาความร่ำรวยมาให้'\nข้อใดสรุปเหตุผลของการใช้ขนมเหล่านี้ในงานมงคลได้ตรงจุดที่สุด",
+        options: [
+          { text: "มีสีเหลืองดั่งทองคำและมีความเชื่อเรื่องความมั่งคั่ง", isCorrect: true, reason: "ข้อความระบุชัดเจนเรื่องสีเหลืองทองและความเชื่อเรื่องนำความร่ำรวยมั่งคั่ง" },
+          { text: "มีรสชาติหวานจับใจและหารับประทานได้ง่ายในท้องตลาด", isCorrect: false, reason: "ข้อความไม่ได้อ้างอิงเรื่องความง่ายในการหาซื้อในตลาด" },
+          { text: "ทำจากวัตถุดิบราคาถูกและใช้เวลาปรุงไม่นาน", isCorrect: false, reason: "ไม่ถูกต้อง ขนมตระกูลทองอาศัยความพิถีพิถันและไข่แดงคุณภาพดี" },
+          { text: "เป็นขนมที่ชาวต่างชาตินิยมนำเข้ามาถวายพระสงฆ์", isCorrect: false, reason: "ผิดจากบริบทของขนมไทยโบราณที่สืบทอดกันมายาวนาน" }
+        ]
+      },
+
+      // 15-21: การฟังและการดู (บทที่ 5-8)
+      {
+        id: 15,
+        category: "การฟังและการดู",
+        question: "ขณะที่วิทยากรกำลังบรรยายเรื่อง 'การออมเงินเพื่ออนาคต' ในหอประชุม ผู้ฟังที่ดีควรปฏิบัติตนตามข้อใด",
+        options: [
+          { text: "ตั้งใจฟัง จดบันทึกสาระสำคัญ และปรบมือเมื่อพูดจบ", isCorrect: true, reason: "เป็นการปฏิบัติตนที่มีสมาธิ เกิดการเรียนรู้ และให้เกียรติผู้บรรยายตามมารยาท" },
+          { text: "นั่งคุยปรึกษากับเพื่อนเบาๆ เรื่องการออมเงินของตนเอง", isCorrect: false, reason: "การพูดคุยขณะผู้อื่นบรรยายถือเป็นการเสียมารยาทและรบกวนสมาธิผู้อื่น" },
+          { text: "หยิบโทรศัพท์ขึ้นมาเปิดเพลงฟังคลอไปกับการบรรยาย", isCorrect: false, reason: "แสดงถึงการไม่ใส่ใจและไม่ให้เกียรติวิทยากรผู้พูด" },
+          { text: "ลุกขึ้นเดินเข้าออกห้องประชุมบ่อยๆ เพื่อเปลี่ยนบรรยากาศ", isCorrect: false, reason: "การเดินไปมาจะสร้างความรำคาญและรบกวนผู้ฟังคนอื่นๆ" }
+        ]
+      },
+      {
+        id: 16,
+        category: "การฟังและการดู",
+        question: "เมื่อชมการแสดงศิลปวัฒนธรรมรำไทยในโรงละคร พฤติกรรมใดแสดงถึง 'การมีมารยาทในการดู' มากที่สุด",
+        options: [
+          { text: "นั่งชมอย่างสงบเรียบร้อยและปิดเสียงอุปกรณ์สื่อสาร", isCorrect: true, reason: "การรักษาความสงบและปิดเสียงรบกวนเป็นมารยาทพื้นฐานที่สำคัญในโรงละคร" },
+          { text: "ใช้ไฟแฟลชถ่ายรูปนักแสดงตลอดเวลาเพื่อให้ได้ภาพคมชัด", isCorrect: false, reason: "แสงแฟลชรบกวนสมาธิและอาจก่อให้เกิดอันตรายต่อนักแสดงบนเวที" },
+          { text: "ลุกขึ้นยืนเต้นเลียนแบบท่าทางนักแสดงที่ตนเองชื่นชอบ", isCorrect: false, reason: "การยืนขึ้นบดบังสายตาผู้ชมแถวหลัง ถือเป็นการรบกวนผู้อื่น" },
+          { text: "รับประทานขนมกรุบกรอบเสียงดังเพื่อให้เพลิดเพลินขณะชม", isCorrect: false, reason: "เสียงเคี้ยวและกลิ่นอาหารรบกวนสมาธิของผู้ร่วมชมท่านอื่น" }
+        ]
+      },
+      {
+        id: 17,
+        category: "การฟังและการดู",
+        question: "ข้อใดเป็นขั้นตอนการจับใจความจากการฟังและการดูที่มีประสิทธิภาพมากที่สุด",
+        options: [
+          { text: "จับประเด็นว่าใคร ทำอะไร ที่ไหน และได้ข้อคิดอะไร", isCorrect: true, reason: "หลักการจับใจความคือการตอบคำถาม 5W1H และสรุปข้อคิดที่นำไปใช้ประโยชน์ได้" },
+          { text: "พยายามจดจำคำพูดของผู้พูดให้ได้ทุกคำโดยไม่ตกหล่น", isCorrect: false, reason: "ไม่มีความจำเป็นและเป็นไปได้ยาก การฟังควรเน้นจับ 'ประเด็นหลัก'" },
+          { text: "จดเฉพาะเรื่องตลกขบขันที่ทำให้ผู้ฟังหัวเราะชอบใจ", isCorrect: false, reason: "เรื่องตลกเป็นเพียงส่วนเสริม ไม่ใช่สาระสำคัญของเรื่องที่ฟัง" },
+          { text: "จับผิดการใช้น้ำเสียงและท่าทางของผู้พูดตลอดเวลา", isCorrect: false, reason: "การคอยจับผิดทำให้มองข้ามสาระความรู้ที่มีประโยชน์" }
+        ]
+      },
+      {
+        id: 18,
+        category: "การฟังและการดู",
+        question: "หากนักเรียนมีข้อสงสัยขณะฟังการบรรยายของวิทยากร ควรปฏิบัติตนตามข้อใดจึงจะสุภาพเหมาะสม",
+        options: [
+          { text: "รอให้วิทยากรบรรยายจบแล้วจึงยกมือขออนุญาตซักถาม", isCorrect: true, reason: "การรอจังหวะที่เปิดโอกาสให้ถามและยกมือก่อน เป็นมารยาทสากลของการฟัง" },
+          { text: "ตะโกนถามคำถามทันทีที่เกิดความสงสัยขึ้นในใจ", isCorrect: false, reason: "เป็นการตัดจังหวะการพูดและเสียมารยาทในที่ประชุม" },
+          { text: "หันไปถามเพื่อนข้างๆ ทันทีด้วยเสียงอันดัง", isCorrect: false, reason: "รบกวนสมาธิของเพื่อนร่วมชั้นและวิทยากรผู้บรรยาย" },
+          { text: "เดินขึ้นไปบนเวทีเพื่อถามวิทยากรแบบส่วนตัวขณะพูด", isCorrect: false, reason: "เป็นการละเมิดพื้นที่และรบกวนขั้นตอนการจัดกิจกรรม" }
+        ]
+      },
+      {
+        id: 19,
+        category: "การฟังและการดู",
+        question: "พฤติกรรมในข้อใดจัดว่า 'ขาดมารยาทในการฟัง' อย่างชัดเจนที่สุด",
+        options: [
+          { text: "พูดแทรกขัดจังหวะขณะที่เพื่อนกำลังเล่าเรื่องความดี", isCorrect: true, reason: "การพูดแทรกทำให้เรื่องราวขาดตอนและแสดงถึงการไม่เคารพผู้พูด" },
+          { text: "สบตาผู้พูดด้วยความเป็นมิตรเพื่อแสดงความสนใจ", isCorrect: false, reason: "เป็นมารยาทที่ดีของผู้ฟัง แสดงความใส่ใจต่อผู้พูด" },
+          { text: "พยักหน้าตอบรับเป็นระยะตามเนื้อเรื่องที่เข้าใจ", isCorrect: false, reason: "เป็นการตอบสนองเชิงบวก ช่วยให้ผู้พูดมีความมั่นใจ" },
+          { text: "นั่งหลังตรงและวางมือบนโต๊ะอย่างเรียบร้อย", isCorrect: false, reason: "เป็นบุคลิกภาพที่ดีและสุภาพของผู้ฟังในห้องเรียน" }
+        ]
+      },
+      {
+        id: 20,
+        category: "การฟังและการดู",
+        question: "การรับชมสื่อโฆษณาขายสินค้าทางสื่อออนไลน์อย่างมีวิจารณญาณ ผู้ดูควรมีคุณลักษณะตามข้อใด",
+        options: [
+          { text: "พิจารณาข้อเท็จจริงและความคุ้มค่าก่อนตัดสินใจเชื่อ", isCorrect: true, reason: "การมีวิจารณญาณคือการไตร่ตรองความสมเหตุสมผล ไม่หลงเชื่อคำโฆษณาเกินจริง" },
+          { text: "รีบสั่งซื้อทันทีเพราะกลัวว่าสินค้าจะหมดสต็อก", isCorrect: false, reason: "เป็นการตัดสินใจด้วยอารมณ์และความเร่งรีบ ขาดการพิจารณา" },
+          { text: "เชื่อคำโฆษณาอย่างสนิทใจเพราะมีดาราชื่อดังเป็นพรีเซนเตอร์", isCorrect: false, reason: "การใช้ดาราเป็นกลยุทธ์ทางการตลาด ผู้ดูต้องตรวจสอบคุณภาพที่แท้จริง" },
+          { text: "แชร์คลิปโฆษณานั้นต่อไปให้เพื่อนทุกคนโดยไม่ได้ตรวจสอบ", isCorrect: false, reason: "อาจกลายเป็นการส่งต่อข้อมูลเท็จหรือไม่ปลอดภัยแก่ผู้อื่น" }
+        ]
+      },
+      {
+        id: 21,
+        category: "การฟังและการดู",
+        question: "เมื่อได้รับฟังข้อมูลข่าวสารจากสื่อสังคมออนไลน์ ข้อควรปฏิบัติเป็นอันดับแรกคือข้อใด",
+        options: [
+          { text: "ตรวจสอบความถูกต้องของข้อมูลจากแหล่งที่เชื่อถือได้", isCorrect: true, reason: "การตรวจสอบแหล่งที่มา (Fact Checking) ช่วยป้องกันการตกเป็นเหยื่อข่าวปลอม" },
+          { text: "เขียนข้อความวิพากษ์วิจารณ์ด้วยถ้อยคำรุนแรงทันที", isCorrect: false, reason: "การใช้อารมณ์ตัดสินอาจนำไปสู่ความผิดทางกฎหมายและสร้างความเสียหาย" },
+          { text: "นำเรื่องราวนั้นไปบอกต่อเพื่อนๆ ทันทีเพื่อความรวดเร็ว", isCorrect: false, reason: "หากข่าวนั้นเป็นข่าวลวง จะทำให้ผู้อื่นเข้าใจผิดตามไปด้วย" },
+          { text: "เชื่อถือทันทีเพราะเห็นว่ามีคนกดถูกใจเป็นจำนวนมาก", isCorrect: false, reason: "ยอดไลก์ไม่ได้เป็นเครื่องยืนยันความถูกต้องแท้จริงของข้อมูล" }
+        ]
+      },
+
+      // 22-28: การพูด (แนะนำตัว สนทนา โน้มน้าวใจ โต้แย้ง)
+      {
+        id: 22,
+        category: "การพูด",
+        question: "หากนักเรียนต้องออกมากล่าว 'แนะนำตนเอง' หน้าชั้นเรียนใหม่ ข้อใดเป็นลำดับการพูดที่ถูกต้องและเหมาะสมที่สุด",
+        options: [
+          { text: "กล่าวคำทักทาย บอกชื่อนามสกุล ชื่อเล่น และสิ่งที่สนใจ", isCorrect: true, reason: "เป็นลำดับมาตรฐานที่สุภาพ เริ่มจากการทักทาย ระบุตัวตน และสร้างความเป็นกันเอง" },
+          { text: "บอกของขวัญที่อยากได้ ตำหนิเพื่อนเก่า และบอกชื่อตนเอง", isCorrect: false, reason: "การพูดตำหนิผู้อื่นและเรียกร้องของขวัญเป็นการพูดที่ไม่เหมาะสม" },
+          { text: "โอ้อวดฐานะความร่ำรวยของครอบครัวก่อนจะแนะนำชื่อ", isCorrect: false, reason: "แสดงถึงความเย่อหยิ่งและไม่สร้างมิตรภาพที่ดีในห้องเรียน" },
+          { text: "เริ่มพูดถึงผลงานดีเด่นของตนเองโดยไม่ต้องกล่าวทักทาย", isCorrect: false, reason: "ขาดมารยาทพื้นฐาน การเริ่มต้นต้องมีการทักทายผู้ฟังเสมอ" }
+        ]
+      },
+      {
+        id: 23,
+        category: "การพูด",
+        question: "ประโยคในข้อใดจัดเป็น 'การพูดโน้มน้าวใจ' เพื่อรณรงค์ให้เพื่อนช่วยกันประหยัดน้ำได้อย่างเหมาะสมและสร้างสรรค์",
+        options: [
+          { text: "น้ำทุกหยดมีคุณค่า ร่วมใจปิดก๊อกน้ำเมื่อใช้เสร็จกันเถอะนะ", isCorrect: true, reason: "เป็นการพูดชี้ให้เห็นคุณค่าและเชิญชวนอย่างสุภาพ นุ่มนวล ชวนให้ปฏิบัติตาม" },
+          { text: "ถ้าใครไม่ยอมปิดก๊อกน้ำ ขอให้ไม่มีน้ำใช้ตลอดทั้งเดือน", isCorrect: false, reason: "เป็นการพูดแช่งและใช้อารมณ์ข่มขู่ มิใช่การโน้มน้าวใจที่ดี" },
+          { text: "เรื่องประหยัดน้ำเป็นหน้าที่ของภารโรง พวกเราไม่ต้องสนใจหรอก", isCorrect: false, reason: "เป็นการพูดปัดความรับผิดชอบและขัดต่อจิตสาธารณะ" },
+          { text: "ทุกคนต้องทำตามที่ฉันสั่งเดี๋ยวนี้ ไม่อย่างนั้นจะฟ้องครู", isCorrect: false, reason: "เป็นการบังคับขู่เข็ญ ขาดศิลปะในการโน้มน้าวใจ" }
+        ]
+      },
+      {
+        id: 24,
+        category: "การพูด",
+        question: "เมื่อเกิดความคิดเห็นไม่ตรงกันในระหว่างการทำงานกลุ่ม นักเรียนควรใช้ 'การพูดโต้แย้ง' ในลักษณะใดจึงจะถูกต้อง",
+        options: [
+          { text: "แสดงเหตุผลและข้อเท็จจริงสนับสนุนความคิดอย่างสุภาพ", isCorrect: true, reason: "การโต้แย้งที่ดีต้องใช้เหตุผล ข้อเท็จจริง และถ้อยคำสุภาพ ไม่ใช้อารมณ์ส่วนตัว" },
+          { text: "ใช้น้ำเสียงดังและพูดดักคอเพื่อไม่ให้เพื่อนได้พูดต่อ", isCorrect: false, reason: "เป็นการแสดงกิริยาก้าวร้าวและเอาแต่ใจตนเอง" },
+          { text: "นำปมด้อยของเพื่อนมาล้อเลียนเพื่อให้เพื่อนยอมจำนน", isCorrect: false, reason: "เป็นการกลั่นแกล้ง (Bully) และทำลายความสัมพันธ์ในกลุ่ม" },
+          { text: "ประชดประชันและเดินหนีออกจากกลุ่มทำงานทันที", isCorrect: false, reason: "ขาดวุฒิภาวะในการทำงานร่วมกับผู้อื่นอย่างสร้างสรรค์" }
+        ]
+      },
+      {
+        id: 25,
+        category: "การพูด",
+        question: "ข้อใดเป็นหัวใจสำคัญของ 'การพูดสนทนา' ในชีวิตประจำวันเพื่อให้เกิดมิตรภาพและความเข้าใจที่ดีต่อกัน",
+        options: [
+          { text: "ใช้ถ้อยคำสุภาพ รับฟังคู่สนทนา และพูดให้ถูกกาลเทศะ", isCorrect: true, reason: "การสนทนาที่ดีประกอบด้วยความสุภาพ การเป็นทั้งผู้พูดและผู้ฟังที่ดี และรู้กาลเทศะ" },
+          { text: "พูดแต่เรื่องของตนเองเพียงฝ่ายเดียวโดยไม่หยุดพัก", isCorrect: false, reason: "ทำให้คู่สนทนารู้สึกอึดอัดและเบื่อหน่าย ไม่อยากพูดคุยด้วย" },
+          { text: "ใช้คำสแลงและคำพูดประชดประชันเพื่อความตลกขบขัน", isCorrect: false, reason: "อาจสร้างความเข้าใจผิดหรือทำให้ผู้ฟังรู้สึกไม่สบายใจได้" },
+          { text: "พยายามพูดอวดรู้และขัดแย้งกับคู่สนทนาในทุกเรื่อง", isCorrect: false, reason: "สร้างบรรยากาศที่เป็นลบและนำไปสู่การทะเลาะเบาะแว้ง" }
+        ]
+      },
+      {
+        id: 26,
+        category: "การพูด",
+        question: "ประโยคในข้อใดแสดงถึงการพูดโน้มน้าวใจให้เพื่อนเห็นความสำคัญของ 'การออมเงิน' ได้ดีที่สุด",
+        options: [
+          { text: "การหยอดกระปุกวันละนิด จะช่วยให้เรามีเงินสำรองในยามจำเป็นนะ", isCorrect: true, reason: "ชี้ให้เห็นประโยชน์ที่เป็นรูปธรรมในอนาคตด้วยน้ำเสียงเชิญชวนอย่างสุภาพ" },
+          { text: "ถ้าเธอไม่ยอมเก็บเงิน โตขึ้นไปเธอจะต้องยากจนแน่นอน", isCorrect: false, reason: "เป็นการพูดข่มขู่ในแง่ลบและดูถูกอนาคตของผู้อื่น" },
+          { text: "ฉันมีเงินเก็บเยอะมาก เธอต้องทำตามฉันให้ได้นะ", isCorrect: false, reason: "เป็นการพูดโอ้อวดตนเองมากกว่าการสร้างแรงจูงใจให้ผู้อื่น" },
+          { text: "เงินมีไว้ใช้ซื้อความสุข จะเก็บออมไปทำไมให้ลำบาก", isCorrect: false, reason: "เป็นการพูดชี้นำที่ขัดแย้งกับหลักการสร้างวินัยทางการเงิน" }
+        ]
+      },
+      {
+        id: 27,
+        category: "การพูด",
+        question: "สถานการณ์ใดแสดงถึง 'การพูดปฏิเสธอย่างสุภาพและมีมารยาท' เมื่อเพื่อนชวนไปเล่นเกมในเวลาเรียน",
+        options: [
+          { text: "เราอยากตั้งใจเรียนวิชานี้ก่อน ไว้หลังเลิกเรียนค่อยเล่นกันนะ", isCorrect: true, reason: "เป็นการปฏิเสธด้วยเหตุผลที่ถูกต้อง ใช้คำสุภาพ และเสนอทางเลือกอื่นที่เหมาะสม" },
+          { text: "ชวนทำแต่เรื่องแย่ๆ แบบนี้ นิสัยไม่ดีเลยจริงๆ", isCorrect: false, reason: "เป็นการต่อว่าเพื่อนด้วยถ้อยคำรุนแรง อาจทำให้ทะเลาะกันได้" },
+          { text: "เงียบเฉยไม่ยอมตอบอะไรแล้วทำหน้าบึ้งตึงใส่เพื่อน", isCorrect: false, reason: "ทำให้เกิดความเข้าใจผิดและแสดงออกถึงความไม่เป็นมิตร" },
+          { text: "ไปสิ โดดเรียนไปด้วยกันเลย ครูคงไม่รู้หรอก", isCorrect: false, reason: "เป็นการยอมรับในการกระทำที่ผิดระเบียบวินัยของโรงเรียน" }
+        ]
+      },
+      {
+        id: 28,
+        category: "การพูด",
+        question: "หากนักเรียนต้องพูดนำเสนอเรื่อง 'นานาขนมไทย' หน้าชั้นเรียน ข้อใดเป็นการเตรียมตัวที่ถูกต้องเป็นลำดับแรก",
+        options: [
+          { text: "ค้นคว้าข้อมูลที่ถูกต้องและเรียบเรียงหัวข้อที่จะพูดให้ชัดเจน", isCorrect: true, reason: "การเตรียมตัวพูดต้องเริ่มต้นที่การหาข้อมูลที่แม่นยำและจัดโครงสร้างเนื้อหาก่อนฝึกซ้อม" },
+          { text: "เลือกชุดแต่งกายที่หรูหราที่สุดเพื่อสร้างความประทับใจ", isCorrect: false, reason: "การแต่งกายควรให้ถูกระเบียบสุภาพตามวัย เนื้อหาสำคัญกว่าความหรูหรา" },
+          { text: "ท่องจำคำพูดทุกตัวอักษรโดยไม่สนใจความเข้าใจในเนื้อหา", isCorrect: false, reason: "การท่องจำเป็นนกแก้วนกขุนทองจะทำให้พูดไม่เป็นธรรมชาติและลืมได้ง่าย" },
+          { text: "นำขนมไทยมาแจกเพื่อนทุกคนเพื่อให้ได้คะแนนการพูดดีๆ", isCorrect: false, reason: "คะแนนการพูดวัดจากทักษะและเนื้อหา มิใช่การแจกสิ่งของ" }
+        ]
+      }
+    ];
+
+    let currentQuizList = [];
+    let currentIndex = 0;
+    let userAnswers = {}; // { questionId: selectedIndex }
+    let currentCategory = "all";
+    let isSoundOn = true;
+
+    // Web Audio Synthesizer (Tone-like effects without external audio files)
+    const AudioEngine = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+      },
+      playCorrect() {
+        if (!isSoundOn) return;
+        try {
+          this.init();
+          const now = this.ctx.currentTime;
+          const osc1 = this.ctx.createOscillator();
+          const osc2 = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc1.type = 'triangle';
+          osc2.type = 'sine';
+
+          osc1.frequency.setValueAtTime(523.25, now); // C5
+          osc1.frequency.setValueAtTime(659.25, now + 0.1); // E5
+          osc2.frequency.setValueAtTime(783.99, now + 0.18); // G5
+
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+
+          osc1.connect(gain);
+          osc2.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc1.start(now);
+          osc2.start(now + 0.1);
+          osc1.stop(now + 0.4);
+          osc2.stop(now + 0.4);
+        } catch (e) {
+          console.warn("Audio error:", e);
+        }
+      },
+      playWrong() {
+        if (!isSoundOn) return;
+        try {
+          this.init();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(260, now);
+          osc.frequency.exponentialRampToValueAtTime(140, now + 0.25);
+
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start(now);
+          osc.stop(now + 0.3);
+        } catch (e) {
+          console.warn("Audio error:", e);
+        }
+      },
+      playClick() {
+        if (!isSoundOn) return;
+        try {
+          this.init();
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(600, now);
+          gain.gain.setValueAtTime(0.05, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          osc.start(now);
+          osc.stop(now + 0.05);
+        } catch (e) {}
+      }
+    };
+
+    function toggleSound() {
+      isSoundOn = !isSoundOn;
+      const soundIcon = document.getElementById("soundIcon");
+      if (isSoundOn) {
+        soundIcon.setAttribute("data-lucide", "volume-2");
+        AudioEngine.playClick();
+      } else {
+        soundIcon.setAttribute("data-lucide", "volume-x");
+      }
+      lucide.createIcons();
+    }
+
+    function shuffleArray(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function prepareQuestions() {
+      let filtered = (currentCategory === "all") 
+        ? [...masterQuestions] 
+        : masterQuestions.filter(q => q.category === currentCategory);
+
+      // Deep copy and shuffle questions & their options
+      currentQuizList = shuffleArray(filtered).map(q => {
+        return {
+          ...q,
+          options: shuffleArray(q.options)
+        };
+      });
+      currentIndex = 0;
+      userAnswers = {};
+    }
+
+    function switchSection(part) {
+      AudioEngine.playClick();
+      const p1 = document.getElementById("part1Container");
+      const p2 = document.getElementById("part2Container");
+      const t1 = document.getElementById("tabPart1Btn");
+      const t2 = document.getElementById("tabPart2Btn");
+
+      if (part === 'part1') {
+        p1.classList.remove('hidden');
+        p2.classList.add('hidden');
+        t1.className = "flex-1 py-2.5 px-3 rounded-xl font-kanit font-semibold text-sm transition-all flex items-center justify-center gap-2 bg-blue-600 text-white shadow-sm";
+        t2.className = "flex-1 py-2.5 px-3 rounded-xl font-kanit font-semibold text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:bg-slate-100";
+      } else {
+        p1.classList.add('hidden');
+        p2.classList.remove('hidden');
+        t2.className = "flex-1 py-2.5 px-3 rounded-xl font-kanit font-semibold text-sm transition-all flex items-center justify-center gap-2 bg-amber-500 text-white shadow-sm";
+        t1.className = "flex-1 py-2.5 px-3 rounded-xl font-kanit font-semibold text-sm transition-all flex items-center justify-center gap-2 text-slate-600 hover:bg-slate-100";
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function filterCategory(cat) {
+      AudioEngine.playClick();
+      currentCategory = cat;
+      document.querySelectorAll(".cat-pill").forEach(pill => {
+        if (pill.getAttribute("data-cat") === cat) {
+          pill.className = "cat-pill px-3 py-1 text-xs rounded-lg font-medium border transition bg-blue-600 text-white border-blue-600";
+        } else {
+          pill.className = "cat-pill px-3 py-1 text-xs rounded-lg font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition";
+        }
+      });
+      shuffleAndRestart();
+    }
+
+    function shuffleAndRestart() {
+      prepareQuestions();
+      document.getElementById("quizPlayArea").classList.remove("hidden");
+      document.getElementById("quizSummaryModal").classList.add("hidden");
+      renderQuestion();
+      updateScoreBadge();
+    }
+
+    function resetAllQuiz() {
+      AudioEngine.playClick();
+      currentCategory = "all";
+      document.querySelectorAll(".cat-pill").forEach(pill => {
+        if (pill.getAttribute("data-cat") === "all") {
+          pill.className = "cat-pill px-3 py-1 text-xs rounded-lg font-medium border transition bg-blue-600 text-white border-blue-600";
+        } else {
+          pill.className = "cat-pill px-3 py-1 text-xs rounded-lg font-medium border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 transition";
+        }
+      });
+      // Clear essays
+      document.getElementById("essay1_idiom").value = "";
+      document.getElementById("essay1_explain").value = "";
+      document.getElementById("essay1_rubric").classList.add("hidden");
+      document.getElementById("essay2_idiom").value = "";
+      document.getElementById("essay2_explain").value = "";
+      document.getElementById("essay2_rubric").classList.add("hidden");
+
+      switchSection('part1');
+      shuffleAndRestart();
+    }
+
+    function renderQuestion() {
+      if (currentQuizList.length === 0) return;
+      const q = currentQuizList[currentIndex];
+      const total = currentQuizList.length;
+
+      // Update Header & Progress
+      document.getElementById("questionCategoryTag").innerText = `หมวด: ${q.category}`;
+      document.getElementById("questionCounterTag").innerText = `ข้อที่ ${currentIndex + 1} จาก ${total}`;
+      const progressPercent = ((currentIndex + 1) / total) * 100;
+      document.getElementById("quizProgressBar").style.width = `${progressPercent}%`;
+
+      // Set Question Text
+      const qEl = document.getElementById("questionText");
+      // Format text breaks
+      qEl.innerHTML = q.question.replace(/\n/g, "<br><span class='block my-1 text-slate-600 text-sm font-normal bg-slate-50 p-3 rounded-xl border border-slate-200'>") + (q.question.includes('\n') ? "</span>" : "");
+
+      // Render Options
+      const optContainer = document.getElementById("optionsContainer");
+      optContainer.innerHTML = "";
+
+      const answeredIndex = userAnswers[q.id];
+      const hasAnswered = answeredIndex !== undefined;
+
+      const letters = ['ก.', 'ข.', 'ค.', 'ง.'];
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = `option-btn w-full p-3.5 md:p-4 rounded-2xl text-left border text-sm md:text-base flex items-start gap-3 transition-all `;
+        
+        let stateStyle = "bg-white border-slate-200 hover:border-blue-400 hover:bg-blue-50/50 text-slate-700 shadow-sm";
+        let badgeStyle = "bg-slate-100 text-slate-600";
+        let iconHtml = "";
+
+        if (hasAnswered) {
+          btn.disabled = true;
+          if (opt.isCorrect) {
+            stateStyle = "bg-emerald-50 border-emerald-500 text-emerald-900 font-medium ring-1 ring-emerald-400";
+            badgeStyle = "bg-emerald-600 text-white";
+            iconHtml = `<i data-lucide="check" class="w-5 h-5 text-emerald-600 shrink-0 ml-auto"></i>`;
+          } else if (idx === answeredIndex && !opt.isCorrect) {
+            stateStyle = "bg-rose-50 border-rose-400 text-rose-900 line-through opacity-85";
+            badgeStyle = "bg-rose-500 text-white";
+            iconHtml = `<i data-lucide="x" class="w-5 h-5 text-rose-500 shrink-0 ml-auto"></i>`;
+          } else {
+            stateStyle = "bg-white/60 border-slate-200 text-slate-400 opacity-60";
+          }
+        }
+
+        btn.className += stateStyle;
+        btn.innerHTML = `
+          <span class="w-7 h-7 rounded-xl flex items-center justify-center font-kanit font-bold text-xs shrink-0 ${badgeStyle}">
+            ${letters[idx]}
+          </span>
+          <span class="flex-1 leading-relaxed">${opt.text}</span>
+          ${iconHtml}
+        `;
+
+        if (!hasAnswered) {
+          btn.onclick = () => selectOption(idx);
+        }
+
+        optContainer.appendChild(btn);
+      });
+
+      // Render Explanation
+      const expBox = document.getElementById("explanationBox");
+      if (hasAnswered) {
+        expBox.classList.remove("hidden");
+        const chosen = q.options[answeredIndex];
+        const correctOpt = q.options.find(o => o.isCorrect);
+
+        const expTitle = document.getElementById("explainTitle");
+        const expDetail = document.getElementById("explainDetail");
+        const expIconWrap = document.getElementById("explainIconWrap");
+
+        if (chosen.isCorrect) {
+          expBox.className = "rounded-2xl p-4 border transition-all mb-4 bg-emerald-50/70 border-emerald-200 text-emerald-900";
+          expIconWrap.className = "p-1.5 rounded-xl shrink-0 mt-0.5 bg-emerald-100 text-emerald-700";
+          expIconWrap.innerHTML = `<i data-lucide="check-circle-2" class="w-5 h-5"></i>`;
+          expTitle.innerText = "ถูกต้องยอดเยี่ยม!";
+          expDetail.innerHTML = `<b>เหตุผล:</b> ${correctOpt.reason}`;
+        } else {
+          expBox.className = "rounded-2xl p-4 border transition-all mb-4 bg-rose-50/70 border-rose-200 text-rose-900";
+          expIconWrap.className = "p-1.5 rounded-xl shrink-0 mt-0.5 bg-rose-100 text-rose-700";
+          expIconWrap.innerHTML = `<i data-lucide="alert-circle" class="w-5 h-5"></i>`;
+          expTitle.innerText = "ยังไม่ถูกต้องนะจ๊ะ";
+          expDetail.innerHTML = `<b>คำอธิบายเฉลย:</b> คำตอบที่ถูกต้องคือ <b>${correctOpt.text}</b> เพราะ ${correctOpt.reason}`;
+        }
+      } else {
+        expBox.classList.add("hidden");
+      }
+
+      // Buttons State
+      document.getElementById("prevBtn").disabled = (currentIndex === 0);
+      const nextBtnText = document.getElementById("nextBtnText");
+      if (currentIndex === currentQuizList.length - 1) {
+        nextBtnText.innerText = "ดูผลสรุปคะแนน";
+      } else {
+        nextBtnText.innerText = "ข้อถัดไป";
+      }
+
+      lucide.createIcons();
+    }
+
+    function selectOption(optIndex) {
+      const q = currentQuizList[currentIndex];
+      userAnswers[q.id] = optIndex;
+      const isCorrect = q.options[optIndex].isCorrect;
+
+      if (isCorrect) {
+        AudioEngine.playCorrect();
+      } else {
+        AudioEngine.playWrong();
+      }
+
+      renderQuestion();
+      updateScoreBadge();
+    }
+
+    function updateScoreBadge() {
+      let correctCount = 0;
+      let answeredCount = 0;
+      currentQuizList.forEach(q => {
+        const ans = userAnswers[q.id];
+        if (ans !== undefined) {
+          answeredCount++;
+          if (q.options[ans].isCorrect) {
+            correctCount++;
+          }
+        }
+      });
+      document.getElementById("currentScoreDisplay").innerText = `${correctCount} / ${answeredCount}`;
+    }
+
+    function nextQuestion() {
+      AudioEngine.playClick();
+      if (currentIndex < currentQuizList.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      } else {
+        showSummaryModal();
+      }
+    }
+
+    function prevQuestion() {
+      AudioEngine.playClick();
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+      }
+    }
+
+    function showSummaryModal() {
+      document.getElementById("quizPlayArea").classList.add("hidden");
+      const summary = document.getElementById("quizSummaryModal");
+      summary.classList.remove("hidden");
+
+      let total = currentQuizList.length;
+      let correct = 0;
+      let catStats = {};
+
+      currentQuizList.forEach(q => {
+        if (!catStats[q.category]) {
+          catStats[q.category] = { total: 0, correct: 0 };
+        }
+        catStats[q.category].total++;
+        const ans = userAnswers[q.id];
+        if (ans !== undefined && q.options[ans].isCorrect) {
+          correct++;
+          catStats[q.category].correct++;
+        }
+      });
+
+      const percent = Math.round((correct / total) * 100);
+      document.getElementById("finalScoreDisplay").innerText = `${correct} / ${total}`;
+
+      let msg = "";
+      if (percent >= 80) msg = `${percent}% - ยอดเยี่ยมมาก สมบูรณ์แบบ!`;
+      else if (percent >= 65) msg = `${percent}% - ผ่านเกณฑ์ดีมาก พร้อมสอบแล้วครับ`;
+      else if (percent >= 50) msg = `${percent}% - ผ่านเกณฑ์ ทบทวนข้อที่ผิดอีกนิดนะ`;
+      else msg = `${percent}% - ลองกดเริ่มใหม่เพื่อฝึกฝนเพิ่มความแม่นยำนะ`;
+
+      document.getElementById("finalScorePercent").innerText = msg;
+
+      // Render category breakdown cards
+      const bd = document.getElementById("categoryBreakdown");
+      bd.innerHTML = "";
+      Object.keys(catStats).forEach(cat => {
+        const item = catStats[cat];
+        const card = document.createElement("div");
+        card.className = "bg-slate-50 border border-slate-200 p-3 rounded-2xl";
+        card.innerHTML = `
+          <div class="text-xs text-slate-500 font-medium truncate">${cat}</div>
+          <div class="text-base font-bold font-kanit text-slate-800">${item.correct} / ${item.total}</div>
+        `;
+        bd.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    function checkEssayAnswer(num) {
+      AudioEngine.playCorrect();
+      const rubricBox = document.getElementById(`essay${num}_rubric`);
+      rubricBox.classList.remove("hidden");
+      rubricBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Initialize application on load
+    window.addEventListener("DOMContentLoaded", () => {
+      prepareQuestions();
+      renderQuestion();
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>
