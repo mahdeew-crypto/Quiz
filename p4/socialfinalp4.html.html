@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แบบฝึกหัดเตรียมสอบ สังคมศึกษา ศาสนาและวัฒนธรรม ป.4 (Interactive Quiz)</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600;700&family=Mitr:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #e11d48;
+      --primary-dark: #9f1239;
+      --primary-light: #ffe4e6;
+      --accent: #2563eb;
+      --bg: #fff1f2;
+      --card-bg: #ffffff;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --correct: #16a34a;
+      --correct-bg: #dcfce7;
+      --wrong: #dc2626;
+      --wrong-bg: #fee2e2;
+      --border: #fecdd3;
+      --shadow: 0 4px 10px rgba(225, 29, 72, 0.08);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Sarabun', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 24px 14px;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    header {
+      background: linear-gradient(135deg, #e11d48, #be123c, #fb7185);
+      color: white;
+      padding: 30px 22px;
+      border-radius: var(--radius);
+      text-align: center;
+      box-shadow: 0 10px 25px -5px rgba(225, 29, 72, 0.3);
+      margin-bottom: 24px;
+    }
+
+    header h1 {
+      font-family: 'Mitr', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      font-size: 1.05rem;
+      opacity: 0.95;
+    }
+
+    .badge-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .badge {
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(4px);
+      padding: 5px 14px;
+      border-radius: 9999px;
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    .control-panel {
+      position: sticky;
+      top: 12px;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 14px 20px;
+      border-radius: var(--radius);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+      margin-bottom: 24px;
+      border: 1px solid rgba(225, 29, 72, 0.15);
+    }
+
+    .score-tracker {
+      font-weight: 700;
+      color: var(--primary-dark);
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(225, 29, 72, 0.25);
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(225, 29, 72, 0.35);
+    }
+
+    .section-title {
+      font-family: 'Mitr', sans-serif;
+      font-size: 1.35rem;
+      color: var(--primary-dark);
+      margin: 30px 0 16px;
+      padding-left: 12px;
+      border-left: 6px solid var(--primary);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quiz-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid var(--border);
+      transition: all 0.2s ease;
+    }
+
+    .quiz-card.answered-correct {
+      border-color: var(--correct);
+      box-shadow: 0 4px 12px rgba(22, 163, 74, 0.15);
+    }
+
+    .quiz-card.answered-wrong {
+      border-color: var(--wrong);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+    }
+
+    .q-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .q-number {
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: var(--primary);
+    }
+
+    .q-tag {
+      font-size: 0.78rem;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      padding: 3px 10px;
+      border-radius: 8px;
+      font-weight: 600;
+    }
+
+    .q-text {
+      font-size: 1.12rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #111827;
+      line-height: 1.6;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 640px) {
+      .options-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .option-btn {
+      text-align: left;
+      padding: 13px 16px;
+      border-radius: 10px;
+      background: #fafafa;
+      border: 1.5px solid #e5e7eb;
+      color: var(--text);
+      font-size: 0.98rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      align-items: center;
+      line-height: 1.45;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background-color: var(--primary-light);
+      border-color: var(--primary);
+      transform: translateX(3px);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+    }
+
+    .option-btn.selected-correct {
+      background-color: var(--correct-bg) !important;
+      border-color: var(--correct) !important;
+      color: #14532d !important;
+      font-weight: 700;
+    }
+
+    .option-btn.selected-wrong {
+      background-color: var(--wrong-bg) !important;
+      border-color: var(--wrong) !important;
+      color: #7f1d1d !important;
+      font-weight: 700;
+    }
+
+    .option-prefix {
+      font-weight: 700;
+      margin-right: 10px;
+      min-width: 24px;
+      display: inline-block;
+      color: var(--primary-dark);
+    }
+
+    .feedback-box {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 0.94rem;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .feedback-box.show {
+      display: block;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .feedback-box.correct {
+      background-color: var(--correct-bg);
+      color: #14532d;
+      border-left: 5px solid var(--correct);
+    }
+
+    .feedback-box.wrong {
+      background-color: var(--wrong-bg);
+      color: #7f1d1d;
+      border-left: 5px solid var(--wrong);
+    }
+
+    .subj-input-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .subj-input {
+      flex: 1;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .subj-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(225, 29, 72, 0.15);
+    }
+
+    .summary-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      margin-bottom: 25px;
+      display: none;
+      border: 2px solid var(--primary-light);
+    }
+
+    .summary-card.show {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .score-circle {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin: 18px auto;
+      border: 5px solid var(--primary);
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>แนวข้อสอบปลายภาค วิชาสังคมศึกษา ป.4</h1>
+      <p>ระบบ Interactive Quiz แบบทดสอบออนไลน์ (เพิ่มจำนวนข้อ 2 เท่า รวม 50 ข้อเพื่อการฝึกฝน)</p>
+      <div class="badge-bar">
+        <span class="badge">🕌 ความรู้เบื้องต้นและศาสนสถาน</span>
+        <span class="badge">🤝 ผู้นำและผู้ตามในสังคมประชาธิปไตย</span>
+        <span class="badge">🗳️ การปกครองระบอบประชาธิปไตย</span>
+        <span class="badge">📝 ปรนัย 40 ข้อ</span>
+        <span class="badge">✏️ อัตนัย 10 ข้อ</span>
+      </div>
+    </header>
+
+    <div class="control-panel">
+      <div class="score-tracker">
+        🎯 คะแนน: <span id="currentScore">0</span> / <span id="totalQuestions">50</span>
+      </div>
+      <div>
+        <button class="btn" onclick="resetAllQuiz()">🔄 สุ่มตัวเลือก / เริ่มใหม่</button>
+      </div>
+    </div>
+
+    <!-- ผลสอบเมื่อทำครบ -->
+    <div id="summarySection" class="summary-card">
+      <h2 style="font-family: 'Mitr'; font-size: 1.7rem; color: var(--primary);">🎉 สรุปผลการประเมินทบทวน 🎉</h2>
+      <div class="score-circle" id="finalScoreCircle">0/50</div>
+      <p id="gradeRemark" style="font-size: 1.2rem; font-weight: 600; margin-bottom: 12px;"></p>
+      <p style="color: var(--text-muted); margin-bottom: 22px;">น้องๆ สามารถคลิกปุ่มด้านล่างเพื่อเริ่มทำข้อสอบซ้ำ โดยระบบจะทำการสุ่มตัวเลือกใหม่ทุกรอบเพื่อความแม่นยำ!</p>
+      <button class="btn" onclick="resetAllQuiz()">🔁 ทำแบบทดสอบอีกครั้ง</button>
+    </div>
+
+    <!-- ส่วนที่ 1: ปรนัย 40 ข้อ -->
+    <h2 class="section-title">📌 ตอนที่ 1: แบบทดสอบปรนัย (40 ข้อ - เลือกคำตอบที่ถูกต้องที่สุด)</h2>
+    <div id="objectiveContainer"></div>
+
+    <!-- ส่วนที่ 2: อัตนัย 10 ข้อ -->
+    <h2 class="section-title">✏️ ตอนที่ 2: แบบทดสอบอัตนัย (10 ข้อ - พิมพ์คำตอบเพื่อตรวจสอบ)</h2>
+    <div id="subjectiveContainer"></div>
+
+    <footer>
+      ข้อสอบพัฒนาตามหลักการวัดและประเมินผลทางการศึกษา • กลุ่มสาระการเรียนรู้สังคมศึกษา ศาสนา และวัฒนธรรม ชั้นประถมศึกษาปีที่ 4
+    </footer>
+  </div>
+
+  <script>
+    // 40 Objective Questions (Homogeneous lengths + Randomized options)
+    const originalObjQuestions = [
+      // --- หน่วยที่ 1 บทที่ 4: ความรู้เบื้องต้นและความสำคัญของศาสนสถาน (14 ข้อ) ---
+      {
+        q: "ศาสนสถานมีความสำคัญสูงสุดต่อนักเรียนและชุมชนในข้อใด?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "เป็นศูนย์รวมจิตใจและที่ประกอบพิธีกรรมทางศาสนา", correct: true },
+          { text: "เป็นสถานที่พักผ่อนหย่อนใจและออกกำลังกายประจำวัน", correct: false },
+          { text: "เป็นแหล่งกระจายสินค้าและจำหน่ายอาหารพื้นเมือง", correct: false },
+          { text: "เป็นสถานที่ราชการสำหรับแจ้งเอกสารสำคัญต่างๆ", correct: false }
+        ],
+        expl: "ศาสนสถานเป็นศูนย์รวมจิตใจของศาสนิกชนและใช้เป็นสถานที่ประกอบพิธีกรรมทางศาสนา"
+      },
+      {
+        q: "ศาสนสถานในข้อใดจัดเป็นศูนย์รวมจิตใจของผู้นับถือศาสนาพุทธ?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "วัดและอุโบสถ", correct: true },
+          { text: "มัสยิดและสุเหร่า", correct: false },
+          { text: "โบสถ์คริสต์และวิหาร", correct: false },
+          { text: "เทวสถานและศาลเจ้า", correct: false }
+        ],
+        expl: "วัดและอุโบสถ (โบสถ์พุทธ) เป็นศาสนสถานสำคัญของพระพุทธศาสนา"
+      },
+      {
+        q: "ศาสนสถานใดเป็นสถานที่ประกอบพิธีละหมาดของศาสนาอิสลาม?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "มัสยิดประจำชุมชน", correct: true },
+          { text: "พระอุโบสถประจำวัด", correct: false },
+          { text: "โบสถ์คาทอลิกสวยงาม", correct: false },
+          { text: "ศาลเจ้าพ่อหลักเมือง", correct: false }
+        ],
+        expl: "มัสยิดหรือสุเหร่า เป็นสถานที่ประกอบพิธีละหมาดและกิจกรรมทางศาสนาของชาวมุสลิม"
+      },
+      {
+        q: "สถานที่ใดเป็นศูนย์รวมในการประกอบพิธีมิสซาของศาสนาคริสต์?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "โบสถ์หรือวัดคริสต์", correct: true },
+          { text: "มัสยิดกลางประจำเมือง", correct: false },
+          { text: "ศาลาการเปรียญในวัด", correct: false },
+          { text: "เทวาลัยของพราหมณ์", correct: false }
+        ],
+        expl: "โบสถ์คริสต์เป็นศาสนสถานที่คริสต์ศาสนิกชนใช้ประกอบพิธีกรรม เช่น พิธีมิสซาในวันอาทิตย์"
+      },
+      {
+        q: "การปฏิบัติตนที่ถูกต้องเหมาะสมที่สุดเมื่อเข้าสู่เขตศาสนสถานคือข้อใด?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "แต่งกายสุภาพเรียบร้อยและสำรวมกิริยามารยาท", correct: true },
+          { text: "พูดคุยส่งเสียงดังกังวานเพื่อสร้างความสนุกสนาน", correct: false },
+          { text: "สวมใส่เสื้อผ้าตามสบายเช่นกางเกงขาสั้นเสื้อกล้าม", correct: false },
+          { text: "นำอาหารและเครื่องดื่มเข้าไปรับประทานทุกจุด", correct: false }
+        ],
+        expl: "การเข้าศาสนสถานทุกแห่งต้องแต่งกายสุภาพ สำรวมกาย วาจา และให้เกียรติสถานที่"
+      },
+      {
+        q: "สิ่งก่อสร้างสำคัญภายในวัดที่ใช้สำหรับพระสงฆ์ทำสังฆกรรมคือข้อใด?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "พระอุโบสถในวัด", correct: true },
+          { text: "หอระฆังสูงตระหง่าน", correct: false },
+          { text: "ศาลาท่าน้ำพักร้อน", correct: false },
+          { text: "กุฏิสำหรับจำพรรษา", correct: false }
+        ],
+        expl: "พระอุโบสถ (โบสถ์) เป็นสถานที่ที่พระสงฆ์ใช้ประชุมทำสังฆกรรม เช่น การบวชพระ การสวดปาติโมกข์"
+      },
+      {
+        q: "การดูแลรักษาศาสนสถานให้มีความยั่งยืนเป็นหน้าที่ของบุคคลใด?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "ศาสนิกชนและทุกคนในชุมชนร่วมมือกัน", correct: true },
+          { text: "เจ้าหน้าที่รัฐและตำรวจในท้องที่เท่านั้น", correct: false },
+          { text: "นักบวชและผู้ดูแลประจำสถานที่เพียงลำพัง", correct: false },
+          { text: "นักท่องเที่ยวที่เดินทางมาเยี่ยมชมสถานที่", correct: false }
+        ],
+        expl: "การทำนุบำรุงและดูแลรักษาศาสนสถานเป็นหน้าที่ของพุทธศาสนิกชนและทุกคนในชุมชน"
+      },
+      {
+        q: "ข้อใดถือเป็นการแสดงความเคารพต่อศาสนสถานของศาสนาอื่นที่ถูกต้อง?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "ปฏิบัติตามกฎระเบียบของสถานที่นั้นด้วยความจริงใจ", correct: true },
+          { text: "วิพากษ์วิจารณ์พิธีกรรมทางศาสนาที่ตนไม่ได้นับถือ", correct: false },
+          { text: "หยิบฉวยสิ่งของมงคลกลับมาเป็นที่ระลึกส่วนตัว", correct: false },
+          { text: "เข้าไปลบหลู่รูปเคารพเนื่องจากมีความเชื่อต่างกัน", correct: false }
+        ],
+        expl: "การอยู่ร่วมกันในสังคมพหุวัฒนธรรม ต้องเคารพและปฏิบัติตามกฎระเบียบของศาสนสถานทุกศาสนา"
+      },
+      {
+        q: "ศาสนสถานมีบทบาทสำคัญในการพัฒนาจิตใจของคนในชุมชนอย่างไร?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "เป็นแหล่งอบรมสั่งสอนคุณธรรมและจริยธรรม", correct: true },
+          { text: "เป็นสถานที่จัดการแสดงคอนเสิร์ตรื่นเริงบันเทิงใจ", correct: false },
+          { text: "เป็นศูนย์การค้าขายแลกเปลี่ยนสินค้าราคาประหยัด", correct: false },
+          { text: "เป็นพื้นที่จัดงานเลี้ยงสังสรรค์ส่งเสียงบันเทิง", correct: false }
+        ],
+        expl: "ศาสนสถานทำหน้าที่เป็นแหล่งขัดเกลาจิตใจ สั่งสอนหลักธรรม และส่งเสริมคุณธรรมจริยธรรม"
+      },
+      {
+        q: "ก่อนเข้าไปภายในมัสยิดเพื่อละหมาด ศาสนิกชนต้องปฏิบัติสิ่งใดเป็นอันดับแรก?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "ชำระล้างร่างกายหรืออาบน้ำละหมาดให้สะอาด", correct: true },
+          { text: "จุดธูปเทียนบูชาเพื่อขอพรสิ่งศักดิ์สิทธิ์", correct: false },
+          { text: "ยืนสงบนิ่งเพื่อไว้อาลัยต่อผู้ล่วงลับ", correct: false },
+          { text: "นำดอกไม้สดมาวางประดับบริเวณทางเข้า", correct: false }
+        ],
+        expl: "ชาวมุสลิมต้องอาบน้ำละหมาด (ชำระร่างกาย) ให้สะอาดบริสุทธิ์ก่อนเข้ามัสยิดเพื่อทำละหมาด"
+      },
+      {
+        q: "เมื่อนักเรียนพบเห็นขยะตกหล่นในบริเวณลานวัด ควรปฏิบัติอย่างไรจึงจะเหมาะสม?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "ช่วยกันเก็บขยะไปทิ้งลงในถังขยะให้เรียบร้อย", correct: true },
+          { text: "เดินผ่านไปเฉยๆ เพราะไม่ใช่ขยะที่ตนเองทิ้งไว้", correct: false },
+          { text: "รอให้เจ้าหน้าที่ทำความสะอาดมาเก็บกวาดเอง", correct: false },
+          { text: "นำใบไม้แห้งมาวางทับไว้เพื่อบดบังสายตาคนอื่น", correct: false }
+        ],
+        expl: "การช่วยกันรักษาความสะอาดเป็นคุณลักษณะของศาสนิกชนที่ดีและแสดงถึงจิตสาธารณะ"
+      },
+      {
+        q: "ข้อใดเป็นโบราณสถานทางพระพุทธศาสนาที่มีความสำคัญระดับชาติของไทย?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "วัดพระศรีรัตนศาสดาราม", correct: true },
+          { text: "พระราชวังแวร์ซายส์อันยิ่งใหญ่", correct: false },
+          { text: "อนุสาวรีย์เทพีเสรีภาพ", correct: false },
+          { text: "หอไอเฟลใจกลางเมืองหลวง", correct: false }
+        ],
+        expl: "วัดพระศรีรัตนศาสดาราม (วัดพระแก้ว) เป็นวัดสำคัญคู่บ้านคู่เมืองของประเทศไทย"
+      },
+      {
+        q: "การกระทำของบุคคลใดจัดว่าเป็นการทำลายศาสนสถานและไม่ควรเอาเป็นเยี่ยงอย่าง?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "ขีดเขียนข้อความลงบนผนังโบสถ์หรือกำแพงวัด", correct: true },
+          { text: "ช่วยกวาดลานวัดและเช็ดถูพื้นศาลาการเปรียญ", correct: false },
+          { text: "นำกระถางต้นไม้มาประดับตกแต่งให้ร่มรื่น", correct: false },
+          { text: "บริจาคปัจจัยเพื่อสมทบทุนซ่อมแซมหลังคาวิหาร", correct: false }
+        ],
+        expl: "การขีดเขียนสลักข้อความบนโบราณสถานหรือศาสนสถานถือเป็นการทำลายสมบัติส่วนรวมและมีความผิด"
+      },
+      {
+        q: "เจดีย์ในวัดทางพระพุทธศาสนามีความสำคัญเพื่อประโยชน์ข้อใดเป็นหลัก?",
+        tag: "ศาสนสถาน",
+        options: [
+          { text: "ใช้เป็นที่ประดิษฐานพระบรมสารีริกธาตุเพื่อกราบไหว้", correct: true },
+          { text: "ใช้เป็นที่พักอาศัยของพระสงฆ์และสามเณรผู้บวชใหม่", correct: false },
+          { text: "ใช้เป็นสถานที่เก็บอุปกรณ์ทำความสะอาดของทางวัด", correct: false },
+          { text: "ใช้เป็นหอสังเกตการณ์ตรวจดูภัยอันตรายรอบวัด", correct: false }
+        ],
+        expl: "พระเจดีย์สร้างขึ้นเพื่อบรรจุพระบรมสารีริกธาตุหรืออัฐิของบุคคลสำคัญให้พุทธศาสนิกชนได้สักการะ"
+      },
+
+      // --- หน่วยที่ 2 บทที่ 1: ผู้นำและผู้ตามในสังคมประชาธิปไตย (13 ข้อ) ---
+      {
+        q: "ลักษณะสำคัญที่สุดของ 'ผู้นำที่ดี' ตามหลักประชาธิปไตยตรงกับข้อใด?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "มีความเป็นธรรมและรับฟังความคิดเห็นของสมาชิก", correct: true },
+          { text: "ใช้อำนาจเด็ดขาดในการตัดสินใจเพียงผู้เดียว", correct: false },
+          { text: "เลือกช่วยเหลือเฉพาะเพื่อนสนิทของตนเองก่อน", correct: false },
+          { text: "หลีกเลี่ยงการรับผิดชอบเมื่อเกิดข้อผิดพลาด", correct: false }
+        ],
+        expl: "ผู้นำในระบอบประชาธิปไตยต้องมีใจกว้าง มีเหตุผล รับฟังความคิดเห็น และยึดประโยชน์ส่วนรวม"
+      },
+      {
+        q: "บทบาทหน้าที่ที่ถูกต้องของ 'ผู้ตามที่ดี' ในห้องเรียนคือข้อใด?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "ให้ความร่วมมือและปฏิบัติตามมติส่วนใหญ่อย่างเต็มใจ", correct: true },
+          { text: "คอยคัดค้านทุกเรื่องที่ไม่ตรงกับความต้องการของตน", correct: false },
+          { text: "นิ่งเฉยไม่แสดงความคิดเห็นใดๆ ในที่ประชุมกลุ่ม", correct: false },
+          { text: "ทำตามคำสั่งเฉพาะเรื่องที่ตนเองได้รับผลประโยชน์", correct: false }
+        ],
+        expl: "ผู้ตามที่ดีต้องให้ความร่วมมือ มีวินัย ปฏิบัติตามมติของกลุ่ม และช่วยเหลืองานอย่างกระตือรือร้น"
+      },
+      {
+        q: "เมื่อสมาชิกในห้องเรียนมีความคิดเห็นขัดแย้งกัน ควรแก้ไขปัญหาด้วยวิธีใด?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "ใช้เหตุผลพูดคุยและลงมติตามเสียงส่วนใหญ่", correct: true },
+          { text: "ใช้กำลังตัดสินว่าฝ่ายใดมีความแข็งแรงมากกว่า", correct: false },
+          { text: "ให้หัวหน้าห้องตัดสินใจตามความชอบส่วนตัวทันที", correct: false },
+          { text: "ยกเลิกกิจกรรมทั้งหมดเพื่อหลีกเลี่ยงการโต้เถียง", correct: false }
+        ],
+        expl: "สังคมประชาธิปไตยแก้ปัญหาความขัดแย้งด้วยการเจรจา รับฟังเหตุผล และเคารพมติเสียงส่วนใหญ่"
+      },
+      {
+        q: "การเลือกตั้งหัวหน้าห้องเรียนเป็นตัวอย่างของการส่งเสริมเรื่องใดได้ชัดเจนที่สุด?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "การปฏิบัติตามวิถีชีวิตประชาธิปไตยในโรงเรียน", correct: true },
+          { text: "การทดสอบความนิยมและความโดดเด่นของนักเรียน", correct: false },
+          { text: "การแบ่งหน้าที่เพื่อลดภาระงานของคุณครูประจำชั้น", correct: false },
+          { text: "การแข่งขันเพื่อแสวงหาผลประโยชน์ส่วนบุคคล", correct: false }
+        ],
+        expl: "การเลือกตั้งหัวหน้าห้องเป็นการฝึกฝนสิทธิ เสรีภาพ และวิถีประชาธิปไตยขั้นพื้นฐานในโรงเรียน"
+      },
+      {
+        q: "หากหัวหน้ากลุ่มสั่งงานที่ไม่ถูกต้องและขัดต่อระเบียบ นักเรียนในฐานะผู้ตามควรทำอย่างไร?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "ทักท้วงและให้คำแนะนำด้วยเหตุผลอย่างสุภาพ", correct: true },
+          { text: "ก้มหน้าปฏิบัติตามเพราะกลัวหัวหน้าจะไม่พอใจ", correct: false },
+          { text: "ชักชวนเพื่อนคนอื่นให้หยุดทำงานเพื่อประท้วง", correct: false },
+          { text: "นำเรื่องไปนินทาให้กลุ่มอื่นฟังเพื่อความสะใจ", correct: false }
+        ],
+        expl: "ผู้ตามที่ดีมีสิทธิทักท้วงและเสนอแนะผู้นำด้วยความสุภาพและมีเหตุผลเมื่อพบสิ่งที่ไม่ถูกต้อง"
+      },
+      {
+        q: "บุคคลใดมีคุณสมบัติเหมาะสมที่จะได้รับเลือกเป็นผู้นำชุมชนมากที่สุด?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "ผู้ที่มีความซื่อสัตย์สุจริตและเสียสละเพื่อส่วนรวม", correct: true },
+          { text: "ผู้ที่มีฐานะร่ำรวยและมีชื่อเสียงโด่งดังในสังคม", correct: false },
+          { text: "ผู้ที่มีอำนาจและมีพรรคพวกคอยสนับสนุนจำนวนมาก", correct: false },
+          { text: "ผู้ที่สัญญาว่าจะให้ผลตอบแทนเป็นเงินแก่ผู้เลือก", correct: false }
+        ],
+        expl: "คุณสมบัติสำคัญของผู้นำคือความซื่อสัตย์ ความเสียสละ มีคุณธรรม และมีจิตสาธารณะ"
+      },
+      {
+        q: "การทำงานกลุ่มจะประสบความสำเร็จได้อย่างราบรื่นขึ้นอยู่กับปัจจัยใดเป็นสำคัญ?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "ความร่วมมือร่วมใจและความรับผิดชอบของทุกคน", correct: true },
+          { text: "การปล่อยให้หัวหน้ากลุ่มรับผิดชอบงานเพียงคนเดียว", correct: false },
+          { text: "การจ้างบุคคลภายนอกที่มีความเชี่ยวชาญมาทำงานแทน", correct: false },
+          { text: "การบังคับให้ทุกคนต้องออกค่าใช้จ่ายจำนวนมากๆ", correct: false }
+        ],
+        expl: "ความสำเร็จของงานกลุ่มเกิดจากการที่ผู้นำและสมาชิกทุกคนร่วมมือและรับผิดชอบหน้าที่ร่วมกัน"
+      },
+      {
+        q: "ผู้ใหญ่บ้านมีบทบาทหน้าที่หลักในการดูแลชุมชนตามข้อใด?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "ดูแลความสงบเรียบร้อยและพัฒนาความเป็นอยู่ของชาวบ้าน", correct: true },
+          { text: "ออกกฎหมายบังคับใช้กับประชาชนทั่วทั้งประเทศ", correct: false },
+          { text: "ตัดสินคดีความและลงโทษผู้กระทำผิดในศาลยุติธรรม", correct: false },
+          { text: "เก็บภาษีเพื่อนำมาสร้างธุรกิจส่วนตัวของครอบครัว", correct: false }
+        ],
+        expl: "ผู้ใหญ่บ้านเป็นผู้นำท้องที่ ทำหน้าที่ดูแลความสงบเรียบร้อย บำบัดทุกข์บำรุงสุขแก่ลูกบ้าน"
+      },
+      {
+        q: "หลักการสำคัญของการเป็นผู้ตามที่ดีในการประชุมคือข้อใด?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "เคารพสิทธิของผู้อื่นและตั้งใจฟังผู้ที่กำลังพูด", correct: true },
+          { text: "พูดแทรกทันทีเมื่อรู้สึกไม่เห็นด้วยกับผู้อื่น", correct: false },
+          { text: "แอบทำงานอื่นที่ไม่เกี่ยวข้องกับการประชุมกลุ่ม", correct: false },
+          { text: "ชักชวนเพื่อนข้างๆ คุยเรื่องตลกเพื่อคลายเครียด", correct: false }
+        ],
+        expl: "มารยาทในการประชุมประชาธิปไตยคือการตั้งใจฟัง ไม่พูดแทรก และเคารพสิทธิของผู้พูด"
+      },
+      {
+        q: "คำว่า 'เสียงข้างมากเคารพเสียงข้างน้อย' มีความหมายตรงกับข้อใดมากที่สุด?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "ตัดสินตามมติส่วนใหญ่แต่ยังคงรับฟังเหตุผลของฝ่ายน้อย", correct: true },
+          { text: "ฝ่ายที่มีคะแนนเสียงมากกว่ามีสิทธิขับไล่ฝ่ายน้อยออกไป", correct: false },
+          { text: "บังคับให้ฝ่ายเสียงข้างน้อยต้องเปลี่ยนความคิดเห็นตามทันที", correct: false },
+          { text: "ละเลยความคิดเห็นของคนกลุ่มน้อยเพราะไม่มีผลต่อคะแนน", correct: false }
+        ],
+        expl: "ประชาธิปไตยยึดมติเสียงข้างมาก แต่ต้องรับฟังและให้ความคุ้มครองสิทธิของเสียงข้างน้อยด้วย"
+      },
+      {
+        q: "การกระทำของนักเรียนคนใดจัดเป็นพฤติกรรมของผู้นำที่มีจิตสาธารณะ?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "กานต์อาสาพาเพื่อนๆ ร่วมกันทำความสะอาดแปลงเกษตร", correct: true },
+          { text: "ก้องสั่งให้เพื่อนทุกคนทำงานแทนตนเองในเวรประจำวัน", correct: false },
+          { text: "เก่งเลือกทำงานเฉพาะส่วนที่ได้รับคำชมจากคุณครู", correct: false },
+          { text: "แก้วเก็บอุปกรณ์การเรียนของส่วนรวมมาไว้ใช้คนเดียว", correct: false }
+        ],
+        expl: "การอาสาชวนเพื่อนทำประโยชน์เพื่อส่วนรวมเป็นแบบอย่างที่ดีของผู้นำที่มีจิตสาธารณะ"
+      },
+      {
+        q: "ข้อใดเป็นผลดีที่เกิดขึ้นโดยตรงจากการที่ทุกคนปฏิบัติตามบทบาทหน้าที่ของตนเอง?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "สังคมเกิดความสงบเรียบร้อยและงานสำเร็จตามเป้าหมาย", correct: true },
+          { text: "ทุกคนมีชื่อเสียงโด่งดังและได้รับการยกย่องจากทั่วโลก", correct: false },
+          { text: "ทำให้สมาชิกในสังคมไม่ต้องปฏิบัติตามกฎหมายอีกต่อไป", correct: false },
+          { text: "ทำให้เกิดการแข่งขันกันจนนำไปสู่ความแตกแยกในกลุ่ม", correct: false }
+        ],
+        expl: "เมื่อผู้นำและผู้ตามปฏิบัติหน้าที่อย่างถูกต้อง ชุมชนและสังคมจะสงบสุขและงานสำเร็จลุล่วง"
+      },
+      {
+        q: "หากนักเรียนได้รับเลือกให้เป็นหัวหน้าห้อง สิ่งแรกที่ควรทำเพื่อสร้างความเชื่อมั่นคือข้อใด?",
+        tag: "ผู้นำและผู้ตาม",
+        options: [
+          { text: "วางตนเป็นแบบอย่างที่ดีในการปฏิบัติตามกฎระเบียบ", correct: true },
+          { text: "ตั้งกฎระเบียบใหม่ที่เข้มงวดขึ้นตามความพอใจของตน", correct: false },
+          { text: "มอบหมายงานยากๆ ให้กับคนที่ตนเองไม่ชอบหน้าทำ", correct: false },
+          { text: "ขอสิทธิพิเศษจากคุณครูเพื่อตนเองและกลุ่มเพื่อนสนิท", correct: false }
+        ],
+        expl: "ผู้นำที่ดีต้องเริ่มจากการปฏิบัติตนเป็นแบบอย่างที่ดี เคารพกฎระเบียบ จึงจะได้รับความไว้วางใจ"
+      },
+
+      // --- หน่วยที่ 2 บทที่ 3: การปกครองระบอบประชาธิปไตย (13 ข้อ) ---
+      {
+        q: "ประเทศไทยมีการปกครองระบอบประชาธิปไตยอันมีลักษณะตามข้อใด?",
+        tag: "การปกครอง",
+        options: [
+          { text: "มีพระมหากษัตริย์ทรงเป็นประมุขภายใต้รัฐธรรมนูญ", correct: true },
+          { text: "มีประธานาธิบดีทำหน้าที่เป็นผู้นำสูงสุดของประเทศ", correct: false },
+          { text: "มีคณะทหารเข้าควบคุมการบริหารงานตลอดเวลา", correct: false },
+          { text: "มีนายกรัฐมนตรีมีอำนาจเบ็ดเสร็จโดยไม่มีการตรวจสอบ", correct: false }
+        ],
+        expl: "ประเทศไทยปกครองด้วยระบอบประชาธิปไตยอันมีพระมหากษัตริย์ทรงเป็นประมุข"
+      },
+      {
+        q: "กฎหมายสูงสุดที่ใช้ในการจัดระเบียบการปกครองของประเทศไทยคือข้อใด?",
+        tag: "การปกครอง",
+        options: [
+          { text: "รัฐธรรมนูญแห่งราชอาณาจักรไทย", correct: true },
+          { text: "พระราชบัญญัติจราจรทางบก", correct: false },
+          { text: "ประมวลกฎหมายอาญาและแพ่ง", correct: false },
+          { text: "กฎระเบียบของกระทรวงมหาดไทย", correct: false }
+        ],
+        expl: "รัฐธรรมนูญเป็นกฎหมายสูงสุดของประเทศ กฎหมายอื่นใดจะขัดหรือแย้งต่อรัฐธรรมนูญไม่ได้"
+      },
+      {
+        q: "อำนาจอธิปไตยซึ่งเป็นอำนาจสูงสุดในการปกครองประเทศแบ่งออกเป็นกี่ฝ่าย?",
+        tag: "การปกครอง",
+        options: [
+          { text: "แบ่งออกเป็น 3 ฝ่ายสำคัญ", correct: true },
+          { text: "แบ่งออกเป็น 2 ฝ่ายหลัก", correct: false },
+          { text: "แบ่งออกเป็น 4 ฝ่ายเท่ากัน", correct: false },
+          { text: "แบ่งออกเป็น 5 ฝ่ายต่อเนื่อง", correct: false }
+        ],
+        expl: "อำนาจอธิปไตยแบ่งออกเป็น 3 ฝ่าย ได้แก่ นิติบัญญัติ บริหาร และตุลาการ"
+      },
+      {
+        q: "สถาบันหรือองค์กรใดทำหน้าที่ในการใช้อำนาจนิติบัญญัติเพื่อออกกฎหมาย?",
+        tag: "การปกครอง",
+        options: [
+          { text: "รัฐสภาซึ่งประกอบด้วย ส.ส. และ ส.ว.", correct: true },
+          { text: "คณะรัฐมนตรีซึ่งนำโดยนายกรัฐมนตรี", correct: false },
+          { text: "ศาลยุติธรรมและศาลรัฐธรรมนูญ", correct: false },
+          { text: "ผู้บัญชาการเหล่าทัพและตำรวจ", correct: false }
+        ],
+        expl: "รัฐสภาเป็นผู้ใช้อำนาจนิติบัญญัติ มีหน้าที่หลักในการพิจารณาและออกกฎหมายเพื่อใช้ในประเทศ"
+      },
+      {
+        q: "คณะรัฐมนตรีทำหน้าที่ใช้อำนาจตามข้อใดในการบริหารประเทศ?",
+        tag: "การปกครอง",
+        options: [
+          { text: "อำนาจบริหารเพื่อพัฒนาบ้านเมือง", correct: true },
+          { text: "อำนาจนิติบัญญัติในการพิจารณากฎหมาย", correct: false },
+          { text: "อำนาจตุลาการในการตัดสินคดีความ", correct: false },
+          { text: "อำนาจเด็ดขาดในการควบคุมสื่อมวลชน", correct: false }
+        ],
+        expl: "คณะรัฐมนตรีหรือรัฐบาลใช้อำนาจบริหาร ทำหน้าที่บริหารและพัฒนาประเทศตามนโยบาย"
+      },
+      {
+        q: "ศาลยุติธรรมทำหน้าที่ใช้อำนาจอธิปไตยในด้านใดตามหลักการปกครอง?",
+        tag: "การปกครอง",
+        options: [
+          { text: "อำนาจตุลาการในการตัดสินคดีความ", correct: true },
+          { text: "อำนาจนิติบัญญัติในการร่างกฎหมาย", correct: false },
+          { text: "อำนาจบริหารในการจัดเก็บภาษีอากร", correct: false },
+          { text: "อำนาจทางการทหารในการป้องกันประเทศ", correct: false }
+        ],
+        expl: "ศาลใช้อำนาจตุลาการ พิจารณาพิพากษาคดีตามกฎหมายด้วยความเที่ยงธรรมและเป็นอิสระ"
+      },
+      {
+        q: "ประชาชนชาวไทยมีสิทธิไปใช้สิทธิเลือกตั้งสมาชิกสภาผู้แทนราษฎรเมื่อมีอายุครบกี่ปีบริบูรณ์?",
+        tag: "การปกครอง",
+        options: [
+          { text: "มีอายุครบ 18 ปีบริบูรณ์ในวันเลือกตั้ง", correct: true },
+          { text: "มีอายุครบ 15 ปีบริบูรณ์ในวันเลือกตั้ง", correct: false },
+          { text: "มีอายุครบ 20 ปีบริบูรณ์ในวันเลือกตั้ง", correct: false },
+          { text: "มีอายุครบ 25 ปีบริบูรณ์ในวันเลือกตั้ง", correct: false }
+        ],
+        expl: "ผู้มีสิทธิเลือกตั้งในประเทศไทยต้องมีอายุไม่ต่ำกว่า 18 ปีบริบูรณ์ในวันเลือกตั้ง"
+      },
+      {
+        q: "การกระทำในข้อใดถือเป็นการมีส่วนร่วมทางการเมืองการปกครองของพลเมืองดี?",
+        tag: "การปกครอง",
+        options: [
+          { text: "ไปใช้สิทธิออกเสียงเลือกตั้งอย่างสุจริตโปร่งใส", correct: true },
+          { text: "รับเงินสินบนจากผู้สมัครรับเลือกตั้งเพื่อลงคะแนน", correct: false },
+          { text: "หลีกเลี่ยงการไปใช้สิทธิเพราะเห็นว่าเป็นเรื่องไกลตัว", correct: false },
+          { text: "ฉีกบัตรเลือกตั้งเพื่อแสดงความไม่ชอบใจในนโยบาย", correct: false }
+        ],
+        expl: "การไปใช้สิทธิเลือกตั้งอย่างบริสุทธิ์ใจเป็นหน้าที่สำคัญยิ่งของพลเมืองในระบอบประชาธิปไตย"
+      },
+      {
+        q: "คำว่า 'เสรีภาพ' ตามวิถีประชาธิปไตยมีความหมายที่ถูกต้องตรงกับข้อใด?",
+        tag: "การปกครอง",
+        options: [
+          { text: "อิสระในการกระทำสิ่งใดๆ โดยไม่ละเมิดสิทธิผู้อื่น", correct: true },
+          { text: "การกระทำสิ่งใดก็ได้ตามใจชอบโดยไม่มีข้อจำกัด", correct: false },
+          { text: "การมีสิทธิทำร้ายร่างกายผู้อื่นเมื่อเกิดความโกรธ", correct: false },
+          { text: "การละเว้นไม่ต้องปฏิบัติตามกฎหมายของบ้านเมือง", correct: false }
+        ],
+        expl: "เสรีภาพคือความเป็นอิสระ แต่ต้องอยู่ภายใต้ขอบเขตของกฎหมายและไม่ไปละเมิดสิทธิของบุคคลอื่น"
+      },
+      {
+        q: "องค์กรปกครองส่วนท้องถิ่นในข้อใดมีโครงสร้างการบริหารในรูปแบบพิเศษ?",
+        tag: "การปกครอง",
+        options: [
+          { text: "กรุงเทพมหานครและเมืองพัทยา", correct: true },
+          { text: "องค์การบริหารส่วนตำบลทุกแห่ง", correct: false },
+          { text: "เทศบาลนครและเทศบาลเมืองทั่วไป", correct: false },
+          { text: "องค์การบริหารส่วนจังหวัดทุกภาค", correct: false }
+        ],
+        expl: "กรุงเทพมหานครและเมืองพัทยาเป็นองค์กรปกครองส่วนท้องถิ่นรูปแบบพิเศษของประเทศไทย"
+      },
+      {
+        q: "เพราะเหตุใดสังคมประชาธิปไตยจึงต้องมีการบัญญัติและบังคับใช้กฎหมาย?",
+        tag: "การปกครอง",
+        options: [
+          { text: "เพื่อให้ประชาชนอยู่ร่วมกันอย่างสงบสุขและเสมอภาค", correct: true },
+          { text: "เพื่อให้เจ้าหน้าที่รัฐมีอำนาจจับกุมประชาชนได้ตลอด", correct: false },
+          { text: "เพื่อหารายได้จากการปรับเงินผู้กระทำผิดเข้าหลวง", correct: false },
+          { text: "เพื่อจำกัดสิทธิไม่ให้ประชาชนแสดงความคิดเห็นใดๆ", correct: false }
+        ],
+        expl: "กฎหมายมีไว้เพื่อรักษาความสงบเรียบร้อย คุ้มครองสิทธิเสรีภาพ และสร้างความยุติธรรมในสังคม"
+      },
+      {
+        q: "สิ่งใดเปรียบเสมือนสัญลักษณ์และหลักประกันความเสมอภาคของคนในระบอบประชาธิปไตย?",
+        tag: "การปกครอง",
+        options: [
+          { text: "ทุกคนอยู่ภายใต้กฎหมายเดียวกันอย่างเท่าเทียมกัน", correct: true },
+          { text: "ทุกคนต้องมีทรัพย์สินและบ้านเรือนขนาดเท่ากันหมด", correct: false },
+          { text: "ทุกคนต้องประกอบอาชีพเดียวกันตามคำสั่งของรัฐ", correct: false },
+          { text: "ทุกคนต้องได้รับเงินเดือนเท่ากันโดยไม่คำนึงถึงงาน", correct: false }
+        ],
+        expl: "หลักความเสมอภาคคือความเท่าเทียมกันต่อหน้ากฎหมาย ทุกคนได้รับความคุ้มครองโดยไม่เลือกปฏิบัติ"
+      },
+      {
+        q: "ในระดับโรงเรียน นักเรียนสามารถนำหลักการประชาธิปไตยมาปรับใช้ได้อย่างไร?",
+        tag: "การปกครอง",
+        options: [
+          { text: "เคารพกฎระเบียบของโรงเรียนและรับฟังเสียงเพื่อน", correct: true },
+          { text: "บังคับให้เพื่อนร่วมห้องเชื่อฟังความคิดของตนเอง", correct: false },
+          { text: "ต่อต้านครูอาจารย์เมื่อได้รับการตักเตือนเรื่องระเบียบ", correct: false },
+          { text: "เลือกทำกิจกรรมเฉพาะเมื่อตนเองได้เป็นหัวหน้าเท่านั้น", correct: false }
+        ],
+        expl: "ประชาธิปไตยในโรงเรียนเริ่มต้นจากการเคารพกฎ มีระเบียบวินัย และรับฟังความคิดเห็นของผู้อื่น"
+      }
+    ];
+
+    // 10 Subjective Questions (Fill-in-the-blank & Concept translations)
+    const originalSubjQuestions = [
+      {
+        q: "ศาสนสถานสำคัญของพระพุทธศาสนาที่เป็นศูนย์รวมจิตใจของพุทธศาสนิกชนเรียกว่าอะไร?",
+        answers: ["วัด", "อาราม", "พระอาราม"],
+        hint: "สถานที่พำนักของพระภิกษุสามเณร และใช้ทำบุญตักบาตร",
+        tag: "ศาสนสถาน"
+      },
+      {
+        q: "สถานที่ประกอบพิธีละหมาดวันศุกร์ของพี่น้องชาวไทยมุสลิมเรียกว่าอะไร?",
+        answers: ["มัสยิด", "สุเหร่า"],
+        hint: "ศาสนสถานในศาสนาอิสลาม มีหอคอยและโดมสวยงาม",
+        tag: "ศาสนสถาน"
+      },
+      {
+        q: "ศาสนสถานสำคัญที่คริสต์ศาสนิกชนใช้ประกอบพิธีมิสซาในวันอาทิตย์เรียกว่าอะไร?",
+        answers: ["โบสถ์", "โบสถ์คริสต์", "วัดคริสต์", "วิหาร"],
+        hint: "สถานที่ประกอบพิธีกรรมทางศาสนาคริสต์ มักมีไม้กางเขนประดับ",
+        tag: "ศาสนสถาน"
+      },
+      {
+        q: "อาคารสำคัญภายในวัดที่ใช้สำหรับพระสงฆ์ประชุมทำสังฆกรรม เช่น การบวชพระ เรียกว่าอะไร?",
+        answers: ["อุโบสถ", "พระอุโบสถ", "โบสถ์"],
+        hint: "มีใบเสมาเป็นเครื่องหมายบอกเขตพัทธสีมาล้อมรอบ",
+        tag: "ศาสนสถาน"
+      },
+      {
+        q: "กฎหมายสูงสุดในการจัดการปกครองของประเทศไทยมีชื่อเรียกว่ากฎหมายอะไร?",
+        answers: ["รัฐธรรมนูญ", "รัฐธรรมนูญแห่งราชอาณาจักรไทย"],
+        hint: "กฎหมายแม่บทสูงสุด กฎหมายอื่นจะขัดหรือแย้งไม่ได้",
+        tag: "การปกครอง"
+      },
+      {
+        q: "บุคคลผู้ทำหน้าที่ใช้อำนาจบริหารในฐานะหัวหน้ารัฐบาลของประเทศไทยเรียกว่าอะไร?",
+        answers: ["นายกรัฐมนตรี", "นายก"],
+        hint: "ผู้นำฝ่ายบริหารของคณะรัฐมนตรี",
+        tag: "การปกครอง"
+      },
+      {
+        q: "อำนาจสูงสุดในการปกครองประเทศของประชาชนในระบอบประชาธิปไตยเรียกว่าอำนาจอะไร?",
+        answers: ["อำนาจอธิปไตย", "อธิปไตย"],
+        hint: "แบ่งเป็น 3 ฝ่าย นิติบัญญัติ บริหาร ตุลาการ",
+        tag: "การปกครอง"
+      },
+      {
+        q: "องค์กรที่ทำหน้าที่ใช้อำนาจนิติบัญญัติในการพิจารณาและออกกฎหมายในประเทศไทยเรียกว่าอะไร?",
+        answers: ["รัฐสภา", "สภาผู้แทนราษฎร"],
+        hint: "ประกอบด้วย สภาผู้แทนราษฎร (ส.ส.) และวุฒิสภา (ส.ว.)",
+        tag: "การปกครอง"
+      },
+      {
+        q: "ผู้นำที่ได้รับเลือกตั้งจากประชาชนให้ทำหน้าที่ดูแลความสงบเรียบร้อยในหมู่บ้านเรียกว่าอะไร?",
+        answers: ["ผู้ใหญ่บ้าน"],
+        hint: "ผู้นำระดับหมู่บ้าน ทำงานร่วมกับกำนัน",
+        tag: "ผู้นำและผู้ตาม"
+      },
+      {
+        q: "บุคคลที่มีสิทธิไปออกเสียงเลือกตั้งระดับประเทศตามกฎหมายไทย ต้องมีอายุไม่ต่ำกว่ากี่ปีบริบูรณ์?",
+        answers: ["18 ปี", "18 ปีบริบูรณ์", "18"],
+        hint: "ระบุจำนวนตัวเลข เช่น 18 หรือ 18 ปี",
+        tag: "การปกครอง"
+      }
+    ];
+
+    let currentObjState = [];
+    let currentSubjState = [];
+
+    // Utility: Shuffle an array (Fisher-Yates)
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function initQuiz() {
+      // Setup Objective questions with randomized choice positions
+      currentObjState = originalObjQuestions.map((item, idx) => {
+        return {
+          id: idx,
+          q: item.q,
+          tag: item.tag,
+          expl: item.expl,
+          options: shuffleArray(item.options),
+          userChoice: null,
+          isCorrect: null
+        };
+      });
+
+      // Setup Subjective questions
+      currentSubjState = originalSubjQuestions.map((item, idx) => {
+        return {
+          id: idx,
+          q: item.q,
+          answers: item.answers,
+          hint: item.hint,
+          tag: item.tag,
+          userAnswer: "",
+          isCorrect: null
+        };
+      });
+
+      renderObjective();
+      renderSubjective();
+      updateScoreboard();
+      document.getElementById('summarySection').classList.remove('show');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderObjective() {
+      const container = document.getElementById('objectiveContainer');
+      container.innerHTML = "";
+      const prefixes = ["ก", "ข", "ค", "ง"];
+
+      currentObjState.forEach((item, qIdx) => {
+        const card = document.createElement('div');
+        card.className = "quiz-card";
+        card.id = `obj-card-${qIdx}`;
+
+        let html = `
+          <div class="q-meta">
+            <span class="q-number">ข้อที่ ${qIdx + 1}</span>
+            <span class="q-tag">${item.tag}</span>
+          </div>
+          <div class="q-text">${item.q}</div>
+          <div class="options-grid">
+        `;
+
+        item.options.forEach((opt, optIdx) => {
+          html += `
+            <button class="option-btn" id="btn-${qIdx}-${optIdx}" onclick="handleOptionSelect(${qIdx}, ${optIdx})">
+              <span class="option-prefix">${prefixes[optIdx]}.</span>
+              <span>${opt.text}</span>
+            </button>
+          `;
+        });
+
+        html += `
+          </div>
+          <div class="feedback-box" id="feedback-obj-${qIdx}"></div>
+        `;
+
+        card.innerHTML = html;
+        container.appendChild(card);
+      });
+    }
+
+    function handleOptionSelect(qIdx, optIdx) {
+      const q = currentObjState[qIdx];
+      if (q.userChoice !== null) return; // answered already
+
+      q.userChoice = optIdx;
+      const chosen = q.options[optIdx];
+      const isCorrect = chosen.correct;
+      q.isCorrect = isCorrect;
+
+      const card = document.getElementById(`obj-card-${qIdx}`);
+      const feedback = document.getElementById(`feedback-obj-${qIdx}`);
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.getElementById(`btn-${qIdx}-${idx}`);
+        btn.disabled = true;
+        if (opt.correct) {
+          btn.classList.add('selected-correct');
+        } else if (idx === optIdx && !isCorrect) {
+          btn.classList.add('selected-wrong');
+        }
+      });
+
+      if (isCorrect) {
+        card.classList.add('answered-correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = `<strong>ยอดเยี่ยม! คำตอบถูกต้อง ✅</strong> ${q.expl}`;
+      } else {
+        card.classList.add('answered-wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = `<strong>ยังไม่ถูกต้อง ❌</strong> ${q.expl}`;
+      }
+
+      updateScoreboard();
+    }
+
+    function renderSubjective() {
+      const container = document.getElementById('subjectiveContainer');
+      container.innerHTML = "";
+
+      currentSubjState.forEach((item, sIdx) => {
+        const globalIdx = 40 + sIdx + 1;
+        const card = document.createElement('div');
+        card.className = "quiz-card";
+        card.id = `subj-card-${sIdx}`;
+
+        card.innerHTML = `
+          <div class="q-meta">
+            <span class="q-number">ข้อที่ ${globalIdx} (อัตนัย)</span>
+            <span class="q-tag">${item.tag}</span>
+          </div>
+          <div class="q-text">${item.q}</div>
+          <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 8px;">💡 คำใบ้: ${item.hint}</p>
+          <div class="subj-input-group">
+            <input type="text" class="subj-input" id="subj-input-${sIdx}" placeholder="พิมพ์คำตอบสั้นๆ ที่นี่..." onkeydown="if(event.key === 'Enter') checkSubjectiveAnswer(${sIdx})">
+            <button class="btn" id="subj-btn-${sIdx}" onclick="checkSubjectiveAnswer(${sIdx})">ตรวจคำตอบ</button>
+          </div>
+          <div class="feedback-box" id="feedback-subj-${sIdx}"></div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function checkSubjectiveAnswer(sIdx) {
+      const item = currentSubjState[sIdx];
+      if (item.isCorrect !== null) return;
+
+      const input = document.getElementById(`subj-input-${sIdx}`);
+      const btn = document.getElementById(`subj-btn-${sIdx}`);
+      const val = input.value.trim().toLowerCase();
+
+      if (!val) {
+        alert("กรุณากรอกคำตอบก่อนกดตรวจคำตอบครับ");
+        return;
+      }
+
+      item.userAnswer = val;
+      const isMatched = item.answers.some(ans => {
+        const normAns = ans.toLowerCase();
+        return val === normAns || val.includes(normAns) || normAns.includes(val);
+      });
+      item.isCorrect = isMatched;
+
+      input.disabled = true;
+      btn.disabled = true;
+
+      const card = document.getElementById(`subj-card-${sIdx}`);
+      const feedback = document.getElementById(`feedback-subj-${sIdx}`);
+
+      if (isMatched) {
+        card.classList.add('answered-correct');
+        feedback.className = "feedback-box show correct";
+        feedback.innerHTML = `<strong>เก่งมาก! คำตอบถูกต้อง ✅</strong> แนวคำตอบ: ${item.answers.join(' หรือ ')}`;
+      } else {
+        card.classList.add('answered-wrong');
+        feedback.className = "feedback-box show wrong";
+        feedback.innerHTML = `<strong>ยังไม่ตรงคำตอบ ❌</strong> คำตอบที่ถูกต้องคือ: <strong>"${item.answers.join(' / ')}"</strong>`;
+      }
+
+      updateScoreboard();
+    }
+
+    function updateScoreboard() {
+      const objScore = currentObjState.filter(q => q.isCorrect === true).length;
+      const subjScore = currentSubjState.filter(s => s.isCorrect === true).length;
+      const totalScore = objScore + subjScore;
+
+      document.getElementById('currentScore').innerText = totalScore;
+
+      const answeredObj = currentObjState.filter(q => q.userChoice !== null).length;
+      const answeredSubj = currentSubjState.filter(s => s.isCorrect !== null).length;
+      const totalAnswered = answeredObj + answeredSubj;
+
+      if (totalAnswered === 50) {
+        showFinalSummary(totalScore);
+      }
+    }
+
+    function showFinalSummary(score) {
+      const summarySec = document.getElementById('summarySection');
+      const scoreCircle = document.getElementById('finalScoreCircle');
+      const remark = document.getElementById('gradeRemark');
+
+      scoreCircle.innerText = `${score}/50`;
+
+      let text = "";
+      if (score >= 45) {
+        text = "🌟 ยอดเยี่ยมไร้ที่ติ! ความรู้แน่นปึ้ก เตรียมตัวสอบปลายภาคได้คะแนนเต็มแน่นอน";
+      } else if (score >= 38) {
+        text = "👏 เก่งมาก! ผลคะแนนอยู่ในเกณฑ์ดีเยี่ยม ทบทวนอีกนิดมั่นใจเต็มร้อย";
+      } else if (score >= 25) {
+        text = "👍 ผ่านเกณฑ์การประเมิน! ลองกดปุ่มเริ่มใหม่เพื่อฝึกฝนข้อที่ตอบผิดซ้ำอีกรอบนะ";
+      } else {
+        text = "💪 พยายามอีกนิดนะ! อ่านทบทวนเนื้อหาและลองทำซ้ำอีกครั้งเพื่อพัฒนาตนเอง";
+      }
+
+      remark.innerText = text;
+      summarySec.classList.add('show');
+      summarySec.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function resetAllQuiz() {
+      initQuiz();
+    }
+
+    window.onload = initQuiz;
+  </script>
+</body>
+</html>
