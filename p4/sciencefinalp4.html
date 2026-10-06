@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แบบทดสอบปลายภาค วิชาวิทยาศาสตร์ ชั้น ป.4</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #f0f7ff;
+      margin: 0;
+      padding: 16px;
+      color: #1e293b;
+    }
+    .quiz-container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(2, 132, 199, 0.12);
+      border: 2px solid #bae6fd;
+    }
+    .header-card {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .header-card h1 {
+      margin: 0 0 6px 0;
+      font-size: 22px;
+    }
+    .header-card p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+    .tab-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab-item {
+      flex: 1;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      color: #475569;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .tab-item.active {
+      background: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.show {
+      display: block;
+    }
+    .question-block {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .q-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #0f172a;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .opts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 620px) {
+      .opts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1.4;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .opt-label:hover {
+      background: #f0fdf4;
+      border-color: #22c55e;
+    }
+    .opt-label input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #0284c7;
+    }
+    .opt-label.chosen {
+      background: #e0f2fe;
+      border-color: #0284c7;
+      color: #0369a1;
+      font-weight: bold;
+    }
+    .opt-label.is-correct {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+      color: #166534 !important;
+      font-weight: bold;
+    }
+    .opt-label.is-wrong {
+      background: #fee2e2 !important;
+      border-color: #dc2626 !important;
+      color: #991b1b !important;
+    }
+    .feedback-note {
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 8px;
+      display: none;
+    }
+    .essay-textarea {
+      width: 100%;
+      min-height: 130px;
+      padding: 14px;
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 15px;
+      resize: vertical;
+      background: #ffffff;
+      color: #0f172a;
+      outline: none;
+      line-height: 1.6;
+      display: block;
+      box-sizing: border-box;
+      cursor: text;
+    }
+    .essay-textarea:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    }
+    .model-answer {
+      background: #fefce8;
+      border-left: 4px solid #ca8a04;
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 12px;
+      font-size: 14px;
+      color: #713f12;
+      line-height: 1.6;
+      display: none;
+    }
+    .btn-submit {
+      width: 100%;
+      background: #0284c7;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);
+      transition: background 0.2s;
+    }
+    .btn-submit:hover {
+      background: #0369a1;
+    }
+    .result-box {
+      display: none;
+      background: #f0fdf4;
+      border: 2px solid #86efac;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .score-badge {
+      font-size: 32px;
+      font-weight: 800;
+      color: #15803d;
+      margin: 8px 0;
+    }
+    .btn-retry {
+      background: #16a34a;
+      color: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn-retry:hover {
+      background: #15803d;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  
+  <div class="header-card">
+    <h1>🔬 แบบทดสอบปลายภาค: วิชาวิทยาศาสตร์ ชั้น ป.4</h1>
+    <p>หน่วยที่ 1: มวลและน้ำหนัก | หน่วยที่ 2: ตัวกลางของแสง</p>
+  </div>
+
+  <div class="tab-bar">
+    <button type="button" class="tab-item active" id="tab-btn-1">
+      📝 ตอนที่ 1: ข้อสอบปรนัย (30 ข้อ)
+    </button>
+    <button type="button" class="tab-item" id="tab-btn-2">
+      ✍️ ตอนที่ 2: ข้อสอบอัตนัย (2 ข้อ)
+    </button>
+  </div>
+
+  <!-- ตอนที่ 1: ปรนัย 30 ข้อ -->
+  <div class="tab-content show" id="tab-content-1">
+    <div id="part1-questions"></div>
+  </div>
+
+  <!-- ตอนที่ 2: อัตนัย 2 ข้อ -->
+  <div class="tab-content" id="tab-content-2">
+    <div class="question-block">
+      <div class="q-text" style="color: #0284c7;">
+        ข้อที่ 1: ให้นักเรียนอธิบายความแตกต่างระหว่าง 'มวล' และ 'น้ำหนัก' พร้อมระบุหน่วยวัดมาตรฐานของทั้งสองอย่างให้ถูกต้อง
+      </div>
+      <textarea class="essay-textarea" id="essay-input-1" placeholder="พิมพ์คำตอบอย่างละเอียดและครบถ้วนที่นี่..."></textarea>
+      <div class="model-answer" id="model-answer-1">
+        <strong>💡 แนวคำตอบที่ถูกต้อง:</strong><br>
+        • <b>มวล (Mass):</b> คือ ปริมาณเนื้อสารทั้งหมดที่ประกอบขึ้นเป็นวัตถุ มีหน่วยเป็น <i>กรัม (g) หรือ กิโลกรัม (kg)</i> และมีค่าคงที่เสมอไม่ว่าจะอยู่ที่ใด<br>
+        • <b>น้ำหนัก (Weight):</b> คือ แรงดึงดูดของโลกหรือเทห์ฟ้าที่กระทำต่อมวลของวัตถุ มีหน่วยเป็น <i>นิวตัน (N)</i> สามารถเปลี่ยนแปลงได้ตามแรงโน้มถ่วงของสถานที่นั้น ๆ
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-text" style="color: #0284c7;">
+        ข้อที่ 2: ให้นักเรียนบอกเกณฑ์ที่ใช้ในการจำแนกตัวกลางของแสง พร้อมยกตัวอย่างวัตถุที่เป็น 'ตัวกลางโปร่งใส', 'ตัวกลางโปร่งแสง' และ 'วัตถุทึบแสง' มาอย่างละ 2 ตัวอย่าง
+      </div>
+      <textarea class="essay-textarea" id="essay-input-2" placeholder="พิมพ์คำตอบอย่างละเอียดและครบถ้วนที่นี่..."></textarea>
+      <div class="model-answer" id="model-answer-2">
+        <strong>💡 แนวคำตอบที่ถูกต้อง:</strong><br>
+        • <b>เกณฑ์ที่ใช้:</b> ใช้ลักษณะการมองเห็นสิ่งต่าง ๆ เมื่อมองผ่านวัตถุที่นำมากั้นแสงเป็นเกณฑ์<br>
+        • <b>ตัวกลางโปร่งใส</b> (แสงผ่านได้หมด/มองเห็นชัด): กระจกใส, น้ำใส, อากาศ<br>
+        • <b>ตัวกลางโปร่งแสง</b> (แสงผ่านได้บางส่วน/มองเห็นไม่ชัด): กระจกฝ้า, กระดาษไข, หมอก<br>
+        • <b>วัตถุทึบแสง</b> (แสงผ่านไม่ได้เลย/เกิดเงา): แผ่นไม้, ก้อนหิน, สมุด
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn-submit" id="btn-submit-exam">
+    ✅ ส่งข้อสอบและตรวจคำตอบ
+  </button>
+
+  <div class="result-box" id="result-box">
+    <h2 style="color: #166534; margin: 0 0 6px 0;">🎉 สรุปผลการประเมินคะแนน</h2>
+    <div>คะแนนตอนที่ 1 (ปรนัย 30 ข้อ):</div>
+    <div class="score-badge" id="score-display">0 / 30</div>
+    <p style="font-size: 14px; color: #475569; margin: 0 0 14px 0;">
+      *สามารถกดสลับไปที่ <b>ตอนที่ 2: ข้อสอบอัตนัย</b> เพื่อตรวจดูแนวคำตอบที่เฉลยไว้ได้ครับ
+    </p>
+    <button type="button" class="btn-retry" id="btn-retry-exam">
+      🔄 ทำใหม่อีกครั้ง (สุ่มตัวเลือกใหม่)
+    </button>
+  </div>
+
+</div>
+
+<script>
+const examQuestions = [
+  // เรื่องที่ 1: มวลและน้ำหนัก (15 ข้อ)
+  {
+    q: "มวลของวัตถุหมายถึงข้อใดถูกต้องที่สุด?",
+    opts: ["เนื้อสารทั้งหมดที่ประกอบขึ้นเป็นวัตถุ", "แรงดึงดูดของโลกที่กระทำต่อตัววัตถุ", "ปริมาตรพื้นที่ทั้งหมดที่วัตถุครอบครอง", "ความหนาแน่นรวมเฉลี่ยของเนื้อวัตถุ"],
+    ans: "เนื้อสารทั้งหมดที่ประกอบขึ้นเป็นวัตถุ"
+  },
+  {
+    q: "น้ำหนักของวัตถุเกิดขึ้นจากสาเหตุในข้อใด?",
+    opts: ["แรงดึงดูดของโลกกระทำต่อมวลวัตถุ", "การสั่นของอนุภาคภายในเนื้อสารวัตถุ", "ขนาดและรูปทรงภายนอกของวัตถุเปลี่ยน", "ความดันบรรยากาศที่กดทับลงบนวัตถุ"],
+    ans: "แรงดึงดูดของโลกกระทำต่อมวลวัตถุ"
+  },
+  {
+    q: "หน่วยมาตรฐานในการวัดมวลของวัตถุคือข้อใด?",
+    opts: ["กรัมและกิโลกรัม", "มิลลิลิตรและลิตร", "นิวตันและดายน์", "เมตรและกิโลเมตร"],
+    ans: "กรัมและกิโลกรัม"
+  },
+  {
+    q: "หน่วยมาตรฐานที่ใช้วัดค่าน้ำหนักคือข้อใด?",
+    opts: ["นิวตัน", "กิโลกรัม", "ลูกบาศก์เซนติเมตร", "กิโลเมตรต่อชั่วโมง"],
+    ans: "นิวตัน"
+  },
+  {
+    q: "อุปกรณ์ชนิดใดใช้วัดน้ำหนักของวัตถุโดยตรง?",
+    opts: ["เครื่องชั่งสปริง", "กระบอกตวงน้ำแก้ว", "ไม้บรรทัดเหล็ก", "เทอร์มอมิเตอร์"],
+    ans: "เครื่องชั่งสปริง"
+  },
+  {
+    q: "เมื่อนำวัตถุชิ้นหนึ่งไปอยู่บนดวงจันทร์ ข้อใดถูกต้อง?",
+    opts: ["มวลเท่าเดิมแต่น้ำหนักลดลง", "มวลลดลงแต่น้ำหนักเท่าเดิม", "ทั้งมวลและน้ำหนักลดลงด้วยกัน", "ทั้งมวลและน้ำหนักคงที่เท่าเดิม"],
+    ans: "มวลเท่าเดิมแต่น้ำหนักลดลง"
+  },
+  {
+    q: "เหตุใดวัตถุจึงมีน้ำหนักบนดวงจันทร์น้อยกว่าบนโลก?",
+    opts: ["ดวงจันทร์มีแรงดึงดูดน้อยกว่าโลก", "ดวงจันทร์ไม่มีชั้นบรรยากาศห่อหุ้ม", "เนื้อสารของวัตถุสลายตัวบางส่วน", "อุณหภูมิพื้นผิวดวงจันทร์หนาวเย็น"],
+    ans: "ดวงจันทร์มีแรงดึงดูดน้อยกว่าโลก"
+  },
+  {
+    q: "ข้อใดคือสมบัติของมวลที่สัมพันธ์กับการเคลื่อนที่?",
+    opts: ["การต้านการเปลี่ยนสภาพการเคลื่อนที่", "การเพิ่มความเร็วในการเคลื่อนที่วัตถุ", "การลดทอนแรงเสียดทานผิวสัมผัส", "การทำให้วัตถุเบาลงขณะเคลื่อนที่"],
+    ans: "การต้านการเปลี่ยนสภาพการเคลื่อนที่"
+  },
+  {
+    q: "วัตถุ A มวล 10 กิโลกรัม และ B มวล 2 กิโลกรัม ข้อใดถูก?",
+    opts: ["วัตถุ A เปลี่ยนการเคลื่อนที่ยากกว่า B", "วัตถุ B เปลี่ยนการเคลื่อนที่ยากกว่า A", "วัตถุทั้งสองชิ้นเคลื่อนย้ายได้ง่ายเท่ากัน", "ไม่สามารถเปรียบเทียบความยากง่ายได้"],
+    ans: "วัตถุ A เปลี่ยนการเคลื่อนที่ยากกว่า B"
+  },
+  {
+    q: "การอ่านค่าเครื่องชั่งสปริงที่ถูกต้องควรทำอย่างไร?",
+    opts: ["ให้ระดับสายตาตรงกับขีดสเกลเสมอ", "มองจากมุมด้านบนเฉียงลงมาที่ขีด", "มองจากมุมด้านล่างเฉียงขึ้นไปที่ขีด", "เอียงเครื่องชั่งเล็กน้อยก่อนอ่านค่า"],
+    ans: "ให้ระดับสายตาตรงกับขีดสเกลเสมอ"
+  },
+  {
+    q: "ถ้าชั่งวัตถุบนโลกได้ 60 นิวตัน ไปชั่งบนดวงจันทร์ได้กี่นิวตัน?",
+    opts: ["10 นิวตัน", "30 นิวตัน", "60 นิวตัน", "360 นิวตัน"],
+    ans: "10 นิวตัน"
+  },
+  {
+    q: "ข้อใดกล่าวถึงความสัมพันธ์ของมวลและน้ำหนักถูกต้อง?",
+    opts: ["วัตถุที่มีมวลมากจะมีน้ำหนักมากด้วย", "วัตถุที่มีมวลมากจะมีน้ำหนักน้อยลง", "มวลและน้ำหนักไม่มีความสัมพันธ์กัน", "น้ำหนักคงที่เสมอในทุกสถานที่"],
+    ans: "วัตถุที่มีมวลมากจะมีน้ำหนักมากด้วย"
+  },
+  {
+    q: "ถ้าปั้นดินน้ำมันกลมให้เป็นแผ่นแบน มวลจะเป็นอย่างไร?",
+    opts: ["มวลคงที่เท่าเดิมไม่เปลี่ยนแปลง", "มวลจะเพิ่มขึ้นตามความกว้างใหม่", "มวลจะลดลงเนื่องจากความบางลง", "มวลจะหมดไปเมื่อเปลี่ยนรูปทรง"],
+    ans: "มวลคงที่เท่าเดิมไม่เปลี่ยนแปลง"
+  },
+  {
+    q: "นักวิทยาศาสตร์ผู้ค้นพบกฎแรงโน้มถ่วงคือใคร?",
+    opts: ["เซอร์ไอแซก นิวตัน", "อัลเบิร์ต ไอน์สไตน์", "กาลิเลโอ กาลิเลอี", "ทอมัส แอลวา เอดิสัน"],
+    ans: "เซอร์ไอแซก นิวตัน"
+  },
+  {
+    q: "หากชั่งน้ำหนักในอวกาศที่ไม่มีแรงโน้มถ่วง ผลคือข้อใด?",
+    opts: ["วัตถุไม่มีน้ำหนักแต่มวลคงเดิม", "วัตถุไม่มีมวลแต่น้ำหนักคงเดิม", "วัตถุสูญเสียทั้งมวลและน้ำหนัก", "วัตถุมีน้ำหนักเพิ่มเป็นทวีคูณ"],
+    ans: "วัตถุไม่มีน้ำหนักแต่มวลคงเดิม"
+  },
+
+  // เรื่องที่ 2: ตัวกลางของแสง (15 ข้อ)
+  {
+    q: "ข้อใดอธิบายความหมายของตัวกลางของแสงได้ถูกต้อง?",
+    opts: ["วัตถุที่ขวางทางเดินแล้วแสงผ่านได้", "แหล่งกำเนิดที่เปล่งแสงเองได้ในตัว", "อุปกรณ์ที่ใช้สะท้อนแสงกลับเข้าตา", "พื้นผิวที่ดูดกลืนแสงได้อย่างสมบูรณ์"],
+    ans: "วัตถุที่ขวางทางเดินแล้วแสงผ่านได้"
+  },
+  {
+    q: "เมื่อมองผ่านตัวกลางโปร่งใส ภาพที่เห็นจะเป็นอย่างไร?",
+    opts: ["มองเห็นสิ่งต่าง ๆ ด้านหลังได้ชัดเจน", "มองเห็นสิ่งต่าง ๆ ด้านหลังได้มัว ๆ", "มองไม่เห็นสิ่งต่าง ๆ ด้านหลังเลย", "มองเห็นเป็นภาพกลับหัวและบิดเบี้ยว"],
+    ans: "มองเห็นสิ่งต่าง ๆ ด้านหลังได้ชัดเจน"
+  },
+  {
+    q: "วัตถุในข้อใดจัดเป็นตัวกลางโปร่งใสทั้งหมด?",
+    opts: ["อากาศ น้ำใส กระจกใส", "กระดาษไข กระจกฝ้า น้ำนม", "แผ่นไม้ สมุด กระจกเงา", "พลาสติกขุ่น หมอก ควัน"],
+    ans: "อากาศ น้ำใส กระจกใส"
+  },
+  {
+    q: "เมื่อแสงตกกระทบตัวกลางโปร่งแสง แสงจะผ่านได้เท่าใด?",
+    opts: ["แสงผ่านไปได้เพียงบางส่วนเท่านั้น", "แสงผ่านไปได้ทั้งหมดอย่างสมบูรณ์", "แสงไม่สามารถผ่านไปได้เลยแม้แต่น้อย", "แสงจะสะท้อนกลับหมดไม่ทะลุผ่าน"],
+    ans: "แสงผ่านไปได้เพียงบางส่วนเท่านั้น"
+  },
+  {
+    q: "วัตถุในข้อใดจัดเป็นตัวกลางโปร่งแสงทั้งหมด?",
+    opts: ["กระจกฝ้า กระดาษไข หมอกบาง", "กระจกใส อากาศบริสุทธิ์ ตู้ปลา", "แผ่นหินอ่อน อิฐบล็อก สมุด", "กระจกเงา แผ่นอะลูมิเนียม ผ้าหนา"],
+    ans: "กระจกฝ้า กระดาษไข หมอกบาง"
+  },
+  {
+    q: "วัตถุทึบแสงมีสมบัติเฉพาะตัวอย่างไรต่อทางเดินแสง?",
+    opts: ["กั้นไม่ให้แสงผ่านได้เลยจนเกิดเงา", "ยอมให้แสงผ่านได้เกือบทั้งหมดโดยรอบ", "กระจายแสงออกเป็นเจ็ดสีของรุ้ง", "รวมลำแสงให้ขนานกันเป็นเส้นตรง"],
+    ans: "กั้นไม่ให้แสงผ่านได้เลยจนเกิดเงา"
+  },
+  {
+    q: "วัตถุในกลุ่มใดจัดเป็นวัตถุทึบแสงทั้งหมด?",
+    opts: ["แผ่นไม้ ก้อนหิน แผ่นเหล็ก", "น้ำแข็งใส อากาศ น้ำกลั่น", "กระจกฝ้า แก้วน้ำใส กระดาษแก้ว", "แผ่นพลาสติกใส แว่นขยาย เลนส์ใส"],
+    ans: "แผ่นไม้ ก้อนหิน แผ่นเหล็ก"
+  },
+  {
+    q: "เหตุใดจึงนิยมนำกระจกใสมาทำเป็นหน้าต่างห้องเรียน?",
+    opts: ["เพื่อให้แสงสว่างส่องผ่านได้เต็มที่", "เพื่อป้องกันไม่ให้คนข้างนอกมองเข้า", "เพื่อลดทอนความเข้มของแสงตอนเที่ยง", "เพื่อสร้างเงาตกทอดที่ชัดเจนในห้อง"],
+    ans: "เพื่อให้แสงสว่างส่องผ่านได้เต็มที่"
+  },
+  {
+    q: "กระจกห้องน้ำที่ต้องการความเป็นส่วนตัวควรใช้วัสดุใด?",
+    opts: ["ตัวกลางโปร่งแสง เช่น กระจกฝ้า", "ตัวกลางโปร่งใส เช่น กระจกใสหนา", "วัตถุทึบแสง เช่น แผ่นแบริเออร์", "กระจกเงาสะท้อนภาพสองด้านขนาน"],
+    ans: "ตัวกลางโปร่งแสง เช่น กระจกฝ้า"
+  },
+  {
+    q: "เงาของวัตถุจะเกิดขึ้นมืดชัดเจนที่สุดจากวัตถุชนิดใด?",
+    opts: ["วัตถุทึบแสง", "ตัวกลางโปร่งใส", "ตัวกลางโปร่งแสง", "แก๊สในอากาศ"],
+    ans: "วัตถุทึบแสง"
+  },
+  {
+    q: "นำกระดาษไขมากั้นหลอดไฟ จะมองเห็นหลอดไฟอย่างไร?",
+    opts: ["เห็นแสงสว่างแต่เห็นรูปทรงไม่ชัดเจน", "มองเห็นรูปทรงหลอดไฟได้อย่างคมชัด", "มองไม่เห็นแสงสว่างจากหลอดไฟเลย", "มองเห็นแสงเปลี่ยนเป็นสีรุ้งชัดเจน"],
+    ans: "เห็นแสงสว่างแต่เห็นรูปทรงไม่ชัดเจน"
+  },
+  {
+    q: "กระจกเงาจัดเป็นวัตถุประเภทใดทางวิทยาศาสตร์?",
+    opts: ["วัตถุทึบแสงที่สะท้อนแสงได้ดี", "ตัวกลางโปร่งใสที่หักเหแสงได้ดี", "ตัวกลางโปร่งแสงที่กระเจิงแสงสมบูรณ์", "แหล่งกำเนิดแสงทุติยภูมิธรรมชาติ"],
+    ans: "วัตถุทึบแสงที่สะท้อนแสงได้ดี"
+  },
+  {
+    q: "เกณฑ์ที่ใช้จำแนกตัวกลางของแสงออกเป็น 3 กลุ่มคืออะไร?",
+    opts: ["ลักษณะการมองเห็นเมื่อมองผ่านวัตถุ", "ความหนาและความแข็งแรงของวัตถุ", "สีสันและลวดลายบนพื้นผิวของวัตถุ", "ความสามารถในการนำความร้อนวัตถุ"],
+    ans: "ลักษณะการมองเห็นเมื่อมองผ่านวัตถุ"
+  },
+  {
+    q: "แว่นตากันแดดเลนส์สีชาเข้มจัดเป็นตัวกลางชนิดใด?",
+    opts: ["ตัวกลางโปร่งแสง", "ตัวกลางโปร่งใส", "วัตถุทึบแสงสมบูรณ์", "วัตถุกึ่งตัวนำแสง"],
+    ans: "ตัวกลางโปร่งแสง"
+  },
+  {
+    q: "ถ้าต้องการให้ห้องนอนมืดสนิทในเวลากลางวัน ควรใช้อะไร?",
+    opts: ["ผ้าม่านทึบแสงเนื้อหนา", "ผ้าม่านโปร่งแสงลายลูกไม้", "ผ้าม่านพลาสติกชนิดใสพิเศษ", "ผ้าม่านกระดาษแก้วกรองรังสี"],
+    ans: "ผ้าม่านทึบแสงเนื้อหนา"
+  }
+];
+
+function shuffle(array) {
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  return arr;
+}
+
+function initTabs() {
+  const btn1 = document.getElementById('tab-btn-1');
+  const btn2 = document.getElementById('tab-btn-2');
+  const content1 = document.getElementById('tab-content-1');
+  const content2 = document.getElementById('tab-content-2');
+
+  btn1.onclick = function() {
+    btn1.className = 'tab-item active';
+    btn2.className = 'tab-item';
+    content1.className = 'tab-content show';
+    content2.className = 'tab-content';
+  };
+
+  btn2.onclick = function() {
+    btn2.className = 'tab-item active';
+    btn1.className = 'tab-item';
+    content2.className = 'tab-content show';
+    content1.className = 'tab-content';
+    // โฟกัส textarea ข้อ 1 ทันทีที่สลับมา
+    setTimeout(function() {
+      const area = document.getElementById('essay-input-1');
+      if (area) area.focus();
+    }, 50);
+  };
+}
+
+function buildQuestions() {
+  const container = document.getElementById('part1-questions');
+  container.innerHTML = '';
+
+  examQuestions.forEach(function(item, qIdx) {
+    const card = document.createElement('div');
+    card.className = 'question-block';
+
+    const title = document.createElement('div');
+    title.className = 'q-text';
+    title.innerHTML = '<span style="color:#0284c7;">' + (qIdx + 1) + '.</span> ' + item.q;
+    card.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'opts-grid';
+
+    const shuffledChoices = shuffle(item.opts);
+
+    shuffledChoices.forEach(function(choice) {
+      const label = document.createElement('label');
+      label.className = 'opt-label label-q-' + qIdx;
+
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'q_' + qIdx;
+      radio.value = choice;
+
+      radio.onchange = function() {
+        const allLabels = card.querySelectorAll('.label-q-' + qIdx);
+        allLabels.forEach(function(l) {
+          l.classList.remove('chosen');
+        });
+        if (radio.checked) {
+          label.classList.add('chosen');
+        }
+      };
+
+      const span = document.createElement('span');
+      span.textContent = choice;
+
+      label.appendChild(radio);
+      label.appendChild(span);
+      grid.appendChild(label);
+    });
+
+    card.appendChild(grid);
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback-note';
+    feedback.id = 'fb-' + qIdx;
+    card.appendChild(feedback);
+
+    container.appendChild(card);
+  });
+}
+
+function gradeExam() {
+  let score = 0;
+
+  examQuestions.forEach(function(item, qIdx) {
+    const radios = document.querySelectorAll('input[name="q_' + qIdx + '"]');
+    const fb = document.getElementById('fb-' + qIdx);
+    let selected = null;
+
+    radios.forEach(function(r) {
+      r.disabled = true;
+      if (r.checked) {
+        selected = r.value;
+      }
+      const pLabel = r.parentElement;
+      if (r.value === item.ans) {
+        pLabel.classList.add('is-correct');
+      } else if (r.checked && r.value !== item.ans) {
+        pLabel.classList.add('is-wrong');
+      }
+    });
+
+    fb.style.display = 'block';
+    if (selected === item.ans) {
+      score++;
+      fb.style.color = '#15803d';
+      fb.textContent = '✓ ถูกต้อง';
+    } else {
+      fb.style.color = '#b91c1c';
+      fb.textContent = '✗ เฉลย: ' + item.ans;
+    }
+  });
+
+  // แสดงเฉลยตอนที่ 2 (อัตนัย)
+  document.getElementById('model-answer-1').style.display = 'block';
+  document.getElementById('model-answer-2').style.display = 'block';
+
+  // แสดงผลลัพธ์คะแนน
+  document.getElementById('score-display').textContent = score + ' / 30';
+  document.getElementById('btn-submit-exam').style.display = 'none';
+
+  const res = document.getElementById('result-box');
+  res.style.display = 'block';
+  res.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetExam() {
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('btn-submit-exam').style.display = 'block';
+
+  document.getElementById('model-answer-1').style.display = 'none';
+  document.getElementById('model-answer-2').style.display = 'none';
+  document.getElementById('essay-input-1').value = '';
+  document.getElementById('essay-input-2').value = '';
+
+  buildQuestions();
+  document.getElementById('tab-btn-1').click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.onload = function() {
+  initTabs();
+  buildQuestions();
+  document.getElementById('btn-submit-exam').onclick = gradeExam;
+  document.getElementById('btn-retry-exam').onclick = resetExam;
+};
+</script>
+</body>
+</html>

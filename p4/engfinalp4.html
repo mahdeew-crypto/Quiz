@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ข้อสอบปลายภาค ภาษาอังกฤษ ป.4: In the Kitchen</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Sarabun', 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    body {
+      background-color: #fffaf0;
+      margin: 0;
+      padding: 16px;
+      color: #292524;
+    }
+    .wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(234, 88, 12, 0.1);
+      border: 2px solid #fed7aa;
+    }
+    .header-card {
+      background: linear-gradient(135deg, #ea580c, #f97316, #fbbf24);
+      color: #ffffff;
+      text-align: center;
+      padding: 22px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .header-card h1 {
+      margin: 0 0 6px 0;
+      font-size: 22px;
+    }
+    .header-card p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+    .tab-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .tab-item {
+      flex: 1;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: bold;
+      border: 2px solid #fdba74;
+      background: #fff7ed;
+      color: #9a3412;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .tab-item.active {
+      background: #ea580c;
+      color: #ffffff;
+      border-color: #ea580c;
+      box-shadow: 0 4px 12px rgba(234, 88, 12, 0.25);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.show {
+      display: block;
+    }
+    .story-card {
+      background: #fff7ed;
+      border: 2px dashed #f97316;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      line-height: 1.6;
+      font-size: 15px;
+      color: #7c2d12;
+    }
+    .story-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      color: #c2410c;
+    }
+    .section-subtitle {
+      font-weight: bold;
+      color: #c2410c;
+      margin: 16px 0 10px 0;
+      font-size: 15px;
+    }
+    .question-block {
+      background: #fffbf5;
+      border: 1.5px solid #fed7aa;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .q-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1c1917;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .opts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 620px) {
+      .opts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      border: 1.5px solid #e7e5e4;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1.4;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .opt-label:hover {
+      background: #ffedd5;
+      border-color: #f97316;
+    }
+    .opt-label input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #ea580c;
+    }
+    .opt-label.chosen {
+      background: #ffedd5;
+      border-color: #ea580c;
+      color: #c2410c;
+      font-weight: bold;
+    }
+    .opt-label.is-correct {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+      color: #166534 !important;
+      font-weight: bold;
+    }
+    .opt-label.is-wrong {
+      background: #fee2e2 !important;
+      border-color: #dc2626 !important;
+      color: #991b1b !important;
+    }
+    .feedback-note {
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 8px;
+      display: none;
+    }
+    .fill-box-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .short-input {
+      padding: 10px 14px;
+      font-size: 15px;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      outline: none;
+      background: #ffffff;
+      color: #1c1917;
+      min-width: 160px;
+    }
+    .short-input:focus {
+      border-color: #ea580c;
+      box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.15);
+    }
+    .short-input.is-correct {
+      border-color: #16a34a;
+      background: #f0fdf4;
+      color: #166534;
+      font-weight: bold;
+    }
+    .short-input.is-wrong {
+      border-color: #dc2626;
+      background: #fef2f2;
+      color: #991b1b;
+      font-weight: bold;
+    }
+    .btn-submit {
+      width: 100%;
+      background: #ea580c;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);
+      transition: background 0.2s;
+    }
+    .btn-submit:hover {
+      background: #c2410c;
+    }
+    .result-box {
+      display: none;
+      background: #fff7ed;
+      border: 2px solid #fdba74;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .score-badge {
+      font-size: 32px;
+      font-weight: 800;
+      color: #ea580c;
+      margin: 8px 0;
+    }
+    .score-sub {
+      font-size: 15px;
+      color: #78350f;
+      margin-bottom: 6px;
+    }
+    .btn-retry {
+      background: #ea580c;
+      color: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+    .btn-retry:hover {
+      background: #c2410c;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  
+  <div class="header-card">
+    <h1>🍳 แบบทดสอบปลายภาค: In the Kitchen (ป.4)</h1>
+    <p>วิชาภาษาอังกฤษพื้นฐาน • รวม 25 ข้อ (10 คะแนนเต็ม)</p>
+  </div>
+
+  <div class="tab-bar">
+    <button type="button" class="tab-item active" id="tab-btn-1">
+      📝 ตอนที่ 1: ปรนัย (15 ข้อ 5 คะแนน)
+    </button>
+    <button type="button" class="tab-item" id="tab-btn-2">
+      ✍️ ตอนที่ 2: เติมคำ (10 ข้อ 5 คะแนน)
+    </button>
+  </div>
+
+  <!-- ตอนที่ 1: ปรนัย 15 ข้อ -->
+  <div class="tab-content show" id="tab-content-1">
+    <div id="part1-questions"></div>
+  </div>
+
+  <!-- ตอนที่ 2: เติมคำ 10 ข้อ (True/False 5 ข้อ + Containers 5 ข้อ) -->
+  <div class="tab-content" id="tab-content-2">
+    <div class="story-card">
+      <h3>📖 Read short story (จากบทเรียนหน้า 43 เล่มสีส้ม):</h3>
+      "Today is Sunday. Ben is in the kitchen with his mother. They are making a pizza for lunch. Ben puts some cheese and a lot of tomatoes on the dough. His mother opens a <b>can</b> of sweet corn and puts it on top. There is only a little olive oil in the bottle, but it is enough. They bake the pizza for twenty minutes. After that, they cut the pizza into six slices. Ben is happy!"
+    </div>
+
+    <div class="section-subtitle">📌 ส่วนที่ 1: พิมพ์คำตอบ True หรือ False (ข้อ 16 - 20)</div>
+    <div id="part2-tf-questions"></div>
+
+    <div class="section-subtitle" style="margin-top: 24px;">📌 ส่วนที่ 2: พิมพ์คำศัพท์ Containers (ภาชนะ) ลงในช่องว่าง (ข้อ 21 - 25)</div>
+    <div id="part2-fill-questions"></div>
+  </div>
+
+  <button type="button" class="btn-submit" id="btn-submit-exam">
+    ✅ ส่งข้อสอบและตรวจคำตอบ
+  </button>
+
+  <div class="result-box" id="result-box">
+    <h2 style="color: #9a3412; margin: 0 0 6px 0;">🎉 สรุปผลการประเมินคะแนน</h2>
+    <div class="score-sub" id="p1-score-display">ตอนที่ 1 (ปรนัย 15 ข้อ): 0 / 5 คะแนน</div>
+    <div class="score-sub" id="p2-score-display">ตอนที่ 2 (เติมคำ 10 ข้อ): 0 / 5 คะแนน</div>
+    <div class="score-badge" id="total-score-display">0.0 / 10 คะแนนเต็ม</div>
+    <button type="button" class="btn-retry" id="btn-retry-exam">
+      🔄 ทำใหม่อีกครั้ง (สุ่มตัวเลือกใหม่)
+    </button>
+  </div>
+
+</div>
+
+<script>
+const part1Data = [
+  {
+    q: "Which of the following is an uncountable noun?",
+    opts: ["spoon", "melon", "sugar", "glass"],
+    ans: "sugar"
+  },
+  {
+    q: "Which of the following is a countable noun?",
+    opts: ["water", "apple", "bread", "juice"],
+    ans: "apple"
+  },
+  {
+    q: "There is ________ soup left in the bowl.",
+    opts: ["a many", "so few", "a little", "few of"],
+    ans: "a little"
+  },
+  {
+    q: "She bought ________ oranges from the shop.",
+    opts: ["a lot of", "very much", "a little", "little bit"],
+    ans: "a lot of"
+  },
+  {
+    q: "We do not have ________ cheese in the fridge.",
+    opts: ["much", "many", "some", "five"],
+    ans: "much"
+  },
+  {
+    q: "Can I have a ________ of cold soda, please?",
+    opts: ["can", "cup", "bag", "bar"],
+    ans: "can"
+  },
+  {
+    q: "Grandfather drinks a ________ of hot tea every morning.",
+    opts: ["cup", "jar", "can", "box"],
+    ans: "cup"
+  },
+  {
+    q: "She bought two ________ of strawberry jam yesterday.",
+    opts: ["jars", "bars", "cans", "bags"],
+    ans: "jars"
+  },
+  {
+    q: "My brother ate a ________ of dark chocolate after lunch.",
+    opts: ["bar", "bowl", "can", "tub"],
+    ans: "bar"
+  },
+  {
+    q: "Please serve a ________ of hot chicken soup.",
+    opts: ["bowl", "loaf", "tube", "roll"],
+    ans: "bowl"
+  },
+  {
+    q: "Father bought a ________ of white bread from the bakery.",
+    opts: ["loaf", "can", "cup", "pot"],
+    ans: "loaf"
+  },
+  {
+    q: "There are two ________ of cow milk in the basket.",
+    opts: ["cartons", "slices", "pieces", "plates"],
+    ans: "cartons"
+  },
+  {
+    q: "Put ________ salt into the pot; do not put too much.",
+    opts: ["a little", "a lot of", "so many", "quite few"],
+    ans: "a little"
+  },
+  {
+    q: "We need two ________ of tuna to make sandwiches.",
+    opts: ["cans", "cups", "bars", "jugs"],
+    ans: "cans"
+  },
+  {
+    q: "He ate two ________ of pizza for dinner.",
+    opts: ["slices", "loaves", "bowls", "bags"],
+    ans: "slices"
+  }
+];
+
+const part2TFData = [
+  {
+    num: 16,
+    q: "Ben and his mother are making vegetable soup for lunch.",
+    answers: ["false"],
+    reveal: "False (พวกเขากำลังทำ pizza)"
+  },
+  {
+    num: 17,
+    q: "Ben puts a lot of tomatoes on the pizza dough.",
+    answers: ["true"],
+    reveal: "True"
+  },
+  {
+    num: 18,
+    q: "His mother opens a carton of sweet corn.",
+    answers: ["false"],
+    reveal: "False (เปิด a can of sweet corn)"
+  },
+  {
+    num: 19,
+    q: "There is only a little olive oil in the bottle.",
+    answers: ["true"],
+    reveal: "True"
+  },
+  {
+    num: 20,
+    q: "They cut the baked pizza into eight slices.",
+    answers: ["false"],
+    reveal: "False (ตัดเป็น six slices)"
+  }
+];
+
+const part2FillData = [
+  {
+    num: 21,
+    q: "My mother drinks a ________ of warm coffee every morning.",
+    answers: ["cup"],
+    reveal: "cup"
+  },
+  {
+    num: 22,
+    q: "Please open a ________ of sweet tuna for the sandwich.",
+    answers: ["can", "tin"],
+    reveal: "can (หรือ tin)"
+  },
+  {
+    num: 23,
+    q: "We keep sweet honey inside a glass ________.",
+    answers: ["jar"],
+    reveal: "jar"
+  },
+  {
+    num: 24,
+    q: "He bought a ________ of bread to make morning toast.",
+    answers: ["loaf"],
+    reveal: "loaf"
+  },
+  {
+    num: 25,
+    q: "She poured cold orange juice from the ________ into glasses.",
+    answers: ["jug", "carton", "bottle"],
+    reveal: "jug (หรือ carton / bottle)"
+  }
+];
+
+function shuffle(array) {
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  return arr;
+}
+
+function initTabs() {
+  const btn1 = document.getElementById('tab-btn-1');
+  const btn2 = document.getElementById('tab-btn-2');
+  const content1 = document.getElementById('tab-content-1');
+  const content2 = document.getElementById('tab-content-2');
+
+  btn1.onclick = function() {
+    btn1.className = 'tab-item active';
+    btn2.className = 'tab-item';
+    content1.className = 'tab-content show';
+    content2.className = 'tab-content';
+  };
+
+  btn2.onclick = function() {
+    btn2.className = 'tab-item active';
+    btn1.className = 'tab-item';
+    content2.className = 'tab-content show';
+    content1.className = 'tab-content';
+    setTimeout(function() {
+      const firstInput = document.getElementById('input-p2-16');
+      if (firstInput) firstInput.focus();
+    }, 50);
+  };
+}
+
+function buildQuiz() {
+  const p1Container = document.getElementById('part1-questions');
+  p1Container.innerHTML = '';
+
+  part1Data.forEach(function(item, qIdx) {
+    const card = document.createElement('div');
+    card.className = 'question-block';
+
+    const title = document.createElement('div');
+    title.className = 'q-text';
+    title.innerHTML = '<span style="color:#ea580c;">' + (qIdx + 1) + '.</span> ' + item.q;
+    card.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'opts-grid';
+
+    const shuffledChoices = shuffle(item.opts);
+
+    shuffledChoices.forEach(function(choice) {
+      const label = document.createElement('label');
+      label.className = 'opt-label label-q-' + qIdx;
+
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'q_' + qIdx;
+      radio.value = choice;
+
+      radio.onchange = function() {
+        const allLabels = card.querySelectorAll('.label-q-' + qIdx);
+        allLabels.forEach(function(l) {
+          l.classList.remove('chosen');
+        });
+        if (radio.checked) {
+          label.classList.add('chosen');
+        }
+      };
+
+      const span = document.createElement('span');
+      span.textContent = choice;
+
+      label.appendChild(radio);
+      label.appendChild(span);
+      grid.appendChild(label);
+    });
+
+    card.appendChild(grid);
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback-note';
+    feedback.id = 'fb-p1-' + qIdx;
+    card.appendChild(feedback);
+
+    p1Container.appendChild(card);
+  });
+
+  const tfContainer = document.getElementById('part2-tf-questions');
+  tfContainer.innerHTML = '';
+  part2TFData.forEach(function(item) {
+    const card = document.createElement('div');
+    card.className = 'question-block';
+
+    const title = document.createElement('div');
+    title.className = 'q-text';
+    title.innerHTML = '<span style="color:#ea580c;">' + item.num + '.</span> ' + item.q;
+    card.appendChild(title);
+
+    const row = document.createElement('div');
+    row.className = 'fill-box-container';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'short-input';
+    input.id = 'input-p2-' + item.num;
+    input.placeholder = 'พิมพ์ True หรือ False...';
+    input.autocomplete = 'off';
+
+    const fb = document.createElement('div');
+    fb.className = 'feedback-note';
+    fb.id = 'fb-p2-' + item.num;
+
+    row.appendChild(input);
+    row.appendChild(fb);
+    card.appendChild(row);
+    tfContainer.appendChild(card);
+  });
+
+  const fillContainer = document.getElementById('part2-fill-questions');
+  fillContainer.innerHTML = '';
+  part2FillData.forEach(function(item) {
+    const card = document.createElement('div');
+    card.className = 'question-block';
+
+    const title = document.createElement('div');
+    title.className = 'q-text';
+    title.innerHTML = '<span style="color:#ea580c;">' + item.num + '.</span> ' + item.q;
+    card.appendChild(title);
+
+    const row = document.createElement('div');
+    row.className = 'fill-box-container';
+
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'short-input';
+    input.id = 'input-p2-' + item.num;
+    input.placeholder = 'พิมพ์คำศัพท์ภาชนะ...';
+    input.autocomplete = 'off';
+
+    const fb = document.createElement('div');
+    fb.className = 'feedback-note';
+    fb.id = 'fb-p2-' + item.num;
+
+    row.appendChild(input);
+    row.appendChild(fb);
+    card.appendChild(row);
+    fillContainer.appendChild(card);
+  });
+}
+
+function gradeExam() {
+  let scoreP1 = 0;
+  let scoreP2 = 0;
+
+  part1Data.forEach(function(item, qIdx) {
+    const radios = document.querySelectorAll('input[name="q_' + qIdx + '"]');
+    const fb = document.getElementById('fb-p1-' + qIdx);
+    let selected = null;
+
+    radios.forEach(function(r) {
+      r.disabled = true;
+      if (r.checked) {
+        selected = r.value;
+      }
+      const pLabel = r.parentElement;
+      if (r.value === item.ans) {
+        pLabel.classList.add('is-correct');
+      } else if (r.checked && r.value !== item.ans) {
+        pLabel.classList.add('is-wrong');
+      }
+    });
+
+    fb.style.display = 'block';
+    if (selected === item.ans) {
+      scoreP1++;
+      fb.style.color = '#15803d';
+      fb.textContent = '✓ ถูกต้อง';
+    } else {
+      fb.style.color = '#b91c1c';
+      fb.textContent = '✗ เฉลย: ' + item.ans;
+    }
+  });
+
+  part2TFData.forEach(function(item) {
+    const input = document.getElementById('input-p2-' + item.num);
+    const fb = document.getElementById('fb-p2-' + item.num);
+    const val = input.value.trim().toLowerCase();
+    input.disabled = true;
+
+    fb.style.display = 'block';
+    if (item.answers.indexOf(val) !== -1) {
+      scoreP2++;
+      input.classList.add('is-correct');
+      fb.style.color = '#15803d';
+      fb.textContent = '✓ ถูกต้อง';
+    } else {
+      input.classList.add('is-wrong');
+      fb.style.color = '#b91c1c';
+      fb.textContent = '✗ เฉลย: ' + item.reveal;
+    }
+  });
+
+  part2FillData.forEach(function(item) {
+    const input = document.getElementById('input-p2-' + item.num);
+    const fb = document.getElementById('fb-p2-' + item.num);
+    const val = input.value.trim().toLowerCase();
+    input.disabled = true;
+
+    fb.style.display = 'block';
+    if (item.answers.indexOf(val) !== -1) {
+      scoreP2++;
+      input.classList.add('is-correct');
+      fb.style.color = '#15803d';
+      fb.textContent = '✓ ถูกต้อง';
+    } else {
+      input.classList.add('is-wrong');
+      fb.style.color = '#b91c1c';
+      fb.textContent = '✗ เฉลย: ' + item.reveal;
+    }
+  });
+
+  const weightedP1 = (scoreP1 / 15) * 5;
+  const weightedP2 = (scoreP2 / 10) * 5;
+  const totalScore = weightedP1 + weightedP2;
+
+  document.getElementById('p1-score-display').textContent = 'ตอนที่ 1 (ปรนัย 15 ข้อ): ถูก ' + scoreP1 + '/15 ข้อ (' + weightedP1.toFixed(2) + ' / 5 คะแนน)';
+  document.getElementById('p2-score-display').textContent = 'ตอนที่ 2 (เติมคำ 10 ข้อ): ถูก ' + scoreP2 + '/10 ข้อ (' + weightedP2.toFixed(2) + ' / 5 คะแนน)';
+  document.getElementById('total-score-display').textContent = totalScore.toFixed(2) + ' / 10 คะแนนเต็ม';
+
+  document.getElementById('btn-submit-exam').style.display = 'none';
+  const resBox = document.getElementById('result-box');
+  resBox.style.display = 'block';
+  resBox.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetExam() {
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('btn-submit-exam').style.display = 'block';
+
+  buildQuiz();
+  document.getElementById('tab-btn-1').click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.onload = function() {
+  initTabs();
+  buildQuiz();
+  document.getElementById('btn-submit-exam').onclick = gradeExam;
+  document.getElementById('btn-retry-exam').onclick = resetExam;
+};
+</script>
+</body>
+</html>
