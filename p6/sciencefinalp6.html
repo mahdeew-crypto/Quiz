@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แบบทดสอบปลายภาค วิชาวิทยาศาสตร์ ชั้น ป.6: หินและซากดึกดำบรรพ์</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Sarabun', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #fdfbf7;
+      margin: 0;
+      padding: 16px;
+      color: #292524;
+    }
+    .quiz-container {
+      max-width: 860px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(180, 83, 9, 0.1);
+      border: 2px solid #fed7aa;
+    }
+    .header-card {
+      background: linear-gradient(135deg, #b45309, #d97706, #f59e0b);
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .header-card h1 {
+      margin: 0 0 6px 0;
+      font-size: 22px;
+    }
+    .header-card p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+    .tab-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab-item {
+      flex: 1;
+      padding: 14px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      color: #78350f;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .tab-item.active {
+      background: #b45309;
+      color: #ffffff;
+      border-color: #b45309;
+      box-shadow: 0 4px 12px rgba(180, 83, 9, 0.25);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.show {
+      display: block;
+    }
+    .question-block {
+      background: #fffaf5;
+      border: 1.5px solid #fed7aa;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .q-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1c1917;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .opts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 620px) {
+      .opts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      border: 1.5px solid #d6d3d1;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1.4;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .opt-label:hover {
+      background: #fef3c7;
+      border-color: #f59e0b;
+    }
+    .opt-label input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #b45309;
+    }
+    .opt-label.chosen {
+      background: #fef3c7;
+      border-color: #b45309;
+      color: #92400e;
+      font-weight: bold;
+    }
+    .opt-label.is-correct {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+      color: #166534 !important;
+      font-weight: bold;
+    }
+    .opt-label.is-wrong {
+      background: #fee2e2 !important;
+      border-color: #dc2626 !important;
+      color: #991b1b !important;
+    }
+    .feedback-note {
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 8px;
+      display: none;
+    }
+    .scenario-box {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 14px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      line-height: 1.6;
+      font-size: 14px;
+      color: #78350f;
+    }
+    .essay-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 14px;
+      border: 2px solid #cbd5e1;
+      border-radius: 10px;
+      font-size: 15px;
+      resize: vertical;
+      background: #ffffff;
+      color: #0f172a;
+      outline: none;
+      line-height: 1.6;
+      display: block;
+      box-sizing: border-box;
+      cursor: text;
+    }
+    .essay-textarea:focus {
+      border-color: #b45309;
+      box-shadow: 0 0 0 3px rgba(180, 83, 9, 0.15);
+    }
+    .model-answer {
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+      border-radius: 8px;
+      padding: 14px;
+      margin-top: 12px;
+      font-size: 14px;
+      color: #166534;
+      line-height: 1.6;
+      display: none;
+    }
+    .btn-submit {
+      width: 100%;
+      background: #b45309;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 14px rgba(180, 83, 9, 0.25);
+      transition: background 0.2s;
+    }
+    .btn-submit:hover {
+      background: #92400e;
+    }
+    .result-box {
+      display: none;
+      background: #fffbeb;
+      border: 2px solid #fcd34d;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .score-badge {
+      font-size: 32px;
+      font-weight: 800;
+      color: #b45309;
+      margin: 8px 0;
+    }
+    .btn-retry {
+      background: #b45309;
+      color: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .btn-retry:hover {
+      background: #92400e;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  
+  <div class="header-card">
+    <h1>🌍 แบบทดสอบปลายภาค: วิชาวิทยาศาสตร์ ชั้น ป.6</h1>
+    <p>หน่วยการเรียนรู้: หินและซากดึกดำบรรพ์</p>
+  </div>
+
+  <div class="tab-bar">
+    <button type="button" class="tab-item active" id="tab-btn-1">
+      📝 ตอนที่ 1: ข้อสอบปรนัย (30 ข้อ)
+    </button>
+    <button type="button" class="tab-item" id="tab-btn-2">
+      ✍️️ ตอนที่ 2: ข้อสอบอัตนัย (2 ข้อ)
+    </button>
+  </div>
+
+  <!-- ตอนที่ 1: ปรนัย 30 ข้อ -->
+  <div class="tab-content show" id="tab-content-1">
+    <div id="part1-questions"></div>
+  </div>
+
+  <!-- ตอนที่ 2: อัตนัย 2 ข้อ -->
+  <div class="tab-content" id="tab-content-2">
+    <div class="question-block">
+      <div class="q-text" style="color: #b45309;">
+        ข้อที่ 1: การวิเคราะห์กระบวนการเกิดหินจากสถานการณ์
+      </div>
+      <div class="scenario-box">
+        <b>สถานการณ์:</b> ทีมนักสำรวจเก็บตัวอย่างหิน 2 ก้อนจากพื้นที่ต่างกัน<br>
+        • <b>ก้อนที่ 1:</b> หินมีผลึกแร่ขนาดใหญ่เกี่ยวประสานกันแน่น ทึบตัน และมีความแข็งแรงทนทานสูงมาก<br>
+        • <b>ก้อนที่ 2:</b> หินมีริ้วขนานของแถบแร่สีเข้มและสีอ่อนสลับกันเป็นแนวยาวอย่างชัดเจน
+      </div>
+      <div class="q-text" style="font-size: 14px;">
+        ให้นักเรียนระบุว่าหินแต่ละก้อนจัดเป็นหินประเภทใด พร้อมอธิบายกระบวนการเกิดของหินทั้งสองพอสังเขป
+      </div>
+      <textarea class="essay-textarea" id="essay-input-1" placeholder="พิมพ์คำตอบและคำอธิบายที่นี่..."></textarea>
+      <div class="model-answer" id="model-answer-1">
+        <strong>💡 แนวคำตอบที่ถูกต้อง:</strong><br>
+        1) <b>ประเภทของหิน:</b><br>
+        • ก้อนที่ 1 จัดเป็น <b>หินอัคนีแทรกซอน</b> (เช่น หินแกรนิต)<br>
+        • ก้อนที่ 2 จัดเป็น <b>หินแปร</b> (เช่น หินไนส์)<br>
+        2) <b>กระบวนการเกิด:</b><br>
+        • <b>หินอัคนีแทรกซอน:</b> เกิดจากแมกมา (หินหนืดใต้ผิวโลก) เย็นตัวและตกผลึกอย่างช้าๆ ใต้เปลือกโลก ทำให้ผลึกแร่มีขนาดใหญ่และประสานกันแน่น<br>
+        • <b>หินแปร:</b> เกิดจากหินเดิมได้รับความร้อน ความดันสูง และปฏิกิริยาเคมีใต้เปลือกโลก ทำให้แร่เดิมแปรสภาพและเรียงตัวเป็นริ้วขนาน
+      </div>
+    </div>
+
+    <div class="question-block">
+      <div class="q-text" style="color: #b45309;">
+        ข้อที่ 2: การวิเคราะห์และแปลความหมายจากซากดึกดำบรรพ์
+      </div>
+      <div class="scenario-box">
+        <b>สถานการณ์:</b> ทีมนักธรณีวิทยาสำรวจหน้าผาชั้นหินตะกอนแห่งหนึ่ง พบว่าในชั้นหินชั้นล่างสุดพบซากดึกดำบรรพ์ของ 'หอยกาบคู่โบราณและปะการัง' แต่ในชั้นหินชั้นบนถัดขึ้นมากลับพบ 'รอยเท้าไดโนเสาร์และซากพืชตระกูลสน'
+      </div>
+      <div class="q-text" style="font-size: 14px;">
+        1) สภาพแวดล้อมในอดีตของพื้นที่แห่งนี้เปลี่ยนแปลงไปอย่างไรตามกาลเวลา?<br>
+        2) นักธรณีวิทยาใช้หลักการใดในการระบุว่าชั้นหินใดเกิดขึ้นก่อนหรือหลัง?
+      </div>
+      <textarea class="essay-textarea" id="essay-input-2" placeholder="พิมพ์คำตอบและคำอธิบายที่นี่..."></textarea>
+      <div class="model-answer" id="model-answer-2">
+        <strong>💡 แนวคำตอบที่ถูกต้อง:</strong><br>
+        1) <b>การเปลี่ยนแปลงสภาพแวดล้อม:</b> ในอดีตยุคแรกเริ่มพื้นที่แห่งนี้เคยเป็น <b>ทะเลหรือมหาสมุทร</b> มาก่อน (จึงพบหอยกาบคู่และปะการัง) ต่อมาเกิดการเปลี่ยนแปลงทางธรณีวิทยา แผ่นดินยกตัวสูงขึ้นกลายเป็น <b>แผ่นดินแห้งหรือป่าบก</b> (จึงพบรอยเท้าไดโนเสาร์และพืชบกตระกูลสน)<br>
+        2) <b>หลักการที่ใช้:</b> ใช้ <b>กฎการลำดับชั้นหิน (Law of Superposition)</b> ซึ่งระบุว่าชั้นหินตะกอนที่อยู่ชั้นล่างสุดจะสะสมตัวก่อนและมีอายุแก่กว่า ส่วนชั้นหินที่อยู่ด้านบนจะสะสมตัวทีหลังและมีอายุอ่อนกว่า
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn-submit" id="btn-submit-exam">
+    ✅ ส่งข้อสอบและตรวจคำตอบ
+  </button>
+
+  <div class="result-box" id="result-box">
+    <h2 style="color: #78350f; margin: 0 0 6px 0;">🎉 สรุปผลการประเมินคะแนน</h2>
+    <div>คะแนนตอนที่ 1 (ปรนัย 30 ข้อ):</div>
+    <div class="score-badge" id="score-display">0 / 30</div>
+    <p style="font-size: 14px; color: #78350f; margin: 0 0 14px 0;">
+      *สามารถกดสลับไปที่ <b>ตอนที่ 2: ข้อสอบอัตนัย</b> เพื่อตรวจดูแนวคำตอบที่เฉลยไว้ได้ครับ
+    </p>
+    <button type="button" class="btn-retry" id="btn-retry-exam">
+      🔄 ทำใหม่อีกครั้ง (สุ่มตัวเลือกใหม่)
+    </button>
+  </div>
+
+</div>
+
+<script>
+const examQuestions = [
+  // เรื่องหิน (ข้อ 1-15)
+  {
+    q: "หินอัคนีแทรกซอนเกิดจากกระบวนการทางธรณีวิทยาในข้อใด?",
+    opts: ["แมกมาเย็นตัวตัวช้าๆ ใต้เปลือกโลก", "ลาวาเย็นตัวอย่างรวดเร็วบนพื้นผิวโลก", "ตะกอนทับถมกันแน่นด้วยสารเชื่อมประสาน", "ความร้อนและความดันแปรสภาพเนื้อหินเดิม"],
+    ans: "แมกมาเย็นตัวตัวช้าๆ ใต้เปลือกโลก"
+  },
+  {
+    q: "หินอัคนีพุชนิดใดที่มีรูพรุนจำนวนมากจนสามารถลอยน้ำได้?",
+    opts: ["หินพัมมิซที่มีแก๊สแทรก", "หินแกรนิตเนื้อผลึกหยาบ", "หินออบซิเดียนผิวมันเรียบ", "หินบะซอลต์เนื้อละเอียดแน่น"],
+    ans: "หินพัมมิซที่มีแก๊สแทรก"
+  },
+  {
+    q: "หินชนิดใดเกิดจากการเย็นตัวของลาวาอย่างรวดเร็วจนมีลักษณะคล้ายแก้ว?",
+    opts: ["หินออบซิเดียนสีดำเข้ม", "หินแกรนิตเนื้อหยาบสลับสี", "หินดินดานเนื้อละเอียดแน่น", "หินอ่อนเนื้อผลึกละเอียด"],
+    ans: "หินออบซิเดียนสีดำเข้ม"
+  },
+  {
+    q: "หินตะกอนมักเกิดจากกระบวนการทางธรรมชาติตามลำดับในข้อใดถูกต้องที่สุด?",
+    opts: ["การผุพัง พัดพา ทับถม แข็งตัว", "การหลอมละลาย ปะทุ เย็นตัว ตกผลึก", "การแปรสภาพจากความร้อนและความดัน", "การแทรกซอนของแมกมาใต้เปลือกโลก"],
+    ans: "การผุพัง พัดพา ทับถม แข็งตัว"
+  },
+  {
+    q: "หินตะกอนชนิดใดทำปฏิกิริยากับกรดไฮโดรคลอริกแล้วเกิดฟองแก๊สอย่างชัดเจน?",
+    opts: ["หินปูนที่มีแคลเซียมคาร์บอเนต", "หินทรายที่มีเม็ดทรายเชื่อมกัน", "หินดินดานที่เกิดจากโคลนทับถม", "หินกรวดมนที่มีเศษหินผิวเรียบ"],
+    ans: "หินปูนที่มีแคลเซียมคาร์บอเนต"
+  },
+  {
+    q: "หินแปรชนิดใดแปรสภาพมาจากหินปูนภายใต้ความร้อนและความดันสูง?",
+    opts: ["หินอ่อนเนื้อผลึกขาวนวล", "หินชนวนเนื้อละเอียดบาง", "หินไนส์ที่มีริ้วขนานเด่น", "หินควาร์ตไซต์เนื้อแน่นแข็ง"],
+    ans: "หินอ่อนเนื้อผลึกขาวนวล"
+  },
+  {
+    q: "หินแปรชนิดใดที่มีลักษณะเป็นแผ่นบางเรียบ สามารถกะเทาะทำแผ่นกระดานชนวนได้?",
+    opts: ["หินชนวนเนื้อละเอียดแน่น", "หินทรายเนื้อหยาบสากมือ", "หินแกรนิตเนื้อแน่นทนทาน", "หินบะซอลต์เนื้อสีเข้มทึบ"],
+    ans: "หินชนวนเนื้อละเอียดแน่น"
+  },
+  {
+    q: "หินไนส์เป็นหินแปรที่มีริ้วขนานสวยงาม แปรสภาพมาจากหินชนิดใดเป็นหลัก?",
+    opts: ["หินแกรนิตเนื้อหยาบเดิม", "หินดินดานที่ทับถมกันแน่น", "หินปูนที่ละลายตกผลึกใหม่", "หินบะซอลต์ที่ผ่านการกัดเซาะ"],
+    ans: "หินแกรนิตเนื้อหยาบเดิม"
+  },
+  {
+    q: "ข้อใดอธิบายวัฏจักรของหิน (Rock Cycle) ได้ถูกต้องที่สุด?",
+    opts: ["หินทุกชนิดเปลี่ยนกลับไปมาได้", "หินแปรเปลี่ยนเป็นหินชนิดอื่นไม่ได้", "หินอัคนีเกิดจากหินตะกอนเท่านั้น", "หินตะกอนไม่สามารถหลอมละลายได้"],
+    ans: "หินทุกชนิดเปลี่ยนกลับไปมาได้"
+  },
+  {
+    q: "การนำหินแกรนิตมาใช้ในงานก่อสร้างและปูพื้นอาคาร อาศัยสมบัติเด่นในข้อใด?",
+    opts: ["มีความแข็งแรงทนทานสูงมาก", "มีรูพรุนช่วยซับเสียงได้ดี", "สามารถขูดขีดให้เป็นรอยได้ง่าย", "ละลายน้ำได้ดีเมื่อโดนสารเคมี"],
+    ans: "มีความแข็งแรงทนทานสูงมาก"
+  },
+  {
+    q: "ถ้าต้องการเลือกหินไปใช้ทำครกหินที่ทนแรงกระแทก ควรเลือกใช้หินชนิดใด?",
+    opts: ["หินแกรนิตเนื้อผลึกแน่น", "หินชนวนเนื้อเป็นแผ่นบาง", "หินพัมมิซเนื้อมีรูพรุนเบา", "หินชอล์กเนื้อร่วนซุยละเอียด"],
+    ans: "หินแกรนิตเนื้อผลึกแน่น"
+  },
+  {
+    q: "หินทรายจัดอยู่ในกลุ่มหินประเภทใดตามการกำเนิดทางธรณีวิทยา?",
+    opts: ["หินตะกอนเนื้อเม็ดหยาบ", "หินอัคนีแทรกซอนเนื้อแน่น", "หินอัคนีพุที่เย็นตัวเร็ว", "หินแปรเนื้อริ้วขนานเข้ม"],
+    ans: "หินตะกอนเนื้อเม็ดหยาบ"
+  },
+  {
+    q: "ข้อใดเป็นประโยชน์ของหินปูนในอุตสาหกรรมก่อสร้าง?",
+    opts: ["เป็นวัตถุดิบผลิตปูนซีเมนต์", "ใช้ทำแผ่นขัดผิวโลหะละเอียด", "ใช้เป็นฉนวนกันความร้อนอาคาร", "ใช้เป็นหินประดับตู้ปลาสวยงาม"],
+    ans: "เป็นวัตถุดิบผลิตปูนซีเมนต์"
+  },
+  {
+    q: "หินดินดานเมื่อได้รับความร้อนและความดันสูงจะแปรสภาพเป็นหินชนิดใด?",
+    opts: ["หินชนวนเนื้อแน่นเรียบ", "หินอ่อนเนื้อผลึกสม่ำเสมอ", "หินควาร์ตไซต์เนื้อแกร่ง", "หินไนส์เนื้อสลับแถบสี"],
+    ans: "หินชนวนเนื้อแน่นเรียบ"
+  },
+  {
+    q: "ลักษณะเด่นที่สังเกตได้ชัดเจนของหินตะกอนส่วนใหญ่คือข้อใด?",
+    opts: ["มักพบการเรียงตัวเป็นชั้นๆ", "มีรูพรุนกระจายเต็มเนื้อหิน", "มีเนื้อแก้วแวววาวสะท้อนแสง", "มีผลึกแร่ขนาดใหญ่เกี่ยวประสาน"],
+    ans: "มักพบการเรียงตัวเป็นชั้นๆ"
+  },
+
+  // เรื่องซากดึกดำบรรพ์ (ข้อ 16-30)
+  {
+    q: "ซากดึกดำบรรพ์ (Fossils) หมายถึงข้อใดถูกต้องและครอบคลุมที่สุด?",
+    opts: ["ซากหรือร่องรอยสิ่งมีชีวิตในอดีต", "ซากกระดูกสัตว์ที่เพิ่งตายไม่นาน", "ก้อนหินที่มีรูปร่างคล้ายสัตว์ป่า", "แร่ธาตุที่ตกผลึกเป็นรูปใบไม้"],
+    ans: "ซากหรือร่องรอยสิ่งมีชีวิตในอดีต"
+  },
+  {
+    q: "หินประเภทใดที่มีโอกาสค้นพบซากดึกดำบรรพ์สมบูรณ์มากที่สุด?",
+    opts: ["หินตะกอนที่ทับถมกันช้าๆ", "หินอัคนีพุที่ลาวาไหลทับ", "หินอัคนีแทรกซอนใต้เปลือกโลก", "หินแปรที่ผ่านความร้อนสูงมาก"],
+    ans: "หินตะกอนที่ทับถมกันช้าๆ"
+  },
+  {
+    q: "เหตุใดเราจึงไม่พบซากดึกดำบรรพ์ในหินอัคนี?",
+    opts: ["ความร้อนหลอมทำลายซากจนหมด", "หินอัคนีมีอายุเก่าแก่เกินไป", "สิ่งมีชีวิตไม่เคยอาศัยบนหิน", "หินอัคนีไม่มีแร่ธาตุช่วยรักษา"],
+    ans: "ความร้อนหลอมทำลายซากจนหมด"
+  },
+  {
+    q: "ข้อใดจัดเป็นซากดึกดำบรรพ์ประเภท 'รอยพิมพ์และรูปหล่อ' (Mold and Cast)?",
+    opts: ["รอยเปลือกหอยที่มีหินแทนที่", "กระดูกไดโนเสาร์กลายเป็นหิน", "ซากแมลงที่ติดอยู่ในก้อนอำพัน", "โครงกระดูกช้างแมมมอธในน้ำแข็ง"],
+    ans: "รอยเปลือกหอยที่มีหินแทนที่"
+  },
+  {
+    q: "ข้อใดจัดเป็นซากดึกดำบรรพ์ประเภท 'ร่องรอย' (Trace Fossils)?",
+    opts: ["รอยเท้าไดโนเสาร์บนลานหิน", "ฟันฉลามดึกดำบรรพ์กลายเป็นหิน", "เนื้อเยื่อใบไม้ที่ถูกถ่านหินอัด", "ไม้กลายเป็นหินในชั้นตะกอน"],
+    ans: "รอยเท้าไดโนเสาร์บนลานหิน"
+  },
+  {
+    q: "ซากแมลงโบราณที่คงสภาพสมบูรณ์ที่สุดมักพบถูกเก็บรักษาไว้ในสิ่งใด?",
+    opts: ["อำพันที่เกิดจากยางไม้โบราณ", "หินแกรนิตที่เกิดจากหินหนืด", "หินบะซอลต์บริเวณภูเขาไฟเก่า", "หินควาร์ตไซต์ในเทือกเขาหิน"],
+    ans: "อำพันที่เกิดจากยางไม้โบราณ"
+  },
+  {
+    q: "กระบวนการกลายเป็นหิน (Petrification) มักเกิดจากการที่สารใดเข้าไปแทนที่เนื้อเยื่อเดิม?",
+    opts: ["สารละลายแร่ธาตุแทรกซึมแทนที่", "น้ำมันดิบไหลซึมเข้าไปสะสมตัว", "ฟองแก๊สร้อนทำปฏิกิริยาเคมี", "ความกดอากาศสูงอัดสารละลาย"],
+    ans: "สารละลายแร่ธาตุแทรกซึมแทนที่"
+  },
+  {
+    q: "ซากดึกดำบรรพ์ดัชนี (Index Fossil) ต้องมีคุณสมบัติเฉพาะตัวตามข้อใด?",
+    opts: ["พบกระจายกว้างขวางแต่อยู่สั้น", "พบในพื้นที่แคบๆ แต่อยู่ยาวนาน", "เป็นซากสัตว์ขนาดใหญ่มากเท่านั้น", "พบได้เฉพาะในเขตป่าดิบชื้น"],
+    ans: "พบกระจายกว้างขวางแต่อยู่สั้น"
+  },
+  {
+    q: "ประโยชน์สำคัญที่สุดของ 'ซากดึกดำบรรพ์ดัชนี' ทางธรณีวิทยาคือข้อใด?",
+    opts: ["ใช้ระบุอายุเปรียบเทียบของชั้นหิน", "ใช้บอกทิศทางการไหลของน้ำใต้ดิน", "ใช้จำแนกชนิดของแร่ธาตุมีค่า", "ใช้คาดเดาความลึกของแหล่งน้ำมัน"],
+    ans: "ใช้ระบุอายุเปรียบเทียบของชั้นหิน"
+  },
+  {
+    q: "ถ้าขุดพบซากดึกดำบรรพ์หอยฝาคู่และปะการังบนภูเขาสูง สรุปได้ว่าอย่างไร?",
+    opts: ["บริเวณนั้นเคยเป็นทะเลในอดีต", "มีคนนำเปลือกหอยขึ้นไปทิ้งไว้", "ภูเขานั้นเกิดจากลาวาใต้ทะเลพ่น", "สัตว์ทะเลอพยพหนีภัยน้ำท่วมใหญ่"],
+    ans: "บริเวณนั้นเคยเป็นทะเลในอดีต"
+  },
+  {
+    q: "การศึกษาซากดึกดำบรรพ์ช่วยให้นักวิทยาศาสตร์เข้าใจเรื่องใดได้ชัดเจนที่สุด?",
+    opts: ["วิวัฒนาการของสิ่งมีชีวิตในอดีต", "การพยากรณ์สภาพอากาศล่วงหน้า", "ตำแหน่งของดาวเคราะห์ในจักรวาล", "การเคลื่อนที่ของลมมรสุมประจำปี"],
+    ans: "วิวัฒนาการของสิ่งมีชีวิตในอดีต"
+  },
+  {
+    q: "หลักการลำดับชั้นหินระบุว่า หินตะกอนที่อยู่ชั้นล่างสุดมักมีอายุอย่างไรเมื่อเทียบกับชั้นบน?",
+    opts: ["มีอายุแก่กว่าชั้นหินที่อยู่บน", "มีอายุอ่อนกว่าชั้นหินที่อยู่บน", "มีอายุเท่ากันกับชั้นหินด้านบน", "ไม่สามารถเปรียบเทียบอายุหินได้"],
+    ans: "มีอายุแก่กว่าชั้นหินที่อยู่บน"
+  },
+  {
+    q: "ซากสิ่งมีชีวิตชนิดใดจัดเป็นซากดึกดำบรรพ์ดัชนีที่สำคัญในมหายุคพาลีโอโซอิก?",
+    opts: ["ไทรโลไบต์สัตว์ทะเลโบราณ", "ไดโนเสาร์กินพืชขนาดยักษ์", "ช้างแมมมอธขนยาวในยุคน้ำแข็ง", "นกโบราณอาร์คีออปเทอริกซ์"],
+    ans: "ไทรโลไบต์สัตว์ทะเลโบราณ"
+  },
+  {
+    q: "ข้อใดเป็นประโยชน์ของซากดึกดำบรรพ์ด้านพลังงานและเชื้อเพลิง?",
+    opts: ["เป็นต้นกำเนิดของถ่านหินและน้ำมัน", "ช่วยดูดซับพลังงานแสงอาทิตย์ได้", "ใช้สร้างกระแสไฟฟ้าโดยตรงในดิน", "ใช้เป็นสารเร่งปฏิกิริยานิวเคลียร์"],
+    ans: "เป็นต้นกำเนิดของถ่านหินและน้ำมัน"
+  },
+  {
+    q: "การค้นพบซากดึกดำบรรพ์ชนิดเดียวกันบนสองทวีปที่ห่างไกลกัน เป็นหลักฐานสนับสนุนทฤษฎีใด?",
+    opts: ["ทวีปเคยเชื่อมติดกันในอดีต", "สัตว์บินข้ามมหาสมุทรได้ง่าย", "น้ำทะเลในอดีตแห้งเหือดหมด", "สัตว์ว่ายน้ำข้ามทวีปได้เร็ว"],
+    ans: "ทวีปเคยเชื่อมติดกันในอดีต"
+  }
+];
+
+function shuffle(array) {
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  return arr;
+}
+
+function initTabs() {
+  const btn1 = document.getElementById('tab-btn-1');
+  const btn2 = document.getElementById('tab-btn-2');
+  const content1 = document.getElementById('tab-content-1');
+  const content2 = document.getElementById('tab-content-2');
+
+  btn1.onclick = function() {
+    btn1.className = 'tab-item active';
+    btn2.className = 'tab-item';
+    content1.className = 'tab-content show';
+    content2.className = 'tab-content';
+  };
+
+  btn2.onclick = function() {
+    btn2.className = 'tab-item active';
+    btn1.className = 'tab-item';
+    content2.className = 'tab-content show';
+    content1.className = 'tab-content';
+    setTimeout(function() {
+      const area = document.getElementById('essay-input-1');
+      if (area) area.focus();
+    }, 50);
+  };
+}
+
+function buildQuestions() {
+  const container = document.getElementById('part1-questions');
+  container.innerHTML = '';
+
+  examQuestions.forEach(function(item, qIdx) {
+    const card = document.createElement('div');
+    card.className = 'question-block';
+
+    const title = document.createElement('div');
+    title.className = 'q-text';
+    title.innerHTML = '<span style="color:#b45309;">' + (qIdx + 1) + '.</span> ' + item.q;
+    card.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'opts-grid';
+
+    const shuffledChoices = shuffle(item.opts);
+
+    shuffledChoices.forEach(function(choice) {
+      const label = document.createElement('label');
+      label.className = 'opt-label label-q-' + qIdx;
+
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'q_' + qIdx;
+      radio.value = choice;
+
+      radio.onchange = function() {
+        const allLabels = card.querySelectorAll('.label-q-' + qIdx);
+        allLabels.forEach(function(l) {
+          l.classList.remove('chosen');
+        });
+        if (radio.checked) {
+          label.classList.add('chosen');
+        }
+      };
+
+      const span = document.createElement('span');
+      span.textContent = choice;
+
+      label.appendChild(radio);
+      label.appendChild(span);
+      grid.appendChild(label);
+    });
+
+    card.appendChild(grid);
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback-note';
+    feedback.id = 'fb-' + qIdx;
+    card.appendChild(feedback);
+
+    container.appendChild(card);
+  });
+}
+
+function gradeExam() {
+  let score = 0;
+
+  examQuestions.forEach(function(item, qIdx) {
+    const radios = document.querySelectorAll('input[name="q_' + qIdx + '"]');
+    const fb = document.getElementById('fb-' + qIdx);
+    let selected = null;
+
+    radios.forEach(function(r) {
+      r.disabled = true;
+      if (r.checked) {
+        selected = r.value;
+      }
+      const pLabel = r.parentElement;
+      if (r.value === item.ans) {
+        pLabel.classList.add('is-correct');
+      } else if (r.checked && r.value !== item.ans) {
+        pLabel.classList.add('is-wrong');
+      }
+    });
+
+    fb.style.display = 'block';
+    if (selected === item.ans) {
+      score++;
+      fb.style.color = '#15803d';
+      fb.textContent = '✓ ถูกต้อง';
+    } else {
+      fb.style.color = '#b91c1c';
+      fb.textContent = '✗ เฉลย: ' + item.ans;
+    }
+  });
+
+  document.getElementById('model-answer-1').style.display = 'block';
+  document.getElementById('model-answer-2').style.display = 'block';
+
+  document.getElementById('score-display').textContent = score + ' / 30';
+  document.getElementById('btn-submit-exam').style.display = 'none';
+
+  const res = document.getElementById('result-box');
+  res.style.display = 'block';
+  res.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetExam() {
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('btn-submit-exam').style.display = 'block';
+
+  document.getElementById('model-answer-1').style.display = 'none';
+  document.getElementById('model-answer-2').style.display = 'none';
+  document.getElementById('essay-input-1').value = '';
+  document.getElementById('essay-input-2').value = '';
+
+  buildQuestions();
+  document.getElementById('tab-btn-1').click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.onload = function() {
+  initTabs();
+  buildQuestions();
+  document.getElementById('btn-submit-exam').onclick = gradeExam;
+  document.getElementById('btn-retry-exam').onclick = resetExam;
+};
+</script>
+</body>
+</html>

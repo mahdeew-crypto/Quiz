@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แนวข้อสอบปลายภาค วิชาภาษาไทย ชั้น ป.6 ภาคเรียนที่ 1 ปีการศึกษา 2569</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Sarabun', 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background-color: #fdfaf6;
+      margin: 0;
+      padding: 16px;
+      color: #292524;
+    }
+    .wrapper {
+      max-width: 880px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(13, 148, 136, 0.08);
+      border: 2px solid #ccfbf1;
+    }
+    .header-card {
+      background: linear-gradient(135deg, #0f766e, #0d9488, #14b8a6);
+      color: #ffffff;
+      text-align: center;
+      padding: 22px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+    }
+    .header-card h1 {
+      margin: 0 0 6px 0;
+      font-size: 22px;
+    }
+    .header-card p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+    .tab-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .tab-item {
+      flex: 1;
+      padding: 14px 16px;
+      font-size: 15px;
+      font-weight: bold;
+      border: 2px solid #99f6e4;
+      background: #f0fdfa;
+      color: #0f766e;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .tab-item.active {
+      background: #0d9488;
+      color: #ffffff;
+      border-color: #0d9488;
+      box-shadow: 0 4px 12px rgba(13, 148, 136, 0.25);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.show {
+      display: block;
+    }
+    .question-block {
+      background: #f0fdfa;
+      border: 1.5px solid #ccfbf1;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+    .q-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #134e4a;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .opts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 640px) {
+      .opts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1.4;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .opt-label:hover {
+      background: #ccfbf1;
+      border-color: #0d9488;
+    }
+    .opt-label input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #0d9488;
+    }
+    .opt-label.chosen {
+      background: #ccfbf1;
+      border-color: #0d9488;
+      color: #0f766e;
+      font-weight: bold;
+    }
+    .opt-label.is-correct {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+      color: #166534 !important;
+      font-weight: bold;
+    }
+    .opt-label.is-wrong {
+      background: #fee2e2 !important;
+      border-color: #dc2626 !important;
+      color: #991b1b !important;
+    }
+    .feedback-note {
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 8px;
+      display: none;
+    }
+    .essay-card {
+      background: #f8fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+    .verse-box {
+      background: #fefce8;
+      border-left: 4px solid #eab308;
+      padding: 14px 18px;
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.8;
+      color: #713f12;
+      margin-bottom: 16px;
+    }
+    .essay-textarea {
+      width: 100%;
+      min-height: 140px;
+      padding: 12px;
+      font-size: 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 8px;
+      outline: none;
+      resize: vertical;
+      background: #ffffff;
+      line-height: 1.6;
+    }
+    .essay-textarea:focus {
+      border-color: #0d9488;
+      box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+    }
+    .solution-box {
+      display: none;
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      margin-top: 12px;
+      color: #166534;
+      line-height: 1.7;
+    }
+    .btn-submit {
+      width: 100%;
+      background: #0d9488;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25);
+      transition: background 0.2s;
+    }
+    .btn-submit:hover {
+      background: #0f766e;
+    }
+    .result-box {
+      display: none;
+      background: #f0fdfa;
+      border: 2px solid #5eead4;
+      border-radius: 16px;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .score-badge {
+      font-size: 32px;
+      font-weight: 800;
+      color: #0d9488;
+      margin: 8px 0;
+    }
+    .btn-retry {
+      background: #0d9488;
+      color: #ffffff;
+      border: none;
+      border-radius: 20px;
+      padding: 12px 28px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+    .btn-retry:hover {
+      background: #0f766e;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  
+  <div class="header-card">
+    <h1>📚 แบบทดสอบปลายภาค วิชาภาษาไทย ชั้นประถมศึกษาปีที่ 6</h1>
+    <p>ภาคเรียนที่ 1 ปีการศึกษา 2569 • ตอนที่ 1 ปรนัย (35 ข้อ) และ ตอนที่ 2 อัตนัย (1 ข้อ)</p>
+  </div>
+
+  <div class="tab-bar">
+    <button type="button" class="tab-item active" id="tab-btn-1">
+      📝 ตอนที่ 1: ปรนัย 4 ตัวเลือก (35 ข้อ)
+    </button>
+    <button type="button" class="tab-item" id="tab-btn-2">
+      ✍️ ตอนที่ 2: อัตนัย กาพย์ยานี 11 (1 ข้อ)
+    </button>
+  </div>
+
+  <!-- ตอนที่ 1: ปรนัย 35 ข้อ -->
+  <div class="tab-content show" id="tab-content-1">
+    <div id="part1-questions"></div>
+  </div>
+
+  <!-- ตอนที่ 2: อัตนัย 1 ข้อ -->
+  <div class="tab-content" id="tab-content-2">
+    <div class="essay-card">
+      <div class="q-text" style="color: #0f766e;">
+        ข้อที่ 1: การแต่งและการสัมผัสคำประพันธ์ "กาพย์ยานี 11"
+      </div>
+      <div class="verse-box">
+        <b>คำชี้แจง:</b> จงพิจารณาเนื้อความกาพย์ยานี 11 ที่กำหนดให้ แล้วแต่งวรรคที่ขาดหายไปจำนวน 2 วรรคให้ได้ใจความถูกต้อง ไพเราะ และถูกต้องตามสัมผัสฉันทลักษณ์กาพย์ยานี 11<br><br>
+        <i>"วิชาคือดวงประทีป &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ส่องชีพบอกทางเดิน<br>
+        (วรรคที่ 3 ..................................) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (วรรคที่ 4 ..................................)"</i>
+      </div>
+      <div class="q-text" style="font-size: 14px;">
+        1) จงเติมข้อความวรรคที่ 3 และวรรคที่ 4 ให้สมบูรณ์ตามฉันทลักษณ์<br>
+        2) อธิบายการส่งและรับสัมผัสนอกของคำประพันธ์บทนี้ให้ถูกต้อง
+      </div>
+      <textarea class="essay-textarea" id="essay-input-0" placeholder="คลิกเพื่อพิมพ์คำตอบ อธิบายฉันทลักษณ์ และคำสัมผัสที่นี่..."></textarea>
+      <div class="solution-box" id="sol-p2-0">
+        <b>💡 แนวคำตอบและเกณฑ์การให้คะแนน:</b><br>
+        1) <b>ตัวอย่างการแต่งวรรคที่สมบูรณ์:</b><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;<i>"วิชาคือดวงประทีป &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ส่องชีพบอกทางเดิน<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; มุ่งมั่นไม่ขัดเขิน &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ย่อมเจริญก้าวหน้าไกล"</i> (หรือคำอื่นที่มีความหมายสอดคล้อง)<br>
+        2) <b>การวิเคราะห์ฉันทลักษณ์และการสัมผัส:</b><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• <b>วรรคหน้ามี 5 คำ วรรคหลังมี 6 คำ</b> รวมหนึ่งบาทมี 11 คำ<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• <b>สัมผัสในบาทแรก:</b> คำสุดท้ายของวรรคที่ 1 (ประทีป) สัมผัสสระกับคำที่ 2 ของวรรคที่ 2 (ชีพ)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• <b>สัมผัสระหว่างวรรค:</b> คำสุดท้ายของวรรคที่ 2 (เดิน) ส่งสัมผัสสระและตัวสะกดมายังคำสุดท้ายของวรรคที่ 3 (เขิน)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;• คำสุดท้ายของวรรคที่ 3 (เขิน) สัมผัสกับคำที่ 2 หรือ 3 ของวรรคที่ 4 (เจริญ)
+      </div>
+    </div>
+  </div>
+
+  <button type="button" class="btn-submit" id="btn-submit-exam">
+    ✅ ส่งข้อสอบและตรวจคำตอบ
+  </button>
+
+  <div class="result-box" id="result-box">
+    <h2 style="color: #0f766e; margin: 0 0 6px 0;">🎉 สรุปผลการประเมินคะแนน</h2>
+    <div style="font-size: 15px; color: #134e4a;">คะแนนตอนที่ 1 (ปรนัย 35 ข้อ):</div>
+    <div class="score-badge" id="score-display">0 / 35</div>
+    <p style="font-size: 13px; color: #64748b; margin: 0 0 10px 0;">
+      *สามารถกดสลับไปที่ <b>"ตอนที่ 2: อัตนัย กาพย์ยานี 11"</b> ด้านบน เพื่อตรวจดูแนวคำตอบที่เฉลยไว้ได้ครับ
+    </p>
+    <button type="button" class="btn-retry" id="btn-retry-exam">
+      🔄 ทำใหม่อีกครั้ง (สุ่มตัวเลือกใหม่)
+    </button>
+  </div>
+
+</div>
+
+<script>
+// ข้อมูลโจทย์ปรนัย 35 ข้อ (เดิม 25 ข้อ + เพิ่มเติม 10 ข้อ ครอบคลุม 7 หน่วยการเรียนรู้ตามแนวข้อสอบ)
+const part1Data = [
+  // 1. คำบุพบท (ข้อ 1-5)
+  {
+    q: "ประโยคในข้อใดใช้คำบุพบทบอกตำแหน่งสถานที่ได้อย่างถูกต้อง?",
+    opts: ["คุณพ่อปลูกต้นไม้อยู่ริมรั้วบ้าน", "เขาวิ่งออกกำลังเพื่อสุขภาพที่ดี", "นักเรียนตั้งใจฟังครูตั้งแต่เช้า", "เธอได้รับรางวัลแก่ความขยันหมั่นเพียร"],
+    ans: "คุณพ่อปลูกต้นไม้อยู่ริมรั้วบ้าน"
+  },
+  {
+    q: "ประโยค 'ครูมอบทุนการศึกษา......นักเรียนที่มีความประพฤติดี' ควรเติมคำบุพบทใด?",
+    opts: ["แก่นักเรียนอย่างเหมาะสม", "แด่นักเรียนที่มีน้ำใจดี", "ต่อนักเรียนที่มีความตั้งใจ", "สำหรับนักเรียนที่ขาดแคลนทุน"],
+    ans: "แก่นักเรียนอย่างเหมาะสม"
+  },
+  {
+    q: "คำว่า 'เพื่อ' ในประโยค 'ทหารยอมสละชีพเพื่อชาติ' ทำหน้าที่แสดงความสัมพันธ์แบบใด?",
+    opts: ["แสดงความมุ่งหมายหรือเป้าหมาย", "แสดงความเป็นเจ้าของกรรมสิทธิ์", "แสดงช่วงเวลาที่เกิดเหตุการณ์", "แสดงเครื่องมือที่ใช้กระทำ"],
+    ans: "แสดงความมุ่งหมายหรือเป้าหมาย"
+  },
+  {
+    q: "ประโยคในข้อใดไม่มีคำบุพบทปรากฏอยู่เลย?",
+    opts: ["นกตัวน้อยกำลังส่งเสียงร้องเจื้อยแจ้ว", "สมุดเล่มสีน้ำเงินวางอยู่บนโต๊ะไม้", "เด็กๆ ไปทัศนศึกษาโดยรถบัสปรับอากาศ", "ชาวบ้านรวมตัวกัน ณ ศาลาประชาคม"],
+    ans: "นกตัวน้อยกำลังส่งเสียงร้องเจื้อยแจ้ว"
+  },
+  {
+    q: "ข้อใดใช้คำบุพบท 'แด่' ได้ถูกต้องตามหลักภาษาไทย?",
+    opts: ["ประชาชนทูลเกล้าฯ ถวายเงินแด่ในหลวง", "ผู้อำนวยการมอบเกียรติบัตรแด่นักเรียน", "คุณแม่ให้ของขวัญวันเกิดแด่ลูกชาย", "นายกเทศมนตรีมอบถุงยังชีพแด่ชาวบ้าน"],
+    ans: "ประชาชนทูลเกล้าฯ ถวายเงินแด่ในหลวง"
+  },
+
+  // 2. คำอุทาน (ข้อ 6-10)
+  {
+    q: "ข้อใดเป็นคำอุทานที่แสดงความรู้สึก 'สงสารหรือเห็นใจ'?",
+    opts: ["โถ! ช่างน่าเวทนาเหลือเกิน", "อุ๊ย! ทำของตกใจหายหมดเลย", "เอ๊ะ! ใครลืมกระเป๋าไว้ตรงนี้", "เย้! พวกเราชนะการแข่งขันแล้ว"],
+    ans: "โถ! ช่างน่าเวทนาเหลือเกิน"
+  },
+  {
+    q: "ข้อความใดเลือกใช้คำอุทานได้เหมาะสมกับอารมณ์ 'โกรธหรือไม่พอใจ'?",
+    opts: ["ชิชะ! กล้าดีอย่างไรมาท้าทายข้า", "อนิจจา! ไม่น่าต้องมาลำบากเลย", "ว้าว! ทะเลที่นี่สวยงามจับใจ", "ไชโย! คุณพ่อกลับมาถึงบ้านแล้ว"],
+    ans: "ชิชะ! กล้าดีอย่างไรมาท้าทายข้า"
+  },
+  {
+    q: "คำที่ขีดเส้นใต้ในข้อใดจัดเป็น 'คำอุทานเสริมบท'?",
+    opts: ["วันหยุดไม่ได้ไปเที่ยววัดวาอารามที่ไหน", "คุณพระช่วย! ฟ้าผ่าลงมาตรงต้นไม้", "อ๋อ! ฉันจำเรื่องราวคราวนั้นได้ดี", "เฮ้อ! เหนื่อยกับการเดินทางทั้งวัน"],
+    ans: "วันหยุดไม่ได้ไปเที่ยววัดวาอารามที่ไหน"
+  },
+  {
+    q: "เครื่องหมายวรรคตอนใดต้องใช้เขียนกำกับไว้หลังคำอุทานบอกอาการเสมอ?",
+    opts: ["อัศเจรีย์ (เครื่องหมายตกใจ)", "ปรัศนี (เครื่องหมายคำถาม)", "นขลิขิต (วงเล็บเปิดปิด)", "ยัติภังค์ (ขีดกลางสั้น)"],
+    ans: "อัศเจรีย์ (เครื่องหมายตกใจ)"
+  },
+  {
+    q: "คำอุทานในข้อใดแสดงอารมณ์ความรู้สึก 'ประหลาดใจหรือสงสัย'?",
+    opts: ["เอ๊ะ! ใครมาเคาะประตูเวลานี้", "เฮ้อ! งานชิ้นนี้เสร็จเสียทีนะ", "อุย! เจ็บแผลที่หัวเข่าจังเลย", "ว้า! หนังเรื่องนี้จบเร็วเกินไป"],
+    ans: "เอ๊ะ! ใครมาเคาะประตูเวลานี้"
+  },
+
+  // 3. คำวิเศษณ์ (ข้อ 11-15)
+  {
+    q: "คำว่า 'หอมฟุ้ง' ในประโยค 'ดอกมะลิส่งกลิ่นหอมฟุ้งไปทั่วบ้าน' จัดเป็นคำวิเศษณ์ชนิดใด?",
+    opts: ["ลักษณวิเศษณ์ (บอกสัณฐานกลิ่นรส)", "กาลวิเศษณ์ (บอกเวลาที่เกิดเหตุ)", "สถานวิเศษณ์ (บอกตำแหน่งสถานที่)", "ประมาณวิเศษณ์ (บอกจำนวนนับ)"],
+    ans: "ลักษณวิเศษณ์ (บอกสัณฐานกลิ่นรส)"
+  },
+  {
+    q: "ประโยคในข้อใดมี 'สถานวิเศษณ์' ทำหน้าที่ขยายคำในประโยค?",
+    opts: ["บ้านของเขาตั้งอยู่ทางทิศเหนือ", "เธอมาโรงเรียนแต่เช้าตรู่ทุกวัน", "คนขยันย่อมประสบความสำเร็จเสมอ", "สุนัขตัวนี้ชอบนอนหลับตอนกลางคืน"],
+    ans: "บ้านของเขาตั้งอยู่ทางทิศเหนือ"
+  },
+  {
+    q: "คำว่า 'โบราณ' ในข้อความ 'ปราสาทหินโบราณตั้งตระหง่าน' ทำหน้าที่ขยายคำใด?",
+    opts: ["ขยายคำนามคือคำว่าปราสาทหิน", "ขยายคำกริยาคือคำว่าตั้งตระหง่าน", "ทำหน้าที่เป็นคำกริยาหลักของประโยค", "ทำหน้าที่เชื่อมข้อความให้สัมพันธ์กัน"],
+    ans: "ขยายคำนามคือคำว่าปราสาทหิน"
+  },
+  {
+    q: "ประโยคในข้อใดมีคำวิเศษณ์ทำหน้าที่ 'ขยายคำกริยา' ได้อย่างชัดเจน?",
+    opts: ["น้องชายคนเล็กวิ่งอย่างรวดเร็ว", "ผ้าผืนสีแดงวางอยู่บนโต๊ะไม้", "เด็กหญิงตัวสูงชอบอ่านนิทานอีสป", "บ้านหลังใหญ่มีสวนดอกไม้ร่มรื่น"],
+    ans: "น้องชายคนเล็กวิ่งอย่างรวดเร็ว"
+  },
+  {
+    q: "ข้อใดเป็นคำวิเศษณ์บอกเวลา (กาลวิเศษณ์)?",
+    opts: ["สายัณห์นี้ท้องฟ้ามีแสงเรื่อเรือง", "บ้านของฉันอยู่ใกล้ตลาดสดเทศบาล", "ผลส้มเขียวหวานมีรสเปรี้ยวอมหวาน", "ผู้หญิงร่างท้วมกำลังเดินข้ามถนน"],
+    ans: "สายัณห์นี้ท้องฟ้ามีแสงเรื่อเรือง"
+  },
+
+  // 4. การเขียนเรียงความ (ข้อ 16-20)
+  {
+    q: "องค์ประกอบหลัก 3 ส่วนของการเขียนเรียงความเรียงลำดับได้อย่างถูกต้องตามข้อใด?",
+    opts: ["คำนำ เนื้อเรื่อง สรุป", "ชื่อเรื่อง เนื้อเรื่อง คำนำ", "คำนำ สรุป เนื้อหา", "โครงเรื่อง เนื้อหา สรุป"],
+    ans: "คำนำ เนื้อเรื่อง สรุป"
+  },
+  {
+    q: "ส่วนใดของเรียงความที่ทำหน้าที่เร้าความสนใจและเปิดประเด็นเข้าสู่เรื่อง?",
+    opts: ["ส่วนคำนำที่ชวนให้ติดตามอ่าน", "ส่วนเนื้อเรื่องที่ให้ข้อเท็จจริง", "ส่วนสรุปที่ฝากข้อคิดเตือนใจ", "ส่วนอ้างอิงที่ระบุแหล่งที่มา"],
+    ans: "ส่วนคำนำที่ชวนให้ติดตามอ่าน"
+  },
+  {
+    q: "ข้อใดเป็นหลักการเขียนเรียงความที่ถูกต้องและเหมาะสมที่สุด?",
+    opts: ["เนื้อเรื่องต้องมีเอกภาพสัมพันธภาพ", "ใช้ภาษาพูดปนภาษาเขียนเพื่อความสนุก", "ส่วนสรุปควรยกประเด็นใหม่ขึ้นมาถก", "ไม่จำเป็นต้องวางโครงเรื่องก่อนเขียน"],
+    ans: "เนื้อเรื่องต้องมีเอกภาพสัมพันธภาพ"
+  },
+  {
+    q: "การมี 'เอกภาพ' ในการเขียนเรียงความหมายถึงลักษณะตามข้อใด?",
+    opts: ["เนื้อหาทุกย่อหน้ามุ่งสู่ใจความเดียว", "ประโยคมีความต่อเนื่องและสละสลวย", "การใช้สำนวนเปรียบเทียบที่หลากหลาย", "การมีความยาวของแต่ละย่อหน้าเท่ากัน"],
+    ans: "เนื้อหาทุกย่อหน้ามุ่งสู่ใจความเดียว"
+  },
+  {
+    q: "ส่วนสรุปของเรียงความที่ดีไม่ควรมีลักษณะตามข้อใด?",
+    opts: ["การเปิดประเด็นข้อสงสัยใหม่ขึ้นมา", "การเน้นย้ำประเด็นสำคัญของเรื่อง", "การฝากข้อคิดเตือนใจที่มีประโยชน์", "การยกสุภาษิตสอนใจมาลงท้าย"],
+    ans: "การเปิดประเด็นข้อสงสัยใหม่ขึ้นมา"
+  },
+
+  // 5. การพูด (ข้อ 21-25)
+  {
+    q: "ข้อใดแสดงถึงการปฏิบัติตนตามมารยาทในการพูดต่อหน้าที่ชุมชนที่ถูกต้อง?",
+    opts: ["สบสายตาผู้ฟังอย่างทั่วถึงและสุภาพ", "ใช้อารมณ์โต้ตอบเมื่อมีผู้ซักถามขัดแย้ง", "ก้มหน้าอ่านบทพูดตลอดเวลาเพื่อความแม่น", "พูดล้อเลียนปมด้อยผู้ฟังเพื่อสร้างเสียงหัวเราะ"],
+    ans: "สบสายตาผู้ฟังอย่างทั่วถึงและสุภาพ"
+  },
+  {
+    q: "การพูดโน้มน้าวใจที่ดีควรมีลักษณะเด่นตามข้อใด?",
+    opts: ["มีเหตุผลน่าเชื่อถือและสร้างสรรค์", "ใช้น้ำเสียงข่มขู่เพื่อให้ผู้ฟังคล้อยตาม", "พูดโอ้อวดเกินจริงเพื่อให้ดูน่าสนใจ", "กล่าวพาดพิงข้อบกพร่องของผู้อื่น"],
+    ans: "มีเหตุผลน่าเชื่อถือและสร้างสรรค์"
+  },
+  {
+    q: "เมื่อต้องการพูดแสดงความคิดเห็นในที่ประชุม ควรปฏิบัติตนอย่างไรเป็นอันดับแรก?",
+    opts: ["ยกมือขออนุญาตประธานก่อนพูด", "พูดแทรกทันทีเมื่อนึกประเด็นออก", "ยืนขึ้นพูดด้วยเสียงดังกว่าผู้อื่น", "เดินไปหน้าห้องเพื่อแย่งไมโครโฟน"],
+    ans: "ยกมือขออนุญาตประธานก่อนพูด"
+  },
+  {
+    q: "ข้อใดไม่ใช่ลักษณะของการพูดแสดงความคิดเห็นที่ดี?",
+    opts: ["ใช้อารมณ์และความรู้สึกส่วนตัวเป็นหลัก", "มีข้อมูลและหลักฐานสนับสนุนชัดเจน", "ใช้ถ้อยคำสุภาพไม่ก้าวร้าวเสียดสี", "เปิดโอกาสให้ผู้อื่นได้ชี้แจงมุมมอง"],
+    ans: "ใช้อารมณ์และความรู้สึกส่วนตัวเป็นหลัก"
+  },
+  {
+    q: "การพูดในสถานการณ์ใดควรใช้น้ำเสียงจริงจัง สุภาพ และเป็นทางการมากที่สุด?",
+    opts: ["การกล่าวรายงานผลงานต่อหน้าผู้บังคับบัญชา", "การเล่าเรื่องตลกให้เพื่อนสนิทฟังช่วงพัก", "การทักทายคุณป้าข้างบ้านในตอนเช้า", "การสั่งอาหารกับแม่ค้าในโรงอาหาร"],
+    ans: "การกล่าวรายงานผลงานต่อหน้าผู้บังคับบัญชา"
+  },
+
+  // 6. สำนวน สุภาษิต และคำพังเพย (ข้อ 26-30)
+  {
+    q: "สำนวน 'ชักแม่น้ำทั้งห้า' มีความหมายตรงกับข้อใด?",
+    opts: ["พูดยกยอปอปั้นเพื่อขอสิ่งที่ต้องการ", "พูดจาขวานผ่าซากตรงไปตรงมา", "พูดจาคลุมเครือไม่ชัดเจนในประเด็น", "พูดความจริงเพียงครึ่งเดียวเสมอ"],
+    ans: "พูดยกยอปอปั้นเพื่อขอสิ่งที่ต้องการ"
+  },
+  {
+    q: "บุคคลใดมีพฤติกรรมตรงกับสำนวน 'กบในกะลาครอบ'?",
+    opts: ["สมชายคิดว่าตนเองฉลาดโดยไม่เปิดรับสิ่งใหม่", "สมหญิงเป็นคนประหยัดอดออมเงินอย่างสม่ำเสมอ", "สมศักดิ์ชอบเดินทางหาประสบการณ์ในต่างแดน", "สมศรีช่วยเหลืองานส่วนรวมด้วยความเต็มใจ"],
+    ans: "สมชายคิดว่าตนเองฉลาดโดยไม่เปิดรับสิ่งใหม่"
+  },
+  {
+    q: "สำนวนใดมีความหมายเตือนใจให้ 'มีความรอบคอบและเตรียมพร้อมรับมือปัญหา'?",
+    opts: ["กันไว้ดีกว่าแก้ แย่แล้วแก้ไม่ทัน", "ช้าๆ ได้พร้าสองเล่มงามชวนมอง", "น้ำขึ้นให้รีบตักฉวยโอกาสทอง", "ตีงูให้กากินสิ้นเปลืองแรงเปล่า"],
+    ans: "กันไว้ดีกว่าแก้ แย่แล้วแก้ไม่ทัน"
+  },
+  {
+    q: "สำนวน 'วัวหายล้อมคอก' มีความหมายตรงกับสถานการณ์ใด?",
+    opts: ["เกิดเรื่องเสียหายแล้วจึงคิดหาทางป้องกัน", "ลงทุนลงแรงไปมากแต่ได้ผลตอบแทนน้อย", "ไม่ยอมรับความช่วยเหลือจากผู้อื่นเลย", "ทำงานลวกๆ พอให้ผ่านพ้นไปวันๆ"],
+    ans: "เกิดเรื่องเสียหายแล้วจึงคิดหาทางป้องกัน"
+  },
+  {
+    q: "สำนวน 'ขี่ช้างจับตั๊กแตน' มักใช้เปรียบเปรยถึงเรื่องใด?",
+    opts: ["ลงทุนลงแรงมากแต่ได้รับผลตอบแทนน้อย", "การทำงานที่เสี่ยงอันตรายเกินความจำเป็น", "การมีความพยายามทำสิ่งที่ยากยิ่งให้สำเร็จ", "การใช้อำนาจข่มเหงรังแกคนที่อ่อนแอกว่า"],
+    ans: "ลงทุนลงแรงมากแต่ได้รับผลตอบแทนน้อย"
+  },
+
+  // 7. วรรณคดี เรื่อง ขุนช้างขุนแผน ตอน กำเนิดพลายงาม (ข้อ 31-35)
+  {
+    q: "เหตุใดขุนช้างจึงคิดลวงพลายงามไปฆ่าในป่าลึก?",
+    opts: ["เพราะรู้ว่าพลายงามเป็นลูกของขุนแผน", "เพราะพลายงามขโมยเงินทองของตนไป", "เพราะนางวันทองสั่งให้ลงโทษพลายงาม", "เพราะพลายงามไม่ยอมช่วยทำงานบ้าน"],
+    ans: "เพราะรู้ว่าพลายงามเป็นลูกของขุนแผน"
+  },
+  {
+    q: "ใครเป็นผู้มาช่วยชีวิตพลายงามไว้ได้ทันท่วงทีขณะที่ขุนช้างกำลังทำร้ายในป่า?",
+    opts: ["ผีพรายของขุนแผนที่คอยปกป้องดูแล", "นางทองประชิดผู้เป็นย่าของพลายงาม", "ขุนแผนที่ใช้วิชาสะเดาะกลอนแหกคุกมา", "ชาวบ้านที่เดินเข้ามาหาของป่าพอดี"],
+    ans: "ผีพรายของขุนแผนที่คอยปกป้องดูแล"
+  },
+  {
+    q: "นางวันทองตัดสินใจให้พลายงามเดินทางไปอาศัยอยู่กับใครที่เมืองกาญจนบุรี?",
+    opts: ["นางทองประศรีผู้เป็นย่าแท้ๆ", "ขุนแผนผู้เป็นพ่อในเรือนจำ", "พระพันวษาในพระบรมมหาราชวัง", "สมเด็จพระวันรัตน์ที่วัดป่าเลไลยก์"],
+    ans: "นางทองประศรีผู้เป็นย่าแท้ๆ"
+  },
+  {
+    q: "ฉากการจากลาระหว่างนางวันทองกับพลายงามสะท้อนคุณธรรมและความรู้สึกเด่นชัดในเรื่องใด?",
+    opts: ["ความรักและความผูกพันอันยิ่งใหญ่ของแม่กับลูก", "ความเคียดแค้นชิงชังที่ต้องรอวันชำระล้าง", "ความกตัญญูรู้คุณต่อผู้มีพระคุณที่เลี้ยงดู", "ความกล้าหาญเด็ดเดี่ยวในการเผชิญโชคชะตา"],
+    ans: "ความรักและความผูกพันอันยิ่งใหญ่ของแม่กับลูก"
+  },
+  {
+    q: "ข้อคิดสำคัญที่นักเรียนสามารถนำไปปรับใช้ในชีวิตประจำวันจากตัวละคร 'พลายงาม' คือข้อใด?",
+    opts: ["ความอดทนเข้มแข็งและความกตัญญูกตเวที", "การฝึกฝนวิชาเวทมนตร์คาถาเพื่อป้องกันตัว", "การหนีปัญหาเมื่อเผชิญหน้ากับความยากลำบาก", "การเก็บความแค้นไว้รอเวลาล้างแค้นศัตรู"],
+    ans: "ความอดทนเข้มแข็งและความกตัญญูกตเวที"
+  }
+];
+
+function shuffle(array) {
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  return arr;
+}
+
+function initTabs() {
+  const btn1 = document.getElementById('tab-btn-1');
+  const btn2 = document.getElementById('tab-btn-2');
+  const content1 = document.getElementById('tab-content-1');
+  const content2 = document.getElementById('tab-content-2');
+
+  btn1.onclick = function() {
+    btn1.className = 'tab-item active';
+    btn2.className = 'tab-item';
+    content1.className = 'tab-content show';
+    content2.className = 'tab-content';
+  };
+
+  btn2.onclick = function() {
+    btn2.className = 'tab-item active';
+    btn1.className = 'tab-item';
+    content2.className = 'tab-content show';
+    content1.className = 'tab-content';
+    setTimeout(function() {
+      const area = document.getElementById('essay-input-0');
+      if (area) area.focus();
+    }, 50);
+  };
+}
+
+function buildQuiz() {
+  const container = document.getElementById('part1-questions');
+  container.innerHTML = '';
+
+  part1Data.forEach(function(item, qIdx) {
+    const card = document.createElement('div');
+    card.className = 'question-block';
+
+    const title = document.createElement('div');
+    title.className = 'q-text';
+    title.innerHTML = '<span style="color:#0f766e;">' + (qIdx + 1) + '.</span> ' + item.q;
+    card.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'opts-grid';
+
+    const shuffledChoices = shuffle(item.opts);
+
+    shuffledChoices.forEach(function(choice) {
+      const label = document.createElement('label');
+      label.className = 'opt-label label-q-' + qIdx;
+
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'q_' + qIdx;
+      radio.value = choice;
+
+      radio.onchange = function() {
+        const allLabels = card.querySelectorAll('.label-q-' + qIdx);
+        allLabels.forEach(function(l) {
+          l.classList.remove('chosen');
+        });
+        if (radio.checked) {
+          label.classList.add('chosen');
+        }
+      };
+
+      const span = document.createElement('span');
+      span.textContent = choice;
+
+      label.appendChild(radio);
+      label.appendChild(span);
+      grid.appendChild(label);
+    });
+
+    card.appendChild(grid);
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback-note';
+    feedback.id = 'fb-p1-' + qIdx;
+    card.appendChild(feedback);
+
+    container.appendChild(card);
+  });
+}
+
+function gradeExam() {
+  let scoreP1 = 0;
+
+  part1Data.forEach(function(item, qIdx) {
+    const radios = document.querySelectorAll('input[name="q_' + qIdx + '"]');
+    const fb = document.getElementById('fb-p1-' + qIdx);
+    let selected = null;
+
+    radios.forEach(function(r) {
+      r.disabled = true;
+      if (r.checked) {
+        selected = r.value;
+      }
+      const pLabel = r.parentElement;
+      if (r.value === item.ans) {
+        pLabel.classList.add('is-correct');
+      } else if (r.checked && r.value !== item.ans) {
+        pLabel.classList.add('is-wrong');
+      }
+    });
+
+    fb.style.display = 'block';
+    if (selected === item.ans) {
+      scoreP1++;
+      fb.style.color = '#15803d';
+      fb.textContent = '✓ ถูกต้อง';
+    } else {
+      fb.style.color = '#dc2626';
+      fb.textContent = '✗ เฉลย: ' + item.ans;
+    }
+  });
+
+  // แสดงเฉลยตอนที่ 2
+  const sol2 = document.getElementById('sol-p2-0');
+  if (sol2) sol2.style.display = 'block';
+  const essayInput = document.getElementById('essay-input-0');
+  if (essayInput) essayInput.disabled = true;
+
+  // แสดงผลคะแนน
+  document.getElementById('score-display').textContent = scoreP1 + ' / 35';
+  document.getElementById('btn-submit-exam').style.display = 'none';
+
+  const resBox = document.getElementById('result-box');
+  resBox.style.display = 'block';
+  resBox.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetExam() {
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('btn-submit-exam').style.display = 'block';
+
+  const sol2 = document.getElementById('sol-p2-0');
+  if (sol2) sol2.style.display = 'none';
+  const essayInput = document.getElementById('essay-input-0');
+  if (essayInput) {
+    essayInput.disabled = false;
+    essayInput.value = '';
+  }
+
+  buildQuiz();
+  document.getElementById('tab-btn-1').click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+window.onload = function() {
+  initTabs();
+  buildQuiz();
+  document.getElementById('btn-submit-exam').onclick = gradeExam;
+  document.getElementById('btn-retry-exam').onclick = resetExam;
+};
+</script>
+</body>
+</html>
