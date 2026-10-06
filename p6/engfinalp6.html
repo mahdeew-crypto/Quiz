@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>แนวข้อสอบปลายภาคเรียน วิชาภาษาอังกฤษ ป.6 (ภาคเรียนที่ 1/2569)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Sarabun', 'Prompt', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background-color: #f0f7ff;
+      margin: 0;
+      padding: 16px;
+      color: #1e293b;
+    }
+    .wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.08);
+      border: 2px solid #dbeafe;
+    }
+    .header-card {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb, #38bdf8);
+      color: #ffffff;
+      text-align: center;
+      padding: 24px 20px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-bottom: 8px;
+      backdrop-filter: blur(4px);
+    }
+    .header-card h1 {
+      margin: 0 0 6px 0;
+      font-size: 22px;
+    }
+    .header-card p {
+      margin: 0;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+    .download-bar {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+    }
+    .btn-download {
+      background: #ffffff;
+      color: #1d4ed8;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+      transition: all 0.2s;
+    }
+    .btn-download:hover {
+      background: #eff6ff;
+      transform: translateY(-1px);
+    }
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .tab-item {
+      flex: 1;
+      min-width: 140px;
+      padding: 12px 10px;
+      font-size: 14px;
+      font-weight: bold;
+      border: 2px solid #bfdbfe;
+      background: #f8fafc;
+      color: #1e40af;
+      border-radius: 12px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: all 0.2s;
+    }
+    .tab-item.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.show {
+      display: block;
+    }
+    .part-header {
+      background: #eff6ff;
+      border-left: 5px solid #2563eb;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #1e3a8a;
+    }
+    .reading-passage {
+      background: #fefce8;
+      border: 1.5px dashed #f59e0b;
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      font-size: 14.5px;
+      line-height: 1.8;
+      color: #78350f;
+    }
+    .reading-passage b {
+      color: #b45309;
+    }
+    .question-block {
+      background: #fcfdfe;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+    }
+    .q-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1e3a8a;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .opts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 640px) {
+      .opts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .opt-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+      cursor: pointer;
+      line-height: 1.4;
+      user-select: none;
+      transition: all 0.15s;
+    }
+    .opt-label:hover {
+      background: #eff6ff;
+      border-color: #3b82f6;
+    }
+    .opt-label input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      margin: 0;
+      cursor: pointer;
+      accent-color: #2563eb;
+    }
+    .opt-label.chosen {
+      background: #dbeafe;
+      border-color: #2563eb;
+      color: #1e40af;
+      font-weight: bold;
+    }
+    .opt-label.is-correct {
+      background: #dcfce7 !important;
+      border-color: #16a34a !important;
+      color: #166534 !important;
+      font-weight: bold;
+    }
+    .opt-label.is-wrong {
+      background: #fee2e2 !important;
+      border-color: #dc2626 !important;
+      color: #991b1b !important;
+    }
+    .feedback-note {
+      font-size: 13px;
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      line-height: 1.5;
+      display: none;
+    }
+    .feedback-note.ok {
+      background: #f0fdf4;
+      color: #166534;
+      border-left: 4px solid #16a34a;
+    }
+    .feedback-note.bad {
+      background: #fef2f2;
+      color: #991b1b;
+      border-left: 4px solid #dc2626;
+    }
+    .btn-submit {
+      width: 100%;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 24px;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+      transition: background 0.2s;
+    }
+    .btn-submit:hover {
+      background: #1d4ed8;
+    }
+    .result-box {
+      display: none;
+      background: #ffffff;
+      border: 2px solid #60a5fa;
+      border-radius: 18px;
+      padding: 24px;
+      margin-top: 24px;
+      text-align: center;
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.1);
+    }
+    .score-badge {
+      font-size: 36px;
+      font-weight: 800;
+      color: #2563eb;
+      margin: 8px 0;
+    }
+    .progress-bar-container {
+      width: 100%;
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      margin: 14px 0 18px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #38bdf8, #2563eb);
+      width: 0%;
+      transition: width 0.6s ease;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 600px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .stat-card {
+      background: #f8fafc;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+    }
+    .stat-card b {
+      display: block;
+      font-size: 18px;
+      margin-top: 2px;
+    }
+    .btn-retry {
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 999px;
+      padding: 12px 30px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 14px;
+    }
+    .btn-retry:hover {
+      background: #1d4ed8;
+    }
+    .nav-helpers {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+    .btn-nav {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .btn-nav:hover {
+      background: #dbeafe;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wrapper">
+  
+  <div class="header-card">
+    <span class="header-badge">โรงเรียนสาธิตมหาวิทยาลัยราชภัฏยะลา • ป.6 ภาคเรียนที่ 1/2569</span>
+    <h1>📝 แนวข้อสอบปลายภาคเรียน วิชาภาษาอังกฤษ ป.6</h1>
+    <p>วันพฤหัสบดีที่ 8 ตุลาคม 2569 • ปรนัย 4 ตัวเลือก (A, B, C, D) รวม 50 ข้อ (25 คะแนนเต็ม)</p>
+    <div class="download-bar">
+      <button type="button" class="btn-download" onclick="downloadCurrentHTML()">
+        💾 ดาวน์โหลดไฟล์นี้เก็บไว้ในเครื่อง (.html)
+      </button>
+    </div>
+  </div>
+
+  <div class="tab-bar">
+    <button type="button" class="tab-item active" id="tab-btn-1">
+      📖 ตอนที่ 1: คำศัพท์ (18 ข้อ)
+    </button>
+    <button type="button" class="tab-item" id="tab-btn-2">
+      ✏️ ตอนที่ 2: ไวยากรณ์ (13 ข้อ)
+    </button>
+    <button type="button" class="tab-item" id="tab-btn-3">
+      💬 ตอนที่ 3: บทสนทนา (9 ข้อ)
+    </button>
+    <button type="button" class="tab-item" id="tab-btn-4">
+      📑 ตอนที่ 4: การอ่าน (10 ข้อ)
+    </button>
+  </div>
+
+  <!-- ตอนที่ 1: Vocabulary (18 ข้อ) -->
+  <div class="tab-content show" id="tab-content-1">
+    <div class="part-header">📌 ตอนที่ 1: Vocabulary (คำศัพท์เกี่ยวกับอาชีพ นิสัย กีฬา รายการทีวี และอุปกรณ์ - ข้อ 1 - 18)</div>
+    <div id="part1-questions"></div>
+    <div class="nav-helpers" style="justify-content: flex-end;">
+      <button type="button" class="btn-nav" onclick="document.getElementById('tab-btn-2').click();">
+        ไปตอนที่ 2: ไวยากรณ์ ➜
+      </button>
+    </div>
+  </div>
+
+  <!-- ตอนที่ 2: Grammar (13 ข้อ) -->
+  <div class="tab-content" id="tab-content-2">
+    <div class="part-header">📌 ตอนที่ 2: Grammar (ไวยากรณ์: Comparison of Adjectives & Adverbs, Verb to be - ข้อ 19 - 31)</div>
+    <div id="part2-questions"></div>
+    <div class="nav-helpers">
+      <button type="button" class="btn-nav" onclick="document.getElementById('tab-btn-1').click();">
+        ⬅ กลับไปตอนที่ 1
+      </button>
+      <button type="button" class="btn-nav" onclick="document.getElementById('tab-btn-3').click();">
+        ไปตอนที่ 3: บทสนทนา ➜
+      </button>
+    </div>
+  </div>
+
+  <!-- ตอนที่ 3: Conversation (9 ข้อ) -->
+  <div class="tab-content" id="tab-content-3">
+    <div class="part-header">📌 ตอนที่ 3: Conversation (บทสนทนาการถาม-ตอบอาชีพ และสำนวนการคุยโทรศัพท์ - ข้อ 32 - 40)</div>
+    <div id="part3-questions"></div>
+    <div class="nav-helpers">
+      <button type="button" class="btn-nav" onclick="document.getElementById('tab-btn-2').click();">
+        ⬅ กลับไปตอนที่ 2
+      </button>
+      <button type="button" class="btn-nav" onclick="document.getElementById('tab-btn-4').click();">
+        ไปตอนที่ 4: การอ่าน ➜
+      </button>
+    </div>
+  </div>
+
+  <!-- ตอนที่ 4: Reading Comprehension (10 ข้อ) -->
+  <div class="tab-content" id="tab-content-4">
+    <div class="part-header">📌 ตอนที่ 4: Reading Comprehension (การอ่านบทความสั้นและวิเคราะห์ข้อมูล - ข้อ 41 - 50)</div>
+    <div id="part4-questions"></div>
+    <div class="nav-helpers">
+      <button type="button" class="btn-nav" onclick="document.getElementById('tab-btn-3').click();">
+        ⬅ กลับไปตอนที่ 3
+      </button>
+    </div>
+  </div>
+
+  <button type="button" class="btn-submit" id="btn-submit-exam">
+    ✅ ส่งข้อสอบและตรวจคำตอบทุกตอน
+  </button>
+
+  <div class="result-box" id="result-box">
+    <h2 style="color: #1e3a8a; margin: 0;">🎉 สรุปผลการประเมินคะแนนสอบปลายภาค</h2>
+    <div class="score-badge" id="score-display">0 / 50</div>
+    <div style="font-size: 15px; color: #475569;" id="points-display">คะแนนสุทธิ: 0.00 / 25.00 คะแนน</div>
+    
+    <div class="progress-bar-container">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card" style="color: #16a34a;">
+        ตอบถูกต้อง
+        <b id="stat-correct">0 ข้อ</b>
+      </div>
+      <div class="stat-card" style="color: #dc2626;">
+        ตอบผิด
+        <b id="stat-wrong">0 ข้อ</b>
+      </div>
+      <div class="stat-card" style="color: #d97706;">
+        ไม่ได้ตอบ
+        <b id="stat-unanswered">0 ข้อ</b>
+      </div>
+      <div class="stat-card" style="color: #2563eb;">
+        ความแม่นยำ
+        <b id="stat-percent">0%</b>
+      </div>
+    </div>
+
+    <p style="font-size: 16px; font-weight: bold; margin: 14px 0;" id="feedback-text"></p>
+    <p style="font-size: 13px; color: #64748b; margin: 0 0 10px 0;">
+      *นักเรียนสามารถกดเปิดดูคำอธิบายเฉลยละเอียดในแต่ละข้อของทุกตอนด้านบนได้ครับ
+    </p>
+
+    <button type="button" class="btn-retry" id="btn-retry-exam">
+      🔄 ทำใหม่อีกครั้ง (สุ่มตัวเลือกใหม่)
+    </button>
+  </div>
+
+</div>
+
+<script>
+// ข้อมูลข้อสอบปรนัยรวม 50 ข้อ (เดิม 40 + เพิ่ม 10 ข้อ: คำศัพท์ 18, ไวยากรณ์ 13, บทสนทนา 9, การอ่าน 10)
+const examData = [
+  // ================= ตอนที่ 1: คำศัพท์ (ข้อ 1 - 18) =================
+  {
+    part: 1,
+    q: "A person who designs buildings and bridges is an ____________.",
+    opts: ["architect", "astronaut", "electrician", "accountant"],
+    ans: "architect",
+    exp: "architect หมายถึง สถาปนิก ผู้ทำหน้าที่ออกแบบอาคารและสะพาน"
+  },
+  {
+    part: 1,
+    q: "Tom loves to tell jokes and make everyone laugh. He is very ____________.",
+    opts: ["humorous", "serious", "nervous", "patient"],
+    ans: "humorous",
+    exp: "humorous หมายถึง มีอารมณ์ขัน ชอบเล่าเรื่องตลกให้คนอื่นหัวเราะ"
+  },
+  {
+    part: 1,
+    q: "A scientist who travels into space to explore other planets is an ____________.",
+    opts: ["astronaut", "archaeologist", "astronomer", "electrician"],
+    ans: "astronaut",
+    exp: "astronaut หมายถึง นักบินอวกาศ"
+  },
+  {
+    part: 1,
+    q: "Which television programme provides real facts about animals and nature?",
+    opts: ["documentary", "game show", "soap opera", "cartoon"],
+    ans: "documentary",
+    exp: "documentary หมายถึง สารคดี ให้ข้อเท็จจริงเกี่ยวกับสัตว์และธรรมชาติ"
+  },
+  {
+    part: 1,
+    q: "You must always wear a ____________ on your head while skateboarding.",
+    opts: ["helmet", "goggle", "jacket", "whistle"],
+    ans: "helmet",
+    exp: "helmet หมายถึง หมวกนิรภัยเพื่อความปลอดภัย"
+  },
+  {
+    part: 1,
+    q: "A person who repairs water pipes and taps in houses is a ____________.",
+    opts: ["plumber", "mechanic", "carpenter", "reporter"],
+    ans: "plumber",
+    exp: "plumber หมายถึง ช่างประปา"
+  },
+  {
+    part: 1,
+    q: "Lisa always shares her snacks with her friends. She is very ____________.",
+    opts: ["generous", "selfish", "jealous", "arrogant"],
+    ans: "generous",
+    exp: "generous หมายถึง มีน้ำใจ เอื้อเฟื้อเผื่อแผ่"
+  },
+  {
+    part: 1,
+    q: "Which piece of sports equipment is needed to play tennis?",
+    opts: ["racket", "helmet", "whistle", "paddle"],
+    ans: "racket",
+    exp: "racket หมายถึง ไม้เทนนิส/ไม้แร็กเกต"
+  },
+  {
+    part: 1,
+    q: "What is the opposite meaning of the word 'dangerous'?",
+    opts: ["safe", "difficult", "boring", "painful"],
+    ans: "safe",
+    exp: "safe (ปลอดภัย) ตรงข้ามกับ dangerous (อันตราย)"
+  },
+  {
+    part: 1,
+    q: "A person who takes care of people's teeth is a ____________.",
+    opts: ["dentist", "pharmacist", "veterinarian", "optician"],
+    ans: "dentist",
+    exp: "dentist หมายถึง ทันตแพทย์"
+  },
+  {
+    part: 1,
+    q: "John does not like to speak in front of people because he is ____________.",
+    opts: ["shy", "bold", "confident", "cheerful"],
+    ans: "shy",
+    exp: "shy หมายถึง ขี้อาย ไม่กล้าพูดต่อหน้าคนอื่น"
+  },
+  {
+    part: 1,
+    q: "Which type of programme tells you what is happening in the world today?",
+    opts: ["the news", "sitcom", "talk show", "animation"],
+    ans: "the news",
+    exp: "the news หมายถึง รายการข่าวสารประจำวัน"
+  },
+  {
+    part: 1,
+    q: "What equipment do swimmers wear over their eyes to see clearly underwater?",
+    opts: ["goggles", "gloves", "sunglasses", "flippers"],
+    ans: "goggles",
+    exp: "goggles หมายถึง แว่นตาว่ายน้ำ"
+  },
+  {
+    part: 1,
+    q: "My sister can wait for a long time without getting angry. She is ____________.",
+    opts: ["patient", "punctual", "stubborn", "curious"],
+    ans: "patient",
+    exp: "patient หมายถึง อดทน รอคอยได้โดยไม่หงุดหงิด"
+  },
+  {
+    part: 1,
+    q: "A person who writes news stories for newspapers or television is a ____________.",
+    opts: ["journalist", "detective", "librarian", "photographer"],
+    ans: "journalist",
+    exp: "journalist หมายถึง นักข่าว หรือผู้สื่อข่าว"
+  },
+  {
+    part: 1,
+    q: "Which adjective means having a strong belief in your own ability?",
+    opts: ["confident", "clumsy", "careless", "lazy"],
+    ans: "confident",
+    exp: "confident หมายถึง มั่นใจในตนเอง"
+  },
+  {
+    part: 1,
+    q: "We need a net, a ball, and knee pads to play ____________.",
+    opts: ["volleyball", "baseball", "cricket", "golf"],
+    ans: "volleyball",
+    exp: "volleyball กีฬาวอลเลย์บอลใช้อุปกรณ์ตาข่าย ลูกบอล และสนับเข่า"
+  },
+  {
+    part: 1,
+    q: "What is the opposite meaning of the word 'exciting'?",
+    opts: ["boring", "tiring", "popular", "frightening"],
+    ans: "boring",
+    exp: "boring (น่าเบื่อ) มีความหมายตรงข้ามกับ exciting (น่าตื่นเต้น)"
+  },
+
+  // ================= ตอนที่ 2: ไวยากรณ์ (ข้อ 19 - 31) =================
+  {
+    part: 2,
+    q: "My brother and I ____________ polite and friendly to all our neighbours.",
+    opts: ["are", "am", "is", "be"],
+    ans: "are",
+    exp: "ประธาน 'My brother and I' เป็นพหูพจน์ (สองคน) จึงใช้กริยา 'are'"
+  },
+  {
+    part: 2,
+    q: "Football is ____________ than golf in our school.",
+    opts: ["more popular", "most popular", "popularer", "popular"],
+    ans: "more popular",
+    exp: "popular เป็นคำคุณศัพท์ 3 พยางค์ การเปรียบเทียบขั้นกว่าต้องใช้ 'more popular than'"
+  },
+  {
+    part: 2,
+    q: "She sings ____________ in the entire international music contest.",
+    opts: ["most beautifully", "more beautifully", "beautifully", "beauty"],
+    ans: "most beautifully",
+    exp: "การเปรียบเทียบกริยาวิเศษณ์ขั้นสูงสุดในกลุ่มคนทั้งหมดใช้ '(the) most beautifully'"
+  },
+  {
+    part: 2,
+    q: "Ken runs ____________ than his classmate Peter in the race.",
+    opts: ["faster", "fastest", "more fast", "more faster"],
+    ans: "faster",
+    exp: "fast เป็นคำกริยาวิเศษณ์รูปเดิม ขั้นกว่าเติม -er กลายเป็น 'faster'"
+  },
+  {
+    part: 2,
+    q: "The tortoise walks very ____________ across the green field.",
+    opts: ["slowly", "slow", "slower", "slowliest"],
+    ans: "slowly",
+    exp: "ใช้กริยาวิเศษณ์ 'slowly' ขยายคำกริยา 'walks'"
+  },
+  {
+    part: 2,
+    q: "Mount Everest is the ____________ mountain peak on Earth.",
+    opts: ["highest", "higher", "most high", "more high"],
+    ans: "highest",
+    exp: "การเปรียบเทียบขั้นสูงสุดของ high คือ 'the highest'"
+  },
+  {
+    part: 2,
+    q: "Which word in the sentence is an ADVERB: 'He speaks English very fluently.'?",
+    opts: ["fluently", "speaks", "English", "very"],
+    ans: "fluently",
+    exp: "fluently ลงท้ายด้วย -ly ทำหน้าที่เป็นคำกริยาวิเศษณ์ขยายคำกริยา speaks"
+  },
+  {
+    part: 2,
+    q: "The blue whale is ____________ than the African elephant.",
+    opts: ["heavier", "heaviest", "more heavy", "heavy"],
+    ans: "heavier",
+    exp: "heavy ลงท้ายด้วย y ให้เปลี่ยน y เป็น i แล้วเติม -er ได้เป็น 'heavier than'"
+  },
+  {
+    part: 2,
+    q: "Jenny plays the violin ____________ than her younger brother.",
+    opts: ["better", "gooder", "best", "more good"],
+    ans: "better",
+    exp: "well (ดี) เป็นกริยาวิเศษณ์ ขั้นกว่าคือ 'better than'"
+  },
+  {
+    part: 2,
+    q: "Mr. Clark ____________ a talented chef in a famous restaurant.",
+    opts: ["is", "am", "are", "were"],
+    ans: "is",
+    exp: "Mr. Clark เป็นประธานเอกพจน์บุรุษที่ 3 ในปัจจุบันกาลใช้ 'is'"
+  },
+  {
+    part: 2,
+    q: "Surfing is ____________ sport among all beach activities.",
+    opts: ["the most exciting", "more exciting", "excitingest", "exciting"],
+    ans: "the most exciting",
+    exp: "ขั้นสูงสุดของคำหลายพยางค์ต้องมี 'the most' นำหน้าคำคุณศัพท์"
+  },
+  {
+    part: 2,
+    q: "She answered all the difficult test questions ____________.",
+    opts: ["easily", "easy", "easier", "easiest"],
+    ans: "easily",
+    exp: "ใช้กริยาวิเศษณ์ 'easily' เพื่อขยายกริยา 'answered'"
+  },
+  {
+    part: 2,
+    q: "Badminton is ____________ than rock climbing.",
+    opts: ["less dangerous", "least dangerous", "dangerouser", "danger"],
+    ans: "less dangerous",
+    exp: "การเปรียบเทียบขั้นกว่าเชิงน้อยกว่าใช้ 'less dangerous than'"
+  },
+
+  // ================= ตอนที่ 3: บทสนทนา (ข้อ 32 - 40) =================
+  {
+    part: 3,
+    q: "Mark: 'What do you want to be in the future?' — Ben: '____________'",
+    opts: ["I want to be a doctor.", "I like watching cartoons.", "I am playing tennis.", "I want some orange juice."],
+    ans: "I want to be a doctor.",
+    exp: "ถามถึงอาชีพที่อยากเป็นในอนาคต ต้องตอบระบุอาชีพ เช่น 'I want to be a doctor.'"
+  },
+  {
+    part: 3,
+    q: "Receptionist: 'Hello, Grand Hotel. May I help you?' — Caller: '____________'",
+    opts: ["May I speak to Mr. White, please?", "Hold on a minute, please.", "I am fine, thank you.", "See you tomorrow morning."],
+    ans: "May I speak to Mr. White, please?",
+    exp: "สำนวนการโทรศัพท์เพื่อขอสายบุคคล ใช้ 'May I speak to..., please?'"
+  },
+  {
+    part: 3,
+    q: "Ann: 'Why do you want to be a firefighter?' — Ken: '____________'",
+    opts: ["Because I want to help people in danger.", "Because I don't like reading books.", "Because my mother works in an office.", "Because it is raining heavily."],
+    ans: "Because I want to help people in danger.",
+    exp: "ถามเหตุผลด้วย 'Why' ต้องตอบด้วยเหตุผล 'Because...'"
+  },
+  {
+    part: 3,
+    q: "Caller: 'Could I speak to Sarah?' — Secretary: 'I'm afraid she's out. ____________'",
+    opts: ["Can I take a message?", "Who is calling, please?", "How do you do?", "Nice to talk to you."],
+    ans: "Can I take a message?",
+    exp: "เมื่อผู้รับสายไม่อยู่ ผู้รับสายจะถามว่า 'Can I take a message?' (จะฝากข้อความไว้ไหม)"
+  },
+  {
+    part: 3,
+    q: "A: 'Who's calling, please?' — B: '____________'",
+    opts: ["This is Peter speaking.", "I am Peter sitting here.", "Peter calls you now.", "You are talking to me."],
+    ans: "This is Peter speaking.",
+    exp: "สำนวนบอกชื่อตนเองทางโทรศัพท์ใช้ 'This is... speaking.'"
+  },
+  {
+    part: 3,
+    q: "Tom: 'Which sport do you prefer, rugby or swimming?' — Alex: '____________'",
+    opts: ["I prefer swimming because it's refreshing.", "I don't like eating fast food.", "I watched sports yesterday.", "Rugby is played on grass."],
+    ans: "I prefer swimming because it's refreshing.",
+    exp: "ถามความชอบเปรียบเทียบ 'prefer... or...' ต้องตอบบอกตัวเลือกที่ตนชอบ"
+  },
+  {
+    part: 3,
+    q: "Phone conversation: 'Hold on a second, please.' means ____________.",
+    opts: ["Please wait a moment.", "Please hang up now.", "Please call back later.", "Please speak louder."],
+    ans: "Please wait a moment.",
+    exp: "'Hold on a second, please.' มีความหมายว่า กรุณารอสักครู่ (Please wait a moment)"
+  },
+  {
+    part: 3,
+    q: "Sam: 'Why does Paul want to become an artist?' — Leo: '____________'",
+    opts: ["Because he is very creative.", "Because he is very clumsy.", "Because he loves cooking food.", "Because he hates drawing."],
+    ans: "Because he is very creative.",
+    exp: "ศิลปิน (artist) สอดคล้องกับคุณลักษณะความคิดสร้างสรรค์ (creative)"
+  },
+  {
+    part: 3,
+    q: "Secretary: 'Sorry, the line is busy right now. Could you please ____________?'",
+    opts: ["call back later", "hang up quickly", "say hello now", "speak slowly"],
+    ans: "call back later",
+    exp: "เมื่อสายไม่ว่าง สำนวนที่สุภาพคือขอให้โทรกลับมาใหม่ในภายหลัง 'call back later'"
+  },
+
+  // ================= ตอนที่ 4: การอ่าน (ข้อ 41 - 50) =================
+  {
+    part: 4,
+    passage: "<b>Passage 1:</b><br>Emma is a twelve-year-old student who loves science and animals. Every weekend, she volunteers at an animal shelter near her house. She feeds the puppies and cleans their cages carefully. She is very patient, gentle, and hardworking. In the future, Emma wants to become a veterinarian because she wants to cure sick animals and protect wildlife.",
+    q: "What does Emma want to be in the future?",
+    opts: ["a veterinarian", "a science teacher", "a zookeeper", "a dog trainer"],
+    ans: "a veterinarian",
+    exp: "ในบทความระบุชัดเจน: 'In the future, Emma wants to become a veterinarian'"
+  },
+  {
+    part: 4,
+    passage: null,
+    q: "Where does Emma volunteer on weekends?",
+    opts: ["at an animal shelter", "at a science museum", "at a pet shop", "at a veterinary clinic"],
+    ans: "at an animal shelter",
+    exp: "ในบทความระบุ: 'Every weekend, she volunteers at an animal shelter near her house.'"
+  },
+  {
+    part: 4,
+    passage: null,
+    q: "Which personality trait best describes Emma?",
+    opts: ["gentle and patient", "careless and selfish", "nervous and lazy", "bossy and noisy"],
+    ans: "gentle and patient",
+    exp: "ในบทความบรรยายลักษณะนิสัย: 'She is very patient, gentle, and hardworking.'"
+  },
+  {
+    part: 4,
+    passage: null,
+    q: "Why does Emma want to do that job?",
+    opts: ["To cure sick animals", "To earn a lot of money", "To travel around the world", "To play with puppies all day"],
+    ans: "To cure sick animals",
+    exp: "ในบทความระบุเหตุผล: 'because she wants to cure sick animals and protect wildlife.'"
+  },
+  {
+    part: 4,
+    passage: "<b>Passage 2:</b><br>Rock climbing is an extreme outdoor sport that is becoming very popular among teenagers. It is more challenging and exciting than hiking, but it can be dangerous if climbers do not follow safety rules. Climbers must wear a sturdy helmet, strong harnesses, and specialized climbing shoes. Before climbing, they must check all ropes and equipment carefully with their partners.",
+    q: "What is rock climbing compared to in the passage?",
+    opts: ["hiking", "skateboarding", "swimming", "rugby"],
+    ans: "hiking",
+    exp: "ในบทความเปรียบเทียบกับ hiking: 'It is more challenging and exciting than hiking'"
+  },
+  {
+    part: 4,
+    passage: null,
+    q: "According to the passage, rock climbing can be dangerous if climbers ____________.",
+    opts: ["ignore safety rules", "climb with partners", "wear sturdy helmets", "check all ropes"],
+    ans: "ignore safety rules",
+    exp: "ในบทความระบุ: 'it can be dangerous if climbers do not follow safety rules.'"
+  },
+  {
+    part: 4,
+    passage: null,
+    q: "Which equipment is NOT mentioned as climbing safety gear in the text?",
+    opts: ["knee pads", "sturdy helmet", "strong harnesses", "specialized shoes"],
+    ans: "knee pads",
+    exp: "ในบทความกล่าวถึง helmet, harnesses และ shoes แต่ไม่ได้กล่าวถึง knee pads"
+  },
+  {
+    part: 4,
+    passage: null,
+    q: "What must climbers do with their equipment before climbing?",
+    opts: ["check it carefully", "buy it new", "clean it with water", "leave it on the ground"],
+    ans: "check it carefully",
+    exp: "ในบทความระบุ: 'they must check all ropes and equipment carefully'"
+  },
+  {
+    part: 4,
+    passage: null,
+    q: "What is the main idea of Passage 2?",
+    opts: ["Safety and thrill in climbing", "How to buy climbing shoes", "The history of hiking", "Different kinds of mountains"],
+    ans: "Safety and thrill in climbing",
+    exp: "ใจความหลักพูดถึงความท้าทายและความสำคัญของความปลอดภัยในการปีนผา"
+  },
+  {
+    part: 4,
+    passage: null,
+    q: "What does the word 'sturdy' in the passage most likely mean?",
+    opts: ["strong and durable", "colorful and bright", "soft and light", "cheap and small"],
+    ans: "strong and durable",
+    exp: "'sturdy' แปลว่า แข็งแรงทนทาน (strong and durable)"
+  }
+];
+
+function shuffleArray(array) {
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  return arr;
+}
+
+function initTabs() {
+  const tabs = [1, 2, 3, 4];
+  tabs.forEach(num => {
+    const btn = document.getElementById('tab-btn-' + num);
+    const content = document.getElementById('tab-content-' + num);
+    btn.onclick = function() {
+      tabs.forEach(n => {
+        document.getElementById('tab-btn-' + n).classList.remove('active');
+        document.getElementById('tab-content-' + n).classList.remove('show');
+      });
+      btn.classList.add('active');
+      content.classList.add('show');
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    };
+  });
+}
+
+function buildQuiz() {
+  const containers = {
+    1: document.getElementById('part1-questions'),
+    2: document.getElementById('part2-questions'),
+    3: document.getElementById('part3-questions'),
+    4: document.getElementById('part4-questions')
+  };
+
+  Object.values(containers).forEach(c => c.innerHTML = '');
+
+  examData.forEach(function(item, qIdx) {
+    const container = containers[item.part];
+    
+    // แสดง Passage ในส่วนการอ่าน
+    if (item.passage) {
+      const pBox = document.createElement('div');
+      pBox.className = 'reading-passage';
+      pBox.innerHTML = item.passage;
+      container.appendChild(pBox);
+    }
+
+    const card = document.createElement('div');
+    card.className = 'question-block';
+
+    const title = document.createElement('div');
+    title.className = 'q-text';
+    title.innerHTML = '<span style="color:#2563eb;">' + (qIdx + 1) + '.</span> ' + item.q;
+    card.appendChild(title);
+
+    const grid = document.createElement('div');
+    grid.className = 'opts-grid';
+
+    const shuffledChoices = shuffleArray(item.opts);
+
+    shuffledChoices.forEach(function(choice) {
+      const label = document.createElement('label');
+      label.className = 'opt-label label-q-' + qIdx;
+
+      const radio = document.createElement('input');
+      radio.type = 'radio';
+      radio.name = 'q_' + qIdx;
+      radio.value = choice;
+
+      radio.onchange = function() {
+        const allLabels = card.querySelectorAll('.label-q-' + qIdx);
+        allLabels.forEach(function(l) {
+          l.classList.remove('chosen');
+        });
+        if (radio.checked) {
+          label.classList.add('chosen');
+        }
+      };
+
+      const span = document.createElement('span');
+      span.textContent = choice;
+
+      label.appendChild(radio);
+      label.appendChild(span);
+      grid.appendChild(label);
+    });
+
+    card.appendChild(grid);
+
+    const feedback = document.createElement('div');
+    feedback.className = 'feedback-note';
+    feedback.id = 'fb-q-' + qIdx;
+    card.appendChild(feedback);
+
+    container.appendChild(card);
+  });
+}
+
+function gradeExam() {
+  let score = 0;
+  let correctCount = 0;
+  let wrongCount = 0;
+  let unansweredCount = 0;
+
+  examData.forEach(function(item, qIdx) {
+    const radios = document.querySelectorAll('input[name="q_' + qIdx + '"]');
+    const fb = document.getElementById('fb-q-' + qIdx);
+    let selected = null;
+
+    radios.forEach(function(r) {
+      r.disabled = true;
+      if (r.checked) {
+        selected = r.value;
+      }
+      const pLabel = r.parentElement;
+      if (r.value === item.ans) {
+        pLabel.classList.add('is-correct');
+      } else if (r.checked && r.value !== item.ans) {
+        pLabel.classList.add('is-wrong');
+      }
+    });
+
+    fb.style.display = 'block';
+    if (!selected) {
+      unansweredCount++;
+      fb.className = 'feedback-note bad';
+      fb.innerHTML = '⚠️ ยังไม่ได้ตอบข้อนี้ • เฉลยคำตอบที่ถูกต้องคือ: <b>' + item.ans + '</b><br>คำอธิบาย: ' + item.exp;
+    } else if (selected === item.ans) {
+      score++;
+      correctCount++;
+      fb.className = 'feedback-note ok';
+      fb.innerHTML = '✓ ถูกต้อง! • ' + item.exp;
+    } else {
+      wrongCount++;
+      fb.className = 'feedback-note bad';
+      fb.innerHTML = '✗ คำตอบยังไม่ถูกต้อง • เฉลยคำตอบที่ถูกต้องคือ: <b>' + item.ans + '</b><br>คำอธิบาย: ' + item.exp;
+    }
+  });
+
+  const percentage = Math.round((score / examData.length) * 100);
+  const rawPoints = (score / examData.length) * 25.0; // คำนวณเป็น 25 คะแนนเต็ม
+
+  document.getElementById('score-display').textContent = score + ' / ' + examData.length + ' ข้อ';
+  document.getElementById('points-display').textContent = 'คะแนนสุทธิ: ' + rawPoints.toFixed(2) + ' / 25.00 คะแนนเต็ม (' + percentage + '%)';
+  document.getElementById('progress-fill').style.width = percentage + '%';
+
+  document.getElementById('stat-correct').textContent = correctCount + ' ข้อ';
+  document.getElementById('stat-wrong').textContent = wrongCount + ' ข้อ';
+  document.getElementById('stat-unanswered').textContent = unansweredCount + ' ข้อ';
+  document.getElementById('stat-percent').textContent = percentage + '%';
+
+  const fbText = document.getElementById('feedback-text');
+  if (percentage >= 80) {
+    fbText.textContent = '🌟 Excellent! ยอดเยี่ยมมากครับ นักเรียนมีความรู้ความเข้าใจในเนื้อหาบทเรียนเป็นอย่างดี พร้อมสอบแน่นอน!';
+    fbText.style.color = '#15803d';
+  } else if (percentage >= 60) {
+    fbText.textContent = '👍 Good job! ทำได้ดีครับ ผ่านเกณฑ์มาตรฐานแล้ว แนะนำให้ทบทวนข้อที่ตอบผิดอีกสักรอบจะช่วยเพิ่มความมั่นใจยิ่งขึ้นครับ';
+    fbText.style.color = '#1d4ed8';
+  } else {
+    fbText.textContent = '📖 Keep fighting! พยายามอีกนิดนะลูก ทบทวนคำศัพท์และไวยากรณ์ตามแนวข้อสอบหน้า 9-44 แล้วลองกดทำใหม่อีกครั้งนะครับ';
+    fbText.style.color = '#d97706';
+  }
+
+  document.getElementById('btn-submit-exam').style.display = 'none';
+  const resBox = document.getElementById('result-box');
+  resBox.style.display = 'block';
+  resBox.scrollIntoView({ behavior: 'smooth' });
+}
+
+function resetExam() {
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('btn-submit-exam').style.display = 'block';
+
+  buildQuiz();
+  document.getElementById('tab-btn-1').click();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function downloadCurrentHTML() {
+  const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+  const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'engfinalp6_quiz.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+window.onload = function() {
+  initTabs();
+  buildQuiz();
+  document.getElementById('btn-submit-exam').onclick = gradeExam;
+  document.getElementById('btn-retry-exam').onclick = resetExam;
+};
+</script>
+</body>
+</html>
