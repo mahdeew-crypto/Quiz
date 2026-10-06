@@ -6,7 +6,7 @@
   <title>คลังข้อสอบและแบบฝึกหัด Interactive</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * { 
       box-sizing: border-box; 
@@ -15,72 +15,117 @@
     }
     body {
       font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: linear-gradient(180deg, #F0F4FD 0%, #F8FAFC 100%);
+      background: #F4F7FC;
       color: #1E293B;
-      padding: 36px 16px 50px;
+      padding: 32px 16px 56px;
       line-height: 1.6;
       min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 90%, rgba(14, 165, 233, 0.08) 0%, transparent 40%);
     }
     .container {
-      max-width: 660px;
+      max-width: 680px;
       margin: 0 auto;
     }
+    
+    /* Header Card */
     header {
       text-align: center;
       margin-bottom: 28px;
+      background: #FFFFFF;
+      padding: 26px 20px;
+      border-radius: 24px;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.04);
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #F97316, #2563EB, #10B981, #8B5CF6);
+    }
+    .badge-top {
+      display: inline-block;
+      background: #EEF2FF;
+      color: #4F46E5;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      border: 1px solid #E0E7FF;
     }
     header h1 {
-      font-size: 26px;
-      font-weight: 700;
+      font-size: 24px;
+      font-weight: 800;
       color: #0F172A;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
     }
     header p {
-      font-size: 15px;
+      font-size: 14.5px;
       color: #64748B;
     }
+
+    /* Section Cards */
     .section-card {
       background: #FFFFFF;
-      border-radius: 22px;
-      padding: 24px 20px;
+      border-radius: 24px;
+      padding: 22px 20px 24px;
       margin-bottom: 22px;
-      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
-      border: 1.5px solid #E2E8F0;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+      border: 1px solid #E2E8F0;
     }
     .section-title {
-      font-size: 18px;
+      font-size: 17.5px;
       font-weight: 700;
       margin-bottom: 16px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      padding-bottom: 10px;
-      border-bottom: 2px dashed #F1F5F9;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1.5px dashed #E2E8F0;
     }
-    .title-p4 { color: #C2410C; }
-    .title-p6 { color: #1D4ED8; }
+    .title-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .title-p4 { color: #EA580C; }
+    .title-p6 { color: #2563EB; }
     
+    .count-tag {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: #F1F5F9;
+      color: #475569;
+    }
+
     .quiz-grid {
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
+
+    /* Modern Subject Buttons */
     .quiz-link {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 20px;
-      border-radius: 16px;
+      padding: 14px 18px;
+      border-radius: 18px;
       text-decoration: none;
-      font-size: 15.5px;
-      font-weight: 500;
       color: #FFFFFF;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-      transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1), filter 0.18s ease;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+      transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
     }
@@ -91,61 +136,117 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 100%);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0) 100%);
       pointer-events: none;
     }
     .quiz-link:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.14);
-      filter: brightness(1.04);
+      transform: translateY(-3px) scale(1.008);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14);
+      filter: brightness(1.05);
     }
+    
     .quiz-info {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 14px;
+      z-index: 1;
     }
-    .quiz-icon {
+    .icon-wrapper {
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.22);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .arrow {
-      font-size: 16px;
-      opacity: 0.9;
-      background: rgba(255, 255, 255, 0.2);
-      width: 28px;
-      height: 28px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
       flex-shrink: 0;
     }
+    .text-group {
+      display: flex;
+      flex-direction: column;
+    }
+    .subj-title {
+      font-size: 15.5px;
+      font-weight: 600;
+      line-height: 1.35;
+      letter-spacing: -0.2px;
+    }
+    .subj-sub {
+      font-size: 12px;
+      opacity: 0.88;
+      font-weight: 400;
+    }
+
+    .arrow-btn {
+      width: 32px;
+      height: 32px;
+      background: rgba(255, 255, 255, 0.22);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: transform 0.2s ease;
+      z-index: 1;
+    }
+    .quiz-link:hover .arrow-btn {
+      transform: translateX(4px);
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    /* 🎨 โทนสีแยกตามรายวิชาและระดับชั้น ไม่ซ้ำกัน */
     
-    /* 🎨 โทนสีแยกตามรายวิชาเฉพาะตัว */
-    /* 1. วิทยาศาสตร์ (สีเขียวหัวเป็ด / มรกต) */
-    .btn-sci-p4    { background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%); }
-    .btn-sci-p6    { background: linear-gradient(135deg, #047857 0%, #10B981 100%); }
+    /* [ป.4] */
+    .btn-sci-p4 { 
+      background: linear-gradient(135deg, #0D9488 0%, #14B8A6 100%); 
+      box-shadow: 0 4px 14px rgba(13, 148, 136, 0.25);
+    }
+    .btn-thai-p4 { 
+      background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%); 
+      box-shadow: 0 4px 14px rgba(217, 119, 6, 0.25);
+    }
+    .btn-math-p4 { 
+      background: linear-gradient(135deg, #2563EB 0%, #38BDF8 100%); 
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+    }
+    .btn-social-p4 { 
+      background: linear-gradient(135deg, #E11D48 0%, #FB7185 100%); 
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.25);
+    }
+    .btn-eng-p4 { 
+      background: linear-gradient(135deg, #EA580C 0%, #FB923C 100%); 
+      box-shadow: 0 4px 14px rgba(234, 88, 12, 0.25);
+    }
 
-    /* 2. ภาษาไทย (สีน้ำตาลทอง / ส้มอิฐ) */
-    .btn-thai-p4   { background: linear-gradient(135deg, #B45309 0%, #D97706 100%); }
-    .btn-thai-p6   { background: linear-gradient(135deg, #9A3412 0%, #EA580C 100%); }
-
-    /* 3. คณิตศาสตร์ (สีน้ำเงินเข้ม / ฟ้าคราม) */
-    .btn-math-p4   { background: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 100%); }
-    .btn-math-p6   { background: linear-gradient(135deg, #2563EB 0%, #60A5FA 100%); }
-
-    /* 4. สังคมศึกษา (สีแดงเลือดหมู / แดงเข้ม) */
-    .btn-social-p4 { background: linear-gradient(135deg, #BE123C 0%, #E11D48 100%); }
-    .btn-social-p6 { background: linear-gradient(135deg, #9F1239 0%, #F43F5E 100%); }
-
-    /* 5. ภาษาอังกฤษ (สีม่วงเข้ม / คราม) */
-    .btn-eng-p4    { background: linear-gradient(135deg, #6D28D9 0%, #8B5CF6 100%); }
+    /* [ป.6] */
+    .btn-math-p6 { 
+      background: linear-gradient(135deg, #1D4ED8 0%, #60A5FA 100%); 
+      box-shadow: 0 4px 14px rgba(29, 78, 216, 0.25);
+    }
+    .btn-social-p6 { 
+      background: linear-gradient(135deg, #BE123C 0%, #F43F5E 100%); 
+      box-shadow: 0 4px 14px rgba(190, 18, 60, 0.25);
+    }
+    .btn-sci-p6 { 
+      background: linear-gradient(135deg, #059669 0%, #34D399 100%); 
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
+    }
+    .btn-thai-p6 { 
+      background: linear-gradient(135deg, #B45309 0%, #D97706 100%); 
+      box-shadow: 0 4px 14px rgba(180, 83, 9, 0.25);
+    }
+    .btn-eng-p6 { 
+      background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%); 
+      box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);
+    }
 
     footer {
       text-align: center;
-      margin-top: 24px;
+      margin-top: 28px;
       font-size: 13px;
       color: #94A3B8;
     }
@@ -155,54 +256,73 @@
 
   <div class="container">
     <header>
+      <span class="badge-top">✨ Self-Paced Learning</span>
       <h1>📚 คลังข้อสอบและแบบฝึกหัด Interactive</h1>
-      <p>เลือกระดับชั้นและรายวิชาที่ต้องการฝึกฝนได้เลยครับ</p>
+      <p>เลือกระดับชั้นและรายวิชาที่ต้องการฝึกฝนเพื่อประเมินตนเองได้ทันที</p>
     </header>
 
     <!-- ระดับชั้นประถมศึกษาปีที่ 4 (ป.4) -->
     <div class="section-card">
       <div class="section-title title-p4">
-        <span>🎒</span> ระดับชั้นประถมศึกษาปีที่ 4 (ป.4)
+        <div class="title-left">
+          <span>🎒</span> ระดับชั้นประถมศึกษาปีที่ 4 (ป.4)
+        </div>
+        <span class="count-tag">5 ชุดข้อสอบ</span>
       </div>
       <div class="quiz-grid">
         <a href="p4/sciencefinalp4.html" class="quiz-link btn-sci-p4">
           <div class="quiz-info">
-            <span class="quiz-icon">🔬</span>
-            <span>วิชาวิทยาศาสตร์ (มวลและน้ำหนัก & ตัวกลางแสง)</span>
+            <div class="icon-wrapper">🔬</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาวิทยาศาสตร์</span>
+              <span class="subj-sub">มวลและน้ำหนัก &amp; ตัวกลางของแสง</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
 
         <a href="p4/thaip4.html" class="quiz-link btn-thai-p4">
           <div class="quiz-info">
-            <span class="quiz-icon">📖</span>
-            <span>วิชาภาษาไทย ปลายภาค ป.4</span>
+            <div class="icon-wrapper">📖</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาภาษาไทย</span>
+              <span class="subj-sub">แบบทดสอบปลายภาคเรียน</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
 
         <a href="p4/mathfinalp4.html" class="quiz-link btn-math-p4">
           <div class="quiz-info">
-            <span class="quiz-icon">📐</span>
-            <span>วิชาคณิตศาสตร์ ปลายภาค ป.4</span>
+            <div class="icon-wrapper">📐</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาคณิตศาสตร์</span>
+              <span class="subj-sub">แบบทดสอบปลายภาคเรียน</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
 
         <a href="p4/socialfinalp4.html" class="quiz-link btn-social-p4">
           <div class="quiz-info">
-            <span class="quiz-icon">🌏</span>
-            <span>วิชาสังคมศึกษา ปลายภาค ป.4</span>
+            <div class="icon-wrapper">🌏</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาสังคมศึกษา</span>
+              <span class="subj-sub">แบบทดสอบปลายภาคเรียน</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
         
         <a href="p4/engfinalp4.html" class="quiz-link btn-eng-p4">
           <div class="quiz-info">
-            <span class="quiz-icon">🍳</span>
-            <span>วิชาภาษาอังกฤษพื้นฐาน ปลายภาค ป.4</span>
+            <div class="icon-wrapper">🍳</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาภาษาอังกฤษพื้นฐาน</span>
+              <span class="subj-sub">Unit 3 In the Kitchen (ปลายภาค)</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
       </div>
     </div>
@@ -210,46 +330,65 @@
     <!-- ระดับชั้นประถมศึกษาปีที่ 6 (ป.6) -->
     <div class="section-card">
       <div class="section-title title-p6">
-        <span>🎓</span> ระดับชั้นประถมศึกษาปีที่ 6 (ป.6)
+        <div class="title-left">
+          <span>🎓</span> ระดับชั้นประถมศึกษาปีที่ 6 (ป.6)
+        </div>
+        <span class="count-tag">5 ชุดข้อสอบ</span>
       </div>
       <div class="quiz-grid">
         <a href="p6/mahp6.html" class="quiz-link btn-math-p6">
           <div class="quiz-info">
-            <span class="quiz-icon">📐</span>
-            <span>วิชาคณิตศาสตร์ (ทศนิยม & อัตราแลกเปลี่ยน)</span>
+            <div class="icon-wrapper">📐</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาคณิตศาสตร์</span>
+              <span class="subj-sub">ทศนิยม &amp; อัตราแลกเปลี่ยน</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
 
         <a href="p6/socialp6.html" class="quiz-link btn-social-p6">
           <div class="quiz-info">
-            <span class="quiz-icon">🏛️</span>
-            <span>วิชาสังคมศึกษาฯ (ศาสนา หน้าที่พลเมือง วัฒนธรรม)</span>
+            <div class="icon-wrapper">🏛️</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาสังคมศึกษาฯ</span>
+              <span class="subj-sub">ศาสนา หน้าที่พลเมือง และวัฒนธรรม</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
 
         <a href="p6/sciencefinalp6.html" class="quiz-link btn-sci-p6">
           <div class="quiz-info">
-            <span class="quiz-icon">🌍</span>
-            <span>วิชาวิทยาศาสตร์ (หินและซากดึกดำบรรพ์)</span>
+            <div class="icon-wrapper">🌍</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาวิทยาศาสตร์</span>
+              <span class="subj-sub">หินและซากดึกดำบรรพ์ (ปลายภาค)</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
 
         <a href="p6/thaifinalp6.html" class="quiz-link btn-thai-p6">
           <div class="quiz-info">
-            <span class="quiz-icon">📚</span>
-            <span>วิชาภาษาไทย ปลายภาค ป.6</span>
+            <div class="icon-wrapper">📚</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาภาษาไทย</span>
+              <span class="subj-sub">แบบทดสอบปลายภาคเรียน</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
-           <a href="p6/engfinalp6.html" class="quiz-link btn-thai-p6">
+
+        <a href="p6/engfinalp6.html" class="quiz-link btn-eng-p6">
           <div class="quiz-info">
-            <span class="quiz-icon">📚</span>
-            <span>วิชาภาษาอังกฤษ ปลายภาค ป.6</span>
+            <div class="icon-wrapper">🇬🇧</div>
+            <div class="text-group">
+              <span class="subj-title">วิชาภาษาอังกฤษ</span>
+              <span class="subj-sub">แบบทดสอบปลายภาคเรียน</span>
+            </div>
           </div>
-          <span class="arrow">➜</span>
+          <span class="arrow-btn">➜</span>
         </a>
       </div>
     </div>
